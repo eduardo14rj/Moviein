@@ -41,6 +41,6 @@ jobs:
           host: ${{ secrets.AWS_INSTANCE_IP }}
           username: ${{ secrets.AWS_INSTANCE_USER }}
           key: ${{secrets.AWS_SSH_KEY}}
-          src: "Moviein/cliente/moviein"
-          remote: "opt/bitnami/apache/htdocs"
+          source: "Moviein/cliente/moviein"
+          target: "opt/bitnami/apache/htdocs"
           
