@@ -29,28 +29,14 @@ jobs:
      - name: Build Project
        run: npm run build
        working-directory: Moviein/cliente/moviein
-
-  files:
-     needs: build
-     runs-on: ubuntu-latest
-     steps:
-        - name: Find files
-          run: ls
-
+       
   deploy:
-    needs: files 
+    needs: build 
     runs-on: ubuntu-latest
 
     steps:    
-      - name: Deploy to AWS Lightsail
-        uses: appleboy/scp-action@master
-        with: 
-          host: ${{ secrets.AWS_INSTANCE_IP }}
-          username: ${{ secrets.AWS_INSTANCE_USER }}
-          key: ${{secrets.AWS_SSH_KEY}}
-          source: "Moviein/cliente/moviein/"
-          target: "/opt/bitnami/apache/htdocs"
-          overwrite: true
-          rm: true
-          
+          - name: Deploy to AWS Lightsail
+            run: rsync -avz --exclude 'node_modules' Moviein/cliente/moviein/ ${{ secrets.AWS_INSTANCE_USER }}@${{ secrets.AWS_INSTANCE_IP }}:/opt/bitnami/apache/htdocs
+            env:
+              SSH_PRIVATE_KEY: ${{ secrets.AWS_SSH_KEY }}
           
