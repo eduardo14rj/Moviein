@@ -35,12 +35,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Find files
+        run: ls -la Moviein/cliente/moviein
+    
       - name: Deploy to AWS Lightsail
         uses: appleboy/scp-action@master
         with: 
           host: ${{ secrets.AWS_INSTANCE_IP }}
           username: ${{ secrets.AWS_INSTANCE_USER }}
           key: ${{secrets.AWS_SSH_KEY}}
-          source: "Moviein/cliente/moviein"
-          target: "opt/bitnami/apache/htdocs"
+          source: Moviein/cliente/moviein
+          target: opt/bitnami/apache/htdocs
           
