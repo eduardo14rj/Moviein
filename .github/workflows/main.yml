@@ -31,13 +31,14 @@ jobs:
        working-directory: Moviein/cliente/moviein
 
   files:
+     needs: build
      runs-on: ubuntu-latest
      steps:
         - name: Find files
           run: ls
 
   deploy:
-    needs: build 
+    needs: files 
     runs-on: ubuntu-latest
 
     steps:    
