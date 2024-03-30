@@ -51,7 +51,6 @@ jobs:
           source: "Moviein/cliente/moviein/"
           target: "/opt/bitnami/apache/htdocs"
           overwrite: true
-          strip_components: 2
-          rm: node_modules/
+          rm: true
           
           
