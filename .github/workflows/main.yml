@@ -34,7 +34,7 @@ jobs:
      runs-on: ubuntu-latest
      steps:
         - name: Find files
-          run: ls -la Moviein/cliente/moviein
+          run: ls -la "/Moviein/cliente/moviein"
 
   deploy:
     needs: build 
