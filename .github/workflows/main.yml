@@ -29,4 +29,17 @@ jobs:
      - name: Build Project
        run: npm run build
        working-directory: Moviein/cliente/moviein
-        
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to AWS Lightsail
+        uses: appleboy/scp-action@master
+        with: 
+          host: ${{ secrets.AWS_INSTANCE_IP }}
+          username: ${{ secrets.AWS_INSTANCE_USER }}
+          key: ${{secrets.AWS_SSH_KEY}}
+          src: "Moviein/cliente/moviein"
+          remote: "opt/bitnami/apache/htdocs"
+          
