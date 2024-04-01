@@ -35,12 +35,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps: 
-         - name: Change SSH key permissions
-           run: echo "${{ secrets.AWS_SSH_KEY }}" > ssh_key.pem && chmod 600 ssh_key.pem
-   
-         - name: Check directory contents
-           run: ls
-
-         - name: Deploy to AWS Lightsail
-           run: |
-            scp -i ssh_key.pem -o StrictHostKeyChecking=no -r Moviein/cliente/moviein/ ${{ secrets.AWS_INSTANCE_USER }}@${{ secrets.AWS_INSTANCE_IP }}:/opt/bitnami/apache/htdocs
+      - name: deploy file to server
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+            username: 'root'
+            server: '${{ secrets.AWS_INSTANCE_IP }}'
+            ssh_private_key: ${{ secrets.AWS_SSH_KEY }}
+            local_path: './*'
+            remote_path: '/opt/bitnami/apache/htdocs'
+            sftpArgs: '-o ConnectTimeout=5'
