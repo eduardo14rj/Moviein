@@ -39,3 +39,4 @@ jobs:
           local_path: 'Moviein/cliente/moviein'
           remote_path: '/opt/bitnami/apache/htdocs'
           sftpArgs: '-o ConnectTimeout=5'
+          exclude: 'node_modules'
