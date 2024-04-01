@@ -35,14 +35,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps: 
-          - name: Save SSH key to file
-            run: echo "${{ secrets.AWS_SSH_KEY }}" > ssh_key.pem
-            shell: bash
-
-          - name: Change SSH key permissions
-            run: chmod 600 ssh_key.pem
-
-          - name: Deploy to AWS Lightsail
-            run: rsync -avz --exclude 'node_modules' -e "ssh -i ssh_key.pem" Moviein/cliente/moviein/ ${{ secrets.AWS_INSTANCE_USER }}@${{ secrets.AWS_INSTANCE_IP }}:/opt/bitnami/apache/htdocs
-            env:
-              SSH_PRIVATE_KEY: "ssh_key.pem"
+        - name: Change SSH key permissions
+          run: echo "${{ secrets.AWS_SSH_KEY }}" > ssh_key.pem && chmod 600 ssh_key.pem
+  
+        - name: Deploy to AWS Lightsail
+          run: |
+            rsync -avz --exclude 'node_modules' -e "ssh -o StrictHostKeyChecking=no -i ssh_key.pem" Moviein/cliente/moviein/ ${{ secrets.AWS_INSTANCE_USER }}@${{ secrets.AWS_INSTANCE_IP }}:/opt/bitnami/apache/htdocs
+          env:
+            SSH_PRIVATE_KEY: $(cat ssh_key.pem)
