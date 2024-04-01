@@ -39,7 +39,7 @@ jobs:
            run: echo "${{ secrets.AWS_SSH_KEY }}" > ssh_key.pem && chmod 600 ssh_key.pem
    
          - name: Check directory contents
-           run: ls Moviein
+           run: ls
 
          - name: Deploy to AWS Lightsail
            run: |
