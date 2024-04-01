@@ -34,7 +34,10 @@ jobs:
     needs: build 
     runs-on: ubuntu-latest
 
-    steps:    
+    steps: 
+          - name: Change SSH key permissions
+            run: chmod 600 ${{ secrets.AWS_SSH_KEY }}
+            
           - name: Deploy to AWS Lightsail
             run: rsync -avz --exclude 'node_modules' Moviein/cliente/moviein/ ${{ secrets.AWS_INSTANCE_USER }}@${{ secrets.AWS_INSTANCE_IP }}:/opt/bitnami/apache/htdocs
             env:
