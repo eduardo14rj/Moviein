@@ -55,5 +55,5 @@ jobs:
           ssh-keygen -R ${{ secrets.AWS_INSTANCE_IP }}
           echo "${{ secrets.AWS_SSH_KEY }}" > ssh_key.pem
           chmod 600 ssh_key.pem
-          ssh -o StrictHostKeyChecking=no -i ssh_key.pem bitnami@${{ secrets.AWS_INSTANCE_IP }} "cd /htdocs/moviein && npm install && pm2 start server.js"
+          ssh -o StrictHostKeyChecking=no -i ssh_key.pem bitnami@${{ secrets.AWS_INSTANCE_IP }} "cd ./htdocs/moviein && npm install && pm2 start server.js"
        shell: bash
