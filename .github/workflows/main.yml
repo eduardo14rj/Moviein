@@ -35,11 +35,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps: 
-        - name: Change SSH key permissions
-          run: echo "${{ secrets.AWS_SSH_KEY }}" > ssh_key.pem && chmod 600 ssh_key.pem
+         - name: Change SSH key permissions
+           run: echo "${{ secrets.AWS_SSH_KEY }}" > ssh_key.pem && chmod 600 ssh_key.pem
 
-        - name: Deploy to AWS Lightsail
-          run: |
-           scp -i ssh_key.pem -o StrictHostKeyChecking=no -r Moviein/cliente/moviein/ ${secrets.AWS_INSTANCE_USER}@${secrets.AWS_INSTANCE_IP}:/opt/bitnami/apache/htdocs
-          env:
-           SSH_PRIVATE_KEY: $(cat ssh_key.pem)
+         - name: Deploy to AWS Lightsail
+           run: |
+            scp -i ssh_key.pem -o StrictHostKeyChecking=no -r Moviein/cliente/moviein/ ${{ secrets.AWS_INSTANCE_USER }}@${{ secrets.AWS_INSTANCE_IP }}:/opt/bitnami/apache/htdocs
