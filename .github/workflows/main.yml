@@ -45,4 +45,4 @@ jobs:
           - name: Deploy to AWS Lightsail
             run: rsync -avz --exclude 'node_modules' -e "ssh -i ssh_key.pem" Moviein/cliente/moviein/ ${{ secrets.AWS_INSTANCE_USER }}@${{ secrets.AWS_INSTANCE_IP }}:/opt/bitnami/apache/htdocs
             env:
-              SSH_PRIVATE_KEY: ${{ secrets.AWS_SSH_KEY }}
+              SSH_PRIVATE_KEY: "ssh_key.pem"
