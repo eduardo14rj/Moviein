@@ -30,17 +30,12 @@ jobs:
        run: npm run build
        working-directory: Moviein/cliente/moviein
        
-  deploy:
-    needs: build 
-    runs-on: ubuntu-latest
-
-    steps: 
-      - name: deploy file to server
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
-        with:
-            username: 'bitnami'
-            server: '${{ secrets.AWS_INSTANCE_IP }}'
-            ssh_private_key: ${{ secrets.AWS_SSH_KEY }}
-            local_path: './*'
-            remote_path: '/opt/bitnami/apache/htdocs'
-            sftpArgs: '-o ConnectTimeout=5'
+     - name: Deploy to Server
+       uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+       with:
+          username: 'bitnami'
+          server: '${{ secrets.AWS_INSTANCE_IP }}'
+          ssh_private_key: ${{ secrets.AWS_SSH_KEY }}
+          local_path: 'Moviein/cliente/moviein'
+          remote_path: '/opt/bitnami/apache/htdocs'
+          sftpArgs: '-o ConnectTimeout=5'
