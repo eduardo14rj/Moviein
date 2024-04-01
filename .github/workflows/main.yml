@@ -38,7 +38,7 @@ jobs:
       - name: deploy file to server
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
-            username: 'root'
+            username: 'bitnami'
             server: '${{ secrets.AWS_INSTANCE_IP }}'
             ssh_private_key: ${{ secrets.AWS_SSH_KEY }}
             local_path: './*'
