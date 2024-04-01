@@ -47,3 +47,7 @@ jobs:
           sftpArgs: '-o ConnectTimeout=5'
           exclude: 'node_modules'
           rsyncFlags: '--exclude=node_modules'
+
+     - name: Start Node.js Server
+       run: ssh -i ${{ secrets.AWS_SSH_KEY }} bitnami@${{ secrets.AWS_INSTANCE_IP }} "cd /opt/bitnami/apache/htdocs/moviein && pm2 start server.js"
+
