@@ -29,7 +29,11 @@ jobs:
      - name: Build Project
        run: |
         npm run build
-        rm -rf Moviein/cliente/moviein/node_modules
+       working-directory: Moviein/cliente/moviein
+
+     - name: clear node_modules
+       run: |
+        rm -rf node_modules
        working-directory: Moviein/cliente/moviein
        
      - name: Deploy to Server
