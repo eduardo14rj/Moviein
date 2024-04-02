@@ -2,7 +2,7 @@
     "apps": [
         {
             "name": "moviein-cliente",
-            "script": "/cliente/moviein/server.js",
+            "script": "../cliente/moviein/server.js",
             "instances": "max",
             "exec_mode": "cluster",
             "env": {
@@ -11,6 +11,7 @@
             }
         },
         {
+            "name": "moviein-servidor",
             "script": "/servidor/dist/server.js",
             "instances": 1,
             "exec_mode": "fork",
