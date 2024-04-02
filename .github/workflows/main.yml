@@ -81,7 +81,7 @@ jobs:
      - name: Node Install
        run: |
           sleep 2s
-          ssh -o StrictHostKeyChecking=no -i ssh_key.pem bitnami@${{ secrets.AWS_INSTANCE_IP }} "cd ./htdocs/moviein && npm install && cd ./htdocs/servidor && npm install"
+          ssh -o StrictHostKeyChecking=no -i ssh_key.pem bitnami@${{ secrets.AWS_INSTANCE_IP }} "cd ./htdocs/moviein && npm install && cd && cd ./htdocs/servidor && npm install"
      - name: Start Node.js Server
        run: |
           sleep 2s
