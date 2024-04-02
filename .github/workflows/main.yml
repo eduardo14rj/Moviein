@@ -26,17 +26,27 @@ jobs:
        run: npm install
        working-directory: Moviein/cliente/moviein
 
-     - name: Build Project
+     - name: Build Client
        run: |
         npm run build
        working-directory: Moviein/cliente/moviein
 
-     - name: clear node_modules
+     - name: Build Server
+       run: |
+        npm run build
+       working-directory: Moviein/servidor
+
+     - name: clear node_modules client
        run: |
         rm -rf node_modules
        working-directory: Moviein/cliente/moviein
+
+     - name: clear node_modules server
+       run: |
+         rm -rf node_modules
+       working-directory: Moviein/servidor
        
-     - name: Deploy to Server
+     - name: Deploy client to Server
        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
        with:
           username: 'bitnami'
@@ -48,12 +58,31 @@ jobs:
           exclude: 'node_modules'
           rsyncFlags: '--exclude=node_modules'
 
-     - name: Prepare SSH Key and Start Node.js Server
+     - name: Deploy server to Server
+       uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+       with:
+          username: 'bitnami'
+          server: '${{ secrets.AWS_INSTANCE_IP }}'
+          ssh_private_key: ${{ secrets.AWS_SSH_KEY }}
+          local_path: 'Moviein/servidor'
+          remote_path: '/opt/bitnami/apache/htdocs'
+          sftpArgs: '-o ConnectTimeout=5'
+          exclude: 'node_modules'
+          rsyncFlags: '--exclude=node_modules'
+
+     - name: Prepare SSH Key
        run: |
           mkdir -p ~/.ssh/
           touch ~/.ssh/known_hosts
           ssh-keygen -R ${{ secrets.AWS_INSTANCE_IP }}
           echo "${{ secrets.AWS_SSH_KEY }}" > ssh_key.pem
           chmod 600 ssh_key.pem
-          ssh -o StrictHostKeyChecking=no -i ssh_key.pem bitnami@${{ secrets.AWS_INSTANCE_IP }} "cd ./htdocs/moviein && npm install && pm2 start server.js"
+
+     - name: Node Install
+       run: |
+          ssh -o StrictHostKeyChecking=no -i ssh_key.pem bitnami@${{ secrets.AWS_INSTANCE_IP }} "cd ./htdocs/moviein && npm install && cd ./htdocs/servidor && npm install "
+
+     - name: Start Node.js Server
+       run: |
+          ssh -o StrictHostKeyChecking=no -i ssh_key.pem bitnami@${{ secrets.AWS_INSTANCE_IP }} "cd ./htdocs/servidor && pm2 start server.json"
        shell: bash
