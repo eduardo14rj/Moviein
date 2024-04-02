@@ -5,7 +5,7 @@ axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 
 var isDev = process.env.NODE_ENV === 'development';
 
-export const baseURL = isDev ? "http://localhost:3001" : "http://3.222.200.242:3001" ;
+export const baseURL = isDev ? "http://localhost:3001" : "http://3.235.135.8:3001" ;
 
 const Api = axios.create({
     baseURL
