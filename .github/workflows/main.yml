@@ -24,12 +24,12 @@ jobs:
 
      - name: Install Dependencies-Client
        run: npm install
-       working-directory: Moviein/cliente/moviein
+       working-directory: Moviein/moviein
 
      - name: Build Client
        run: |
         npm run build
-       working-directory: Moviein/cliente/moviein
+       working-directory: Moviein/moviein
 
      - name: Build Server
        run: |
@@ -39,7 +39,7 @@ jobs:
      - name: clear node_modules client
        run: |
         rm -rf node_modules
-       working-directory: Moviein/cliente/moviein
+       working-directory: Moviein/moviein
 
      - name: clear node_modules server
        run: |
@@ -52,7 +52,7 @@ jobs:
           username: 'bitnami'
           server: '${{ secrets.AWS_INSTANCE_IP }}'
           ssh_private_key: ${{ secrets.AWS_SSH_KEY }}
-          local_path: 'Moviein/cliente/moviein'
+          local_path: 'Moviein/moviein'
           remote_path: '/opt/bitnami/apache/htdocs'
           sftpArgs: '-o ConnectTimeout=5'
           exclude: 'node_modules'
