@@ -17,7 +17,7 @@ app.register(cors, {
 });
 
 app.get("/users", async () => {
-    const users = await prisma.user.findMany();
+    const users = await prisma.user.findFirst();
     return { users };
 });
 
