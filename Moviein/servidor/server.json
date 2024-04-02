@@ -3,7 +3,7 @@
         {
             "name": "moviein-cliente",
             "script": "../moviein/server.js",
-            "instances": "max",
+            "instances": 1,
             "exec_mode": "cluster",
             "env": {
                 "NODE_ENV": "production",
