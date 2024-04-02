@@ -12,7 +12,7 @@
         },
         {
             "name": "moviein-servidor",
-            "script": "/servidor/dist/server.js",
+            "script": "dist/server.js",
             "instances": 1,
             "exec_mode": "fork",
             "env": {
