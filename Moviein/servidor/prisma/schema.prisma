@@ -21,8 +21,3 @@ model User {
   name  String?
   role  String
 }
-
-model Filmes {
-  id    Int     @id @default(autoincrement())
-  name  String
-}
