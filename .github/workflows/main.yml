@@ -85,5 +85,5 @@ jobs:
      - name: Start Node.js Server
        run: |
           sleep 2s
-          ssh -o StrictHostKeyChecking=no -i ssh_key.pem bitnami@${{ secrets.AWS_INSTANCE_IP }} "cd ./htdocs/servidor && pm2 start server.json"
+          ssh -o StrictHostKeyChecking=no -i ssh_key.pem bitnami@${{ secrets.AWS_INSTANCE_IP }} "cd && cd ./htdocs/servidor && pm2 start server.json"
        shell: bash
