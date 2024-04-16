@@ -32,6 +32,12 @@ app.get("/user/register", async (req, res) => {
     return res.status(201).send();
 });
 
+app.get("/user/b", async (req, res) => {
+    return res.status(201).send("e eeeeeeeeeeee");
+});
+
+
+
 app.listen({
     port: process.env.PORT ? Number(process.env.PORT) : 3001,
     host: "0.0.0.0"
