@@ -36,5 +36,5 @@ app.listen({
     port: process.env.PORT ? Number(process.env.PORT) : 3001,
     host: "0.0.0.0"
 }).then(() => {
-    console.log("Servidor rodando em porta:", process.env.PORT ? Number(process.env.PORT) : 3001);
+    console.log("Servidor rodando em porta:", `http://localhost: ${process.env.PORT ? Number(process.env.PORT) : 3001}`);
 });
