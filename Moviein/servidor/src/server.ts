@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import { Pool } from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
 import cors from '@fastify/cors'; // Importe o módulo 'cors' diretamente
+import { UserController } from "./Controllers/UserController";
 
 const connectionString = `${process.env.DATABASE_URL}`
 const pool = new Pool({ connectionString })
@@ -16,27 +17,7 @@ app.register(cors, {
   origin: true
 });
 
-app.get("/users", async () => {
-    const users = await prisma.user.findMany();
-    return { users };
-});
-
-app.get("/user/register", async (req, res) => {
-    await prisma.user.create({
-        data: {
-            email: "teste@gmail.com",
-            role: "Admin",
-            name: "Eduardo"
-        }
-    });
-    return res.status(201).send();
-});
-
-app.get("/user/b", async (req, res) => {
-    return res.status(201).send("e eeeeeeeeeeee");
-});
-
-
+UserController(app, prisma);
 
 app.listen({
     port: process.env.PORT ? Number(process.env.PORT) : 3001,
