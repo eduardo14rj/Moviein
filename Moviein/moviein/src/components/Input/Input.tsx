@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import { IconType } from 'react-icons';
 type InputType = {
     Nome: string
     Type: string

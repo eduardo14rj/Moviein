@@ -3,7 +3,7 @@ import filmes from '../../assets/filme.png';
 import logo from '../../assets/logo.png';
 import { MdEmail, MdOutlinePassword } from "react-icons/md"
 import Input from '../../components/Input/Input';
-import { useNavigate, useNavigation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
   const nav = useNavigate();
