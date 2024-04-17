@@ -5,7 +5,7 @@ import { PrismaPg } from '@prisma/adapter-pg'
 import cors from '@fastify/cors'; // Importe o módulo 'cors' diretamente
 import { UserController } from "./Controllers/UserController";
 
-const connectionString = `${process.env.DATABASE_URL}`
+const connectionString = "postgres://dvlvctun:u1gQQ6T2PxiVXJAl1hA1GcjkWA-81PZv@kesavan.db.elephantsql.com/dvlvctun"
 const pool = new Pool({ connectionString })
 const adapter = new PrismaPg(pool)
 const prisma = new PrismaClient({ adapter })
@@ -17,11 +17,11 @@ app.register(cors, {
   origin: true
 });
 
-UserController(app, prisma);
+UserController(app, prisma)
 
 app.listen({
     port: process.env.PORT ? Number(process.env.PORT) : 3001,
     host: "0.0.0.0"
 }).then(() => {
-    console.log("Servidor rodando em porta:", `http://localhost: ${process.env.PORT ? Number(process.env.PORT) : 3001}`);
+    console.log("Servidor rodando em porta:", `http://localhost:${process.env.PORT ? Number(process.env.PORT) : 3001}`);
 });

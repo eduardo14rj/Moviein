@@ -6,6 +6,6 @@ export const UserController = (app: FastifyInstance, prisma: PrismaClient) => {
     app.get("/users", async () => {
         const users = await prisma.user.findMany();
         return { users };
-    });
+      });
 
 }

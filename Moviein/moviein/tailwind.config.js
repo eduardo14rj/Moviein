@@ -5,6 +5,12 @@ module.exports = {
     fontFamily: {
       sans: ["Poppins", "Inter", "Arial", "sans-serif"]
     },
+    colors: {
+      "dark": "#191825",
+      "white": "#fff",
+      "redDark": "#D2043D",
+      "primary": "#865DFF"
+    },
     extend: {},
   },
   plugins: [],

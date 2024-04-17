@@ -11,7 +11,7 @@ generator client {
 
 datasource db {
   provider          = "postgresql"
-  url               = env("DATABASE_URL")
+  url               = "postgres://dvlvctun:u1gQQ6T2PxiVXJAl1hA1GcjkWA-81PZv@kesavan.db.elephantsql.com/dvlvctun"
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
@@ -26,5 +26,5 @@ model User {
 model UsuarioInformacao {
   Id     Int  @id @default(autoincrement())
   User   User @relation(fields: [UserId], references: [Id])
-  UserId Int @unique
+  UserId Int  @unique
 }
