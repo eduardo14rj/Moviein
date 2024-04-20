@@ -50,7 +50,7 @@ const Register: React.FC = () => {
       <div className='container mx-auto pt-8'>
         <div className='bg-dark p-8 rounded-lg'>
           <div className='flex justify-center mb-3'>
-            <img src={logo} className='w-[80px]' />
+            <img src={logo} alt='Logo' className='w-[80px]' />
           </div>
           {/* Etapas */}
           <div className='relative flex justify-between mx-4'>
