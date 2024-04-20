@@ -33,7 +33,7 @@ const Register: React.FC = () => {
     shouldFocusError: true,
   });
 
-  const [etapa, setEtapa] = useState<number>(0);
+  const [etapa] = useState<number>(0);
   const EtapaState =
     etapa === 0 ? "0%" : (
       etapa === 1 ? "50%" : (
