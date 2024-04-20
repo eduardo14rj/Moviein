@@ -1,8 +1,6 @@
 import React from 'react';
 import filmes from '../../assets/filme.png';
 import logo from '../../assets/logo.png';
-import { MdEmail, MdOutlinePassword } from "react-icons/md"
-import Input from '../../components/Input/Input';
 import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
@@ -27,8 +25,8 @@ const Login: React.FC = () => {
                   </div>
                 </div>
                 <form>
-                  <Input Icon={<MdEmail />} Nome='Email' Type='email' />
-                  <Input Icon={<MdOutlinePassword />} Nome='Senha' Type='password' />
+                  {/* <Input Icon={<MdEmail />} Titulo='Email' Type='email' />
+                  <Input Icon={<MdOutlinePassword />} Titulo='Senha' Type='password' /> */}
 
                   <div className='flex gap-4 mt-4 justify-end'>
                     <input type='submit' value="Entrar" className='w-full cursor-pointer py-3 px-6 text-white bg-primary rounded-lg ' />
