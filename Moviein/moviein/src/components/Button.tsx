@@ -3,7 +3,7 @@ import { VariantProps, tv } from 'tailwind-variants';
 import { AiOutlineLoading } from "react-icons/ai";
 
 const button = tv({
-    base: "py-3 px-6 rounded-lg border-[1px]",
+    base: "py-3 px-6 rounded-lg border-[1px] flex justify-center",
     variants: {
         loading: {
             true: "opacity-60 cursor-auto"

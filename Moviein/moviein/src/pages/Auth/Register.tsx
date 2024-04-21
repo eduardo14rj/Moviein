@@ -10,13 +10,33 @@ import Select from '../../components/Input/Select';
 import RegistroUsuarioScheema, { RegistroUsuario } from './RegistroUsuarioScheema';
 import Button from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
+import Api from '../../api/api';
+import { toast } from 'react-toastify';
+import { AxiosError } from 'axios';
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors, defaultValues }, setValue } = useForm<RegistroUsuario>({
+  const [load, setLoad] = useState<boolean>(false);
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm<RegistroUsuario>({
     resolver: yupResolver(RegistroUsuarioScheema),
     defaultValues: {
-      etapa: 0
+      etapa: 0,
+      nomeMaterno: "teste",
+      bairro: "teste",
+      cep: "77777777",
+      cidade: "teste",
+      complemento: "teste",
+      confirmarSenha: "123",
+      cpf: "22222222222",
+      dataNascimento: "2024-06-20",
+      email: "eduardo14rj@gmail.com",
+      estado: "teste",
+      genero: "M",
+      nomeCompleto: "teste",
+      numero: "1",
+      pais: "teste",
+      senha: "123",
+      telefone: "123"
     }
   });
 
@@ -42,15 +62,34 @@ const Register: React.FC = () => {
     }
   }
 
-  function RegistrarUsuario(data: RegistroUsuario) {
-    console.log(etapa)
+  async function RegistrarUsuario(data: RegistroUsuario) {
     switch (etapa) {
       case 0: setEtapa(1)
         break;
       case 1: setEtapa(2)
         break;
       case 2:
-        alert("Registro")
+        try {
+
+          setLoad(true)
+          console.log(data)
+          const { etapa, ...iss } = data;
+          var res = await Api.post("/api/user/register", iss)
+          setLoad(false);
+          if (res.status === 200 || res.status === 201) {
+            toast.success("Usuário criado com sucesso!", {
+              position: "bottom-center"
+            })
+            navigate("/login");
+          }
+        } catch (error) {
+          const d = error as AxiosError<{ message: string }>;
+          toast.error(d.response?.data.message, {
+            position: "bottom-center",
+            autoClose: 10000
+          })
+          setLoad(false)
+        }
         break;
     }
     if (etapa === 0)
@@ -197,14 +236,14 @@ const Register: React.FC = () => {
                     <Input<RegistroUsuario>
                       Titulo='Email'
                       Icon={<MdEmail />}
-                      field='Email'
+                      field='email'
                       fieldErrors={errors}
                       register={register}
                       Type='email' />
                     <Input<RegistroUsuario>
                       Titulo="Senha"
                       Icon={<MdKey />}
-                      field="Senha"
+                      field="senha"
                       fieldErrors={errors}
                       register={register}
                       Type='password'
@@ -212,7 +251,7 @@ const Register: React.FC = () => {
                     <Input<RegistroUsuario>
                       Titulo="Confirmar senha"
                       Icon={<MdKey />}
-                      field="ConfirmarSenha"
+                      field="confirmarSenha"
                       fieldErrors={errors}
                       register={register}
                       Type='password'
@@ -230,12 +269,8 @@ const Register: React.FC = () => {
                 />
                 <Button
                   titulo='Próximo'
+                  loading={load}
                   type="submit"
-                />
-                <Button
-                  titulo='Teste'
-                  type="button"
-                  onClick={() => console.log(defaultValues)}
                 />
               </div>
             </form>

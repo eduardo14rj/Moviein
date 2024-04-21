@@ -15,16 +15,29 @@ datasource db {
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
-model User {
+model usuario {
   Id                Int                @id @default(autoincrement())
   Email             String             @unique
   Nome              String?
   Funcao            String
-  UsuarioInformacao UsuarioInformacao?
+  Senha             String
+  UsuarioInformacao usuarioInformacao?
 }
 
-model UsuarioInformacao {
-  Id     Int  @id @default(autoincrement())
-  User   User @relation(fields: [UserId], references: [Id])
-  UserId Int  @unique
+model usuarioInformacao {
+  Id             Int      @id @default(autoincrement())
+  Usuario        usuario  @relation(fields: [UsuarioId], references: [Id], onUpdate: Cascade)
+  UsuarioId      Int      @unique
+  Cpf            String
+  DataNascimento DateTime
+  NomeMaterno    String
+  Telefone       String
+  Genero         String
+  Cep            String
+  Pais           String
+  Estado         String
+  Bairro         String
+  Complemento    String
+  Cidade         String
+  Numero         String
 }

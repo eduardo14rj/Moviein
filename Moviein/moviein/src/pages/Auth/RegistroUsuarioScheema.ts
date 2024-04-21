@@ -47,19 +47,19 @@ const RegistroUsuarioScheema = yup
 
         //schreema etapa 3
 
-        Email: yup.string().when("etapa", (etp, scheema) => {
+        email: yup.string().when("etapa", (etp, scheema) => {
             if (etp[0] === 2)
                 return scheema.required("Preenche o campo 'Email'").email("Formato de email inválido.")
             return scheema
         }),
-        Senha: yup.string().when("etapa", (etp, scheema) => {
+        senha: yup.string().when("etapa", (etp, scheema) => {
             if (etp[0] === 2)
                 return scheema.required("Insira sua senha")
             return scheema
         }),
-        ConfirmarSenha: yup.string().when("etapa", (etp, scheema) => {
+        confirmarSenha: yup.string().when("etapa", (etp, scheema) => {
             if (etp[0] === 2)
-                return scheema.required("Preenche o campo 'Email'").oneOf([yup.ref("Senha")], "As senhas não coincidem.")
+                return scheema.required("Preenche o campo 'Email'").oneOf([yup.ref("senha")], "As senhas não coincidem.")
             return scheema
         }),
     })

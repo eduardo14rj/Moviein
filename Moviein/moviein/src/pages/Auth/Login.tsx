@@ -1,10 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import filmes from '../../assets/filme.png';
 import logo from '../../assets/logo.png';
 import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import LoginSchreema, { LoginSchreemaType } from './LoginSchreema';
+import { MdEmail, MdOutlinePassword } from 'react-icons/md';
+import Input from '../../components/Input/Input';
+import Button from '../../components/Button';
+import { AxiosError } from 'axios';
+import Api from '../../api/api';
+import { toast } from 'react-toastify';
 
 const Login: React.FC = () => {
   const nav = useNavigate();
+  const [load, setLoad] = useState<boolean>(false);
+  const { register, formState: { errors }, handleSubmit } = useForm<LoginSchreemaType>({
+    resolver: yupResolver(LoginSchreema)
+  })
+
+  type LoginDTO_Res = {
+    token: string,
+    funcao: string
+  }
+
+  async function LoginEntrar(data: LoginSchreemaType) {
+    setLoad(true);
+    try {
+      var e = await Api.post<LoginDTO_Res>("/api/user/login", data);
+      if (e.status === 200 || e.status === 204) {
+        window.localStorage.setItem("token", e.data.token);
+        window.localStorage.setItem("funcao", e.data.funcao);
+        setLoad(false);
+        nav("/")
+      }
+    } catch (error) {
+      setLoad(false);
+      var errorData = error as AxiosError<{ mensagem: string }>;
+      toast.error(errorData.response?.data.mensagem, {
+        position: "bottom-center"
+      });
+    }
+  }
 
   return (
     <div className='relative w-full h-screen'>
@@ -24,12 +61,30 @@ const Login: React.FC = () => {
                     <p onClick={() => nav("/registro")} className='text-primary ml-1 cursor-pointer underline  decoration-slice'>Crie uma conta</p>
                   </div>
                 </div>
-                <form>
-                  {/* <Input Icon={<MdEmail />} Titulo='Email' Type='email' />
-                  <Input Icon={<MdOutlinePassword />} Titulo='Senha' Type='password' /> */}
-
+                <form onSubmit={handleSubmit(LoginEntrar)}>
+                  <Input<LoginSchreemaType>
+                    Icon={<MdEmail />}
+                    Titulo='Email'
+                    Type='email'
+                    field="email"
+                    fieldErrors={errors}
+                    register={register} />
+                  <Input<LoginSchreemaType>
+                    Icon={<MdOutlinePassword />}
+                    Titulo='Senha'
+                    Type='password'
+                    field="senha"
+                    fieldErrors={errors}
+                    register={register}
+                  />
                   <div className='flex gap-4 mt-4 justify-end'>
-                    <input type='submit' value="Entrar" className='w-full cursor-pointer py-3 px-6 text-white bg-primary rounded-lg ' />
+                    {/* <input type='submit' value="Entrar" className='w-full cursor-pointer py-3 px-6 text-white bg-primary rounded-lg ' /> */}
+                    <Button
+                      type="submit"
+                      titulo='Entrar'
+                      className='w-full'
+                      loading={load}
+                    />
                   </div>
                 </form>
                 <div className='mt-6 flex gap-1'>
