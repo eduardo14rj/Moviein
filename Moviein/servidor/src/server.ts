@@ -8,7 +8,7 @@ import { UserController } from "./Controllers/UserController";
 const connectionString = "postgres://dvlvctun:u1gQQ6T2PxiVXJAl1hA1GcjkWA-81PZv@kesavan.db.elephantsql.com/dvlvctun"
 const pool = new Pool({ connectionString })
 const adapter = new PrismaPg(pool)
-const prisma = new PrismaClient({ adapter })
+export const prismaClient = new PrismaClient({ adapter })
 
 const app = fastify();
 
@@ -17,7 +17,7 @@ app.register(cors, {
   origin: true
 });
 
-UserController(app, prisma)
+UserController(app)
 
 app.listen({
     port: process.env.PORT ? Number(process.env.PORT) : 3001,

@@ -2,11 +2,12 @@ import { PrismaClient } from '@prisma/client';
 import { FastifyInstance } from 'fastify';
 import RegisterUserDTO_Req from '../DTOs/RegisterUserDTO_Req';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { prismaClient } from '../server';
 
-export const UserController = (app: FastifyInstance, prisma: PrismaClient) => {
+export const UserController = (app: FastifyInstance) => {
 
   app.get("/users", async () => {
-    const users = await prisma.usuario.findMany();
+    const users = await prismaClient.usuario.findMany();
     return { users };
   });
 
@@ -19,7 +20,7 @@ export const UserController = (app: FastifyInstance, prisma: PrismaClient) => {
     }
 
     try {
-      await prisma.usuario.create({
+      await prismaClient.usuario.create({
         data: {
           Email: data.email,
           Senha: data.senha,
@@ -63,7 +64,7 @@ export const UserController = (app: FastifyInstance, prisma: PrismaClient) => {
   app.post("/api/user/login", async (req, res) => {
     const { email, senha } = req.body as LoginDTO_Req
 
-    var user = await prisma.usuario.findUnique({
+    var user = await prismaClient.usuario.findUnique({
       where: { 
         Email: email
       }
