@@ -1,18 +1,16 @@
-import { PrismaClient } from '@prisma/client';
-import { FastifyInstance } from 'fastify';
+import { FastifyReply, FastifyRequest } from 'fastify';
 import RegisterUserDTO_Req from '../DTOs/RegisterUserDTO_Req';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { prismaClient } from '../server';
 
-export const UserController = (app: FastifyInstance) => {
 
-  app.get("/users", async () => {
+export class UserController {
+  async ListarUsuarios(req: FastifyRequest, res: FastifyReply) {
     const users = await prismaClient.usuario.findMany();
-    return { users };
-  });
+    return res.code(200).send(users);
+  }
 
-
-  app.post("/api/user/register", async (req, res) => {
+  async RegistrarUsuario(req: FastifyRequest, res: FastifyReply) {
     var data = req.body as RegisterUserDTO_Req;
 
     if (data.dataNascimento && typeof data.dataNascimento === 'string') {
@@ -58,14 +56,13 @@ export const UserController = (app: FastifyInstance) => {
       });
 
     }
-  })
+  }
 
-
-  app.post("/api/user/login", async (req, res) => {
+  async login(req: FastifyRequest, res: FastifyReply) {
     const { email, senha } = req.body as LoginDTO_Req
 
     var user = await prismaClient.usuario.findUnique({
-      where: { 
+      where: {
         Email: email
       }
     });
@@ -80,6 +77,5 @@ export const UserController = (app: FastifyInstance) => {
       token: "1234sdsa",
       funcao: "cliente"
     });
-  })
-
+  }
 }

@@ -89,7 +89,7 @@ const Register: React.FC = () => {
           setLoad(true)
           console.log(data)
           const { etapa, ...iss } = data;
-          var res = await Api.post("/api/user/register", iss)
+          var res = await Api.post("/api/usuario/registro", iss)
           setLoad(false);
           if (res.status === 200 || res.status === 201) {
             toast.success("Usuário criado com sucesso!", {

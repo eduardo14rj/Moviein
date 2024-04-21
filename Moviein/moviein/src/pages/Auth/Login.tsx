@@ -27,7 +27,7 @@ const Login: React.FC = () => {
   async function LoginEntrar(data: LoginSchreemaType) {
     setLoad(true);
     try {
-      var e = await Api.post<LoginDTO_Res>("/api/user/login", data);
+      var e = await Api.post<LoginDTO_Res>("/api/usuario/login", data);
       if (e.status === 200 || e.status === 204) {
         window.localStorage.setItem("token", e.data.token);
         window.localStorage.setItem("funcao", e.data.funcao);

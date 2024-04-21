@@ -11,13 +11,13 @@ const adapter = new PrismaPg(pool)
 export const prismaClient = new PrismaClient({ adapter })
 
 const app = fastify();
+app.register(cors, {origin: true});
 
-// Registre o plugin fastify-cors com a configuração origin como true para aceitar solicitações de qualquer origem
-app.register(cors, {
-  origin: true
-});
+const usuarioController = new UserController();
 
-UserController(app)
+app.post("/api/usuario/login", usuarioController.login);
+app.post("/api/usuario/registro", usuarioController.RegistrarUsuario);
+app.get("/api/usuario/listar", usuarioController.ListarUsuarios);
 
 app.listen({
     port: process.env.PORT ? Number(process.env.PORT) : 3001,
