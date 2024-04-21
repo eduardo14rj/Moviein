@@ -15,7 +15,7 @@ app.register(cors, {origin: true});
 
 const usuarioController = new UserController();
 
-app.post("/api/usuario/login", usuarioController.login);
+app.post("/api/usuario/login", usuarioController.login); 
 app.post("/api/usuario/registro", usuarioController.RegistrarUsuario);
 app.get("/api/usuario/listar", usuarioController.ListarUsuarios);
 
