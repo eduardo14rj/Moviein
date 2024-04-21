@@ -17,7 +17,8 @@ const button = tv({
 })
 
 type ButtonType = ComponentProps<'button'> & VariantProps<typeof button> & {
-    titulo: string
+    titulo?: string
+    icon?: React.ReactNode
     loading?: boolean
 }
 
@@ -26,6 +27,7 @@ const Button: React.FC<ButtonType> = ({
     loading,
     type,
     onClick,
+    icon,
     color = "primary",
     className
 }) => {
@@ -41,6 +43,9 @@ const Button: React.FC<ButtonType> = ({
             })}>
             {
                 !loading && titulo
+            }
+            {
+                (!loading && icon) && icon
             }
             {
                 loading &&

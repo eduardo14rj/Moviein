@@ -19,7 +19,7 @@ const Input = <T extends FieldValues>({ Type, Titulo, Icon, register, field, fie
             <div className='w-100 mb-5 flex flex-col relative'>
                 <label className='text-white mb-2'>{Titulo}</label>
                 <div className='relative'>
-                    <input {...register(field)} type={Type} className='p-2 text-white outline-none rounded-lg bg-[transparent] w-full border-[1px] border-white' placeholder='...' />
+                    <input {...register(field)} type={Type} className='p-2 text-white active:text-white outline-none rounded-lg bg-[transparent] w-full border-[1px] border-white' placeholder='...' />
 
                     {Icon && React.cloneElement(Icon as React.ReactElement<any>, {
                         className: `text-white absolute right-4 bottom-[50%] translate-y-[50%]`

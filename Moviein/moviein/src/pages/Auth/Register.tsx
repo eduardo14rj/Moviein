@@ -13,30 +13,32 @@ import { useNavigate } from 'react-router-dom';
 import Api from '../../api/api';
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
+import EnderecoCEPModel from '../../models/EnderecoCEPModel';
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
   const [load, setLoad] = useState<boolean>(false);
-  const { register, handleSubmit, formState: { errors }, setValue } = useForm<RegistroUsuario>({
+  const [loadCEP, setLoadCEP] = useState<boolean>(false);
+  const { register, handleSubmit, formState: { errors }, setValue, getValues } = useForm<RegistroUsuario>({
     resolver: yupResolver(RegistroUsuarioScheema),
     defaultValues: {
       etapa: 0,
       nomeMaterno: "teste",
-      bairro: "teste",
-      cep: "77777777",
-      cidade: "teste",
-      complemento: "teste",
-      confirmarSenha: "123",
-      cpf: "22222222222",
+      telefone: "123",
       dataNascimento: "2024-06-20",
-      email: "eduardo14rj@gmail.com",
-      estado: "teste",
+      cpf: "22222222222",
       genero: "M",
       nomeCompleto: "teste",
-      numero: "1",
-      pais: "teste",
-      senha: "123",
-      telefone: "123"
+      // bairro: "teste",
+      // cep: "77777777",
+      // cidade: "teste",
+      // complemento: "teste",
+      // confirmarSenha: "123",
+      // email: "eduardo14rj@gmail.com",
+      // estado: "teste",
+      // numero: "1",
+      // pais: "teste",
+      // senha: "123",
     }
   });
 
@@ -50,6 +52,19 @@ const Register: React.FC = () => {
   useEffect(() => {
     setValue("etapa", etapa);
   }, [etapa, setValue])
+
+  async function CEPEndereco() {
+    var cep = getValues("cep");
+    setLoadCEP(true);
+    var enderecos = await Api.get<EnderecoCEPModel>(`https://viacep.com.br/ws/${cep}/json/`);
+    if (enderecos.status === 200 || enderecos.status === 204) {
+      setLoadCEP(false);
+      setValue("bairro", enderecos.data.bairro);
+      setValue("estado", enderecos.data.uf);
+      setValue("complemento", enderecos.data.complemento);
+      setValue("cidade", enderecos.data.localidade);
+    }
+  }
 
   const VoltarEtapa = () => {
     switch (etapa) {
@@ -187,9 +202,10 @@ const Register: React.FC = () => {
                         />
                       </div>
                       <div className='bottom-5 relative'>
-                        <button className=' bg-primary border-primary border-[1px] p-3 rounded-lg' type='button'>
-                          <MdSearch className='text-white' />
-                        </button>
+                        <Button
+                          icon={<MdSearch className='text-white' />}
+                          loading={loadCEP}
+                          onClick={() => CEPEndereco()} />
                       </div>
                     </div>
                     <hr className='border-white/30' />
