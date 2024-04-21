@@ -64,7 +64,7 @@ export const UserController = (app: FastifyInstance, prisma: PrismaClient) => {
     const { email, senha } = req.body as LoginDTO_Req
 
     var user = await prisma.usuario.findUnique({
-      where: {
+      where: { 
         Email: email
       }
     });
