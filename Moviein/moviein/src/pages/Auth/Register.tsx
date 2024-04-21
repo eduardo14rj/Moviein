@@ -1,47 +1,60 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import filmes from '../../assets/filme.png';
 import logo from '../../assets/logo.png';
 import Input from '../../components/Input/Input';
-import * as yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup"
 
 import { useForm } from 'react-hook-form';
-import { MdCalendarMonth } from 'react-icons/md';
+import { MdCalendarMonth, MdEmail, MdKey, MdSearch } from 'react-icons/md';
 import Select from '../../components/Input/Select';
-
-const RegistroUsuarioScheema = yup
-  .object({
-    nomeCompleto: yup.string().required("O campo 'Nome Completo' é obrigatório."),
-    dataNascimento: yup.string(),
-    cpf: yup.string()
-      .max(11, "O CPF precisa ter 11 dígitos.")
-      .min(11, "O CPF precisa ter 11 dígitos."),
-    nomeMaterno: yup.string(),
-    telefone: yup.string(),
-    genero: yup.string(),
-
-    cep: yup.string()
-      .min(8, "O CEP precisa ter 8 caracteres.")
-      .max(8, "O CEP precisa ter 8 caracteres.")
-  })
-
-type RegistroUsuario = yup.InferType<typeof RegistroUsuarioScheema>;
+import RegistroUsuarioScheema, { RegistroUsuario } from './RegistroUsuarioScheema';
+import Button from '../../components/Button';
+import { useNavigate } from 'react-router-dom';
 
 const Register: React.FC = () => {
-  const { register, handleSubmit, formState: { errors} } = useForm<RegistroUsuario>({
+  const navigate = useNavigate();
+  const { register, handleSubmit, formState: { errors, defaultValues }, setValue } = useForm<RegistroUsuario>({
     resolver: yupResolver(RegistroUsuarioScheema),
-    shouldFocusError: true,
+    defaultValues: {
+      etapa: 0
+    }
   });
 
-  const [etapa] = useState<number>(0);
+  const [etapa, setEtapa] = useState<number>(0);
   const EtapaState =
-    etapa === 0 ? "0%" : (
-      etapa === 1 ? "50%" : (
-        etapa === 2 ? "100%" : "0%"
+    etapa === 0 ? "w-0" : (
+      etapa === 1 ? "w-[50%]" : (
+        etapa === 2 ? "w-full" : "w-0"
       ));
 
+  useEffect(() => {
+    setValue("etapa", etapa);
+  }, [etapa, setValue])
+
+  const VoltarEtapa = () => {
+    switch (etapa) {
+      case 0: navigate("/login")
+        break;
+      case 1: setEtapa(0)
+        break;
+      case 2: setEtapa(1)
+        break;
+    }
+  }
+
   function RegistrarUsuario(data: RegistroUsuario) {
-    console.log(data);
+    console.log(etapa)
+    switch (etapa) {
+      case 0: setEtapa(1)
+        break;
+      case 1: setEtapa(2)
+        break;
+      case 2:
+        alert("Registro")
+        break;
+    }
+    if (etapa === 0)
+      setEtapa(1);
   }
 
   return (
@@ -64,7 +77,7 @@ const Register: React.FC = () => {
             </div>
 
             <div className='h-3 w-full bg-dark overflow-hidden top-[50%] translate-y-[-50%] absolute rounded-full'>
-              <div className={`h-full w-[${EtapaState}] bg-primary`}>
+              <div className={`h-full ${EtapaState} bg-primary`}>
               </div>
             </div>
 
@@ -81,63 +94,149 @@ const Register: React.FC = () => {
             <form onSubmit={handleSubmit(RegistrarUsuario)}>
               {
                 etapa === 0 && (
-                  <div className='grid grid-cols-2 gap-4'>
-                    <div>
+                  <div className='grid md:grid-cols-2 grid-cols-1 gap-4'>
+                    <Input<RegistroUsuario>
+                      fieldErrors={errors}
+                      register={register}
+                      field='nomeCompleto'
+                      Titulo='Nome completo' />
+                    <Input<RegistroUsuario>
+                      fieldErrors={errors}
+                      register={register}
+                      field='nomeMaterno'
+                      Titulo='Nome materno' />
+                    <Input<RegistroUsuario>
+                      fieldErrors={errors}
+                      register={register}
+                      Icon={<MdCalendarMonth />}
+                      Type='date'
+                      field='dataNascimento'
+                      Titulo='Data de nascimento' />
+                    <Input<RegistroUsuario>
+                      fieldErrors={errors}
+                      register={register}
+                      field='telefone'
+                      Titulo='Telefone com DDD' />
+                    <Input<RegistroUsuario>
+                      fieldErrors={errors}
+                      register={register}
+                      field='cpf'
+                      Titulo='CPF' />
+                    <Select<RegistroUsuario>
+                      register={register}
+                      fieldErrors={errors}
+                      field='genero'
+                      options={[
+                        { nome: "Masculino", valor: "M" },
+                        { nome: "Feminino", valor: "F" }
+                      ]}
+                      placeholder='Selecione um gênero'
+                      Titulo='Gênero' />
+                  </div>
+                )
+              }
+              {
+                etapa === 1 && (
+                  <>
+                    <div className='flex justify-between items-end gap-3'>
+                      <div className='w-full'>
+                        <Input<RegistroUsuario>
+                          Titulo='CEP'
+                          field="cep"
+                          fieldErrors={errors}
+                          register={register}
+                        />
+                      </div>
+                      <div className='bottom-5 relative'>
+                        <button className=' bg-primary border-primary border-[1px] p-3 rounded-lg' type='button'>
+                          <MdSearch className='text-white' />
+                        </button>
+                      </div>
+                    </div>
+                    <hr className='border-white/30' />
+                    <div className='mt-3 grid grid-cols-2 gap-4'>
                       <Input<RegistroUsuario>
+                        Titulo="País"
+                        field="pais"
                         fieldErrors={errors}
-                        register={register}
-                        field='nomeCompleto'
-                        Titulo='Nome completo' />
-                    </div>
-                    <div>
+                        register={register} />
                       <Input<RegistroUsuario>
+                        Titulo="Estado"
+                        field="estado"
                         fieldErrors={errors}
-                        register={register}
-                        field='nomeMaterno'
-                        Titulo='Nome materno' />
-                    </div>
-                    <div>
+                        register={register} />
                       <Input<RegistroUsuario>
+                        Titulo="Cidade"
+                        field="cidade"
                         fieldErrors={errors}
-                        register={register}
-                        Icon={<MdCalendarMonth />}
-                        Type='date'
-                        field='dataNascimento'
-                        Titulo='Data de nascimento' />
-                    </div>
-                    <div>
+                        register={register} />
                       <Input<RegistroUsuario>
+                        Titulo="Bairro"
+                        field="bairro"
                         fieldErrors={errors}
-                        register={register}
-                        field='telefone'
-                        Titulo='Telefone com DDD' />
-                    </div>
-                    <div>
+                        register={register} />
                       <Input<RegistroUsuario>
+                        Titulo="Número"
+                        field="numero"
+                        Type="number"
                         fieldErrors={errors}
-                        register={register}
-                        field='cpf'
-                        Titulo='CPF' />
+                        register={register} />
+                      <Input<RegistroUsuario>
+                        Titulo="Complemento"
+                        field="complemento"
+                        fieldErrors={errors}
+                        register={register} />
                     </div>
-                    <div>
-                      <Select<RegistroUsuario>
-                        register={register}
-                        field='genero'
-                        options={[
-                          { nome: "Masculino", valor: "M" },
-                          { nome: "Feminino", valor: "F" }
-                        ]}
-                        placeholder='Selecione um gênero'
-                        Titulo='Gênero' />
-                    </div>
+                  </>
+                )
+              }
+
+              {
+                etapa === 2 && (
+                  <div>
+                    <Input<RegistroUsuario>
+                      Titulo='Email'
+                      Icon={<MdEmail />}
+                      field='Email'
+                      fieldErrors={errors}
+                      register={register}
+                      Type='email' />
+                    <Input<RegistroUsuario>
+                      Titulo="Senha"
+                      Icon={<MdKey />}
+                      field="Senha"
+                      fieldErrors={errors}
+                      register={register}
+                      Type='password'
+                    />
+                    <Input<RegistroUsuario>
+                      Titulo="Confirmar senha"
+                      Icon={<MdKey />}
+                      field="ConfirmarSenha"
+                      fieldErrors={errors}
+                      register={register}
+                      Type='password'
+                    />
                   </div>
                 )
               }
 
               <div className='mt-4 flex justify-end gap-4'>
-                <button type='submit' className='cursor-pointer py-3 px-6 text-white bg-primary rounded-lg'>
-                  próximo
-                </button>
+                <Button
+                  titulo={etapa === 0 ? "Voltar ao login" : "Voltar"}
+                  type='button'
+                  color="outline-white"
+                  onClick={() => VoltarEtapa()}
+                />
+                <Button
+                  titulo='Próximo'
+                  type="submit"
+                />
+                <Button
+                  titulo='Teste'
+                  type="button"
+                  onClick={() => console.log(defaultValues)}
+                />
               </div>
             </form>
           </div>

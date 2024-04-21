@@ -25,7 +25,7 @@ const Input = <T extends FieldValues>({ Type, Titulo, Icon, register, field, fie
                         className: `text-white absolute right-4 bottom-[50%] translate-y-[50%]`
                     })}
                 </div>
-                {error && <small className='absolute -bottom-6 text-redDark'>{error.message}</small>}
+                {error && <small className='text-redDark'>{error.message}</small>}
             </div>
         </>
     );
