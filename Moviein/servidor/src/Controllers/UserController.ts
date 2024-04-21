@@ -20,24 +20,24 @@ export class UserController {
     try {
       await prismaClient.usuario.create({
         data: {
-          Email: data.email,
-          Senha: data.senha,
-          Funcao: "cliente",
-          Nome: data.nomeCompleto,
-          UsuarioInformacao: {
+          email: data.email,
+          senha: data.senha,
+          funcao: "cliente",
+          nome: data.nomeCompleto,
+          usuarioInformacao: {
             create: {
-              Bairro: data.bairro,
-              Cep: data.cep,
-              Cidade: data.cidade,
-              Complemento: data.complemento,
-              Cpf: data.cpf,
-              DataNascimento: data.dataNascimento,
-              Estado: data.estado,
-              Genero: data.genero,
-              NomeMaterno: data.nomeMaterno,
-              Numero: data.numero,
-              Pais: data.pais,
-              Telefone: data.telefone
+              bairro: data.bairro,
+              cep: data.cep,
+              cidade: data.cidade,
+              complemento: data.complemento,
+              cpf: data.cpf,
+              dataNascimento: data.dataNascimento,
+              estado: data.estado,
+              genero: data.genero,
+              nomeMaterno: data.nomeMaterno,
+              numero: data.numero,
+              pais: data.pais,
+              telefone: data.telefone
             }
           }
         }
@@ -63,14 +63,14 @@ export class UserController {
 
     var user = await prismaClient.usuario.findUnique({
       where: {
-        Email: email
+        email: email
       }
     });
 
     if (user === null)
       return res.status(400).send({ mensagem: "Usuário com esse email não encontrado." });
 
-    if (user.Senha !== senha)
+    if (user.senha !== senha)
       return res.status(400).send({ mensagem: "Senha inválida." });
 
     return res.status(200).send({

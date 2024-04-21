@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["driverAdapters"]
@@ -15,29 +9,29 @@ datasource db {
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
-model usuario {
-  Id                Int                @id @default(autoincrement())
-  Email             String             @unique
-  Nome              String?
-  Funcao            String
-  Senha             String
-  UsuarioInformacao usuarioInformacao?
+model Usuario {
+  id                Int                @id @default(autoincrement())
+  email             String             @unique
+  nome              String?
+  funcao            String
+  senha             String
+  usuarioInformacao UsuarioInformacao?
 }
 
-model usuarioInformacao {
-  Id             Int      @id @default(autoincrement())
-  Usuario        usuario  @relation(fields: [UsuarioId], references: [Id], onUpdate: Cascade)
-  UsuarioId      Int      @unique
-  Cpf            String
-  DataNascimento DateTime
-  NomeMaterno    String
-  Telefone       String
-  Genero         String
-  Cep            String
-  Pais           String
-  Estado         String
-  Bairro         String
-  Complemento    String
-  Cidade         String
-  Numero         String
+model UsuarioInformacao {
+  id             Int      @id @default(autoincrement())
+  usuarioId      Int      @unique
+  cpf            String
+  dataNascimento DateTime
+  nomeMaterno    String
+  telefone       String
+  genero         String
+  cep            String
+  pais           String
+  estado         String
+  bairro         String
+  complemento    String
+  cidade         String
+  numero         String
+  usuario        Usuario  @relation(fields: [usuarioId], references: [id])
 }
