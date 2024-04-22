@@ -2,7 +2,9 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import RegisterUserDTO_Req from '../DTOs/RegisterUserDTO_Req';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { prismaClient } from '../server';
+import moment from 'moment';
 
+import jwt from 'jsonwebtoken';
 
 export class UserController {
   async ListarUsuarios(req: FastifyRequest, res: FastifyReply) {
@@ -73,9 +75,19 @@ export class UserController {
     if (user.senha !== senha)
       return res.status(400).send({ mensagem: "Senha inválida." });
 
+    var exp = moment().add(30, "days");
+    var seconds_diff = exp.diff(moment(), "seconds");
+    console.log({ exp, seconds_diff })
+
+    var token = jwt.sign({
+      funcao: user.funcao,
+      exp: seconds_diff
+    }, "123456789");
+
     return res.status(200).send({
-      token: "1234sdsa",
-      funcao: "cliente"
+      token: token,
+      funcao: "cliente",
+      exp: exp.toDate()
     });
   }
 }

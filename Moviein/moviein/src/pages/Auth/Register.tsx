@@ -170,7 +170,7 @@ const Register: React.FC = () => {
               <p className='text-white  absolute top-12 z-10 text-center'>Dados pessoais</p>
             </div>
             <div className='flex flex-col items-center'>
-              <div className={`w-8 h-8 rounded-full z-10 bg-primary`}></div>
+              <div className={`w-8 h-8 rounded-full z-10 ${etapa >= 1 ? "bg-primary" : "bg-primary/50"}`}></div>
               <p className='text-white absolute top-12 z-10'>Endereço</p>
             </div>
 
@@ -180,7 +180,7 @@ const Register: React.FC = () => {
             </div>
 
             <div className='flex flex-col items-center'>
-              <div className='w-8 h-8 rounded-full bg-primary z-10'></div>
+              <div className={`w-8 h-8 rounded-full z-10 ${etapa >= 2 ? "bg-primary" : "bg-primary/50"}`}></div>
               <p className='text-white z-10 absolute bottom-2 w-[max-content] text-center top-12'>Dados de <br /> acesso</p>
             </div>
           </div>
