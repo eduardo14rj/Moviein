@@ -19,10 +19,10 @@ const Register: React.FC = () => {
   const navigate = useNavigate();
   const [load, setLoad] = useState<boolean>(false);
   const [loadCEP, setLoadCEP] = useState<boolean>(false);
-  const { register, handleSubmit, formState: { errors }, setValue, getValues } = useForm<RegistroUsuario>({
+  const { register, handleSubmit, formState: { errors }, setValue, getValues, resetField, watch } = useForm<RegistroUsuario>({
     resolver: yupResolver(RegistroUsuarioScheema),
     defaultValues: {
-      // etapa: 0,
+      etapa: 0,
       // nomeMaterno: "teste",
       // telefone: "123",
       // dataNascimento: "2024-06-20",
@@ -54,15 +54,60 @@ const Register: React.FC = () => {
   }, [etapa, setValue])
 
   async function CEPEndereco() {
-    var cep = getValues("cep");
-    setLoadCEP(true);
-    var enderecos = await Api.get<EnderecoCEPModel>(`https://viacep.com.br/ws/${cep}/json/`);
-    if (enderecos.status === 200 || enderecos.status === 204) {
+    try {
+      setLoadCEP(true);
+      var cep = getValues("cep");
+      var enderecos = await Api.get<EnderecoCEPModel>(`https://viacep.com.br/ws/${cep}/json/`);
+      if (enderecos.status === 200 || enderecos.status === 204) {
+        setLoadCEP(false);
+        setValue("bairro", enderecos.data.bairro);
+        setValue("estado", enderecos.data.uf);
+        setValue("complemento", enderecos.data.complemento);
+        setValue("cidade", enderecos.data.localidade);
+      }
+      if (
+        enderecos.data?.bairro === undefined &&
+        enderecos.data?.complemento === undefined &&
+        enderecos.data?.localidade === undefined &&
+        enderecos.data?.logradouro === undefined
+      ) {
+        toast.warning("Endereço do CEP não encontrado.", {
+          position: "bottom-center",
+          autoClose: 2000
+        })
+      }
+    } catch (err) {
       setLoadCEP(false);
-      setValue("bairro", enderecos.data.bairro);
-      setValue("estado", enderecos.data.uf);
-      setValue("complemento", enderecos.data.complemento);
-      setValue("cidade", enderecos.data.localidade);
+      toast.error("CEP inválido", {
+        position: "bottom-center"
+      })
+    }
+  }
+
+  function LimparCampos() {
+    switch (etapa) {
+      case 0:
+        resetField("nomeCompleto");
+        resetField("nomeMaterno");
+        resetField("dataNascimento");
+        resetField("telefone");
+        resetField("cpf");
+        resetField("genero");
+        break;
+      case 1:
+        resetField("cep");
+        resetField("pais");
+        resetField("estado");
+        resetField("cidade");
+        resetField("bairro");
+        resetField("numero");
+        resetField("complemento");
+        break;
+      case 2:
+        resetField("email");
+        resetField("senha");
+        resetField("confirmarSenha");
+        break;
     }
   }
 
@@ -87,7 +132,6 @@ const Register: React.FC = () => {
         try {
 
           setLoad(true)
-          console.log(data)
           const { etapa, ...iss } = data;
           var res = await Api.post("/api/usuario/registro", iss)
           setLoad(false);
@@ -192,7 +236,7 @@ const Register: React.FC = () => {
               {
                 etapa === 1 && (
                   <>
-                    <div className='flex justify-between items-end gap-3'>
+                    <div className='flex justify-between items-start gap-3'>
                       <div className='w-full'>
                         <Input<RegistroUsuario>
                           Titulo='CEP'
@@ -201,8 +245,10 @@ const Register: React.FC = () => {
                           register={register}
                         />
                       </div>
-                      <div className='bottom-5 relative'>
+                      <div className='relative'>
+                      <p className='text-white mb-2 opacity-0'>.</p>
                         <Button
+                          disabled={watch("cep")?.length !== 8}
                           icon={<MdSearch className='text-white' />}
                           loading={loadCEP}
                           onClick={() => CEPEndereco()} />
@@ -276,25 +322,30 @@ const Register: React.FC = () => {
                 )
               }
 
-              <div className='mt-4 flex justify-end gap-4'>
-                <Button
-                  titulo={etapa === 0 ? "Voltar ao login" : "Voltar"}
-                  type='button'
-                  color="outline-white"
-                  onClick={() => VoltarEtapa()}
-                />
-                <Button
-                  titulo='Próximo'
-                  loading={load}
-                  type="submit"
-                />
+              <div className='mt-4 flex justify-between'>
+                <Button titulo='Limpar'
+                  onClick={() => LimparCampos()}
+                  color="outline-red" type='button' />
+                <div className='flex gap-4'>
+                  <Button
+                    titulo={etapa === 0 ? "Voltar ao login" : "Voltar"}
+                    type='button'
+                    color="outline-white"
+                    onClick={() => VoltarEtapa()}
+                  />
+                  <Button
+                    titulo='Próximo'
+                    loading={load}
+                    type="submit"
+                  />
+                </div>
               </div>
             </form>
           </div>
 
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }
 

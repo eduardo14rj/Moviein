@@ -8,10 +8,14 @@ const button = tv({
         loading: {
             true: "opacity-60 cursor-auto"
         },
+        disabled: {
+            true: "opacity-60 cursor-auto"
+        },
         color: {
             primary: "bg-primary text-white border-primary",
-            red: "bg-red text-white border-primary",
-            "outline-white": "bg-transparent border-[1px] border-white text-white"
+            red: "bg-redDark text-white border-redDark",
+            "outline-white": "bg-transparent border-[1px] border-white text-white",
+            "outline-red": "bg-transparent text-redDark border-redDark"
         }
     }
 })
@@ -28,18 +32,20 @@ const Button: React.FC<ButtonType> = ({
     type,
     onClick,
     icon,
+    disabled,
     color = "primary",
     className
 }) => {
     return (
         <button
             onClick={onClick}
-            disabled={loading}
+            disabled={loading || disabled}
             type={type}
             className={button({
                 color: color,
                 className: className,
-                loading: loading
+                loading: loading,
+                disabled: disabled
             })}>
             {
                 !loading && titulo
