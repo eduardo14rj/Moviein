@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.11.30",
     "@types/pg": "^8.11.4",
@@ -20,6 +21,7 @@
     "@prisma/adapter-pg": "^5.11.0",
     "@prisma/client": "^5.11.0",
     "@types/fastify-cors": "^2.1.0",
+    "crypto-js": "^4.2.0",
     "fastify": "^4.26.2",
     "fastify-cors": "^6.1.0",
     "jsonwebtoken": "^9.0.2",

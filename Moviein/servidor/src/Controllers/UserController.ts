@@ -3,8 +3,8 @@ import RegisterUserDTO_Req from '../DTOs/RegisterUserDTO_Req';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { prismaClient } from '../server';
 import moment from 'moment';
-
 import jwt from 'jsonwebtoken';
+import MD5 from "crypto-js/md5";
 
 export class UserController {
   async ListarUsuarios(req: FastifyRequest, res: FastifyReply) {
@@ -15,15 +15,14 @@ export class UserController {
   async RegistrarUsuario(req: FastifyRequest, res: FastifyReply) {
     var data = req.body as RegisterUserDTO_Req;
 
-    if (data.dataNascimento && typeof data.dataNascimento === 'string') {
-      data.dataNascimento = new Date(data.dataNascimento).toISOString();
-    }
+    var senhaEncr = MD5(data.senha).toString();
+
 
     try {
       await prismaClient.usuario.create({
         data: {
           email: data.email,
-          senha: data.senha,
+          senha: senhaEncr,
           funcao: "cliente",
           nome: data.nomeCompleto,
           usuarioInformacao: {
@@ -33,7 +32,7 @@ export class UserController {
               cidade: data.cidade,
               complemento: data.complemento,
               cpf: data.cpf,
-              dataNascimento: data.dataNascimento,
+              dataNascimento: new Date(data.dataNascimento).toISOString(),
               estado: data.estado,
               genero: data.genero,
               nomeMaterno: data.nomeMaterno,
@@ -72,7 +71,9 @@ export class UserController {
     if (user === null)
       return res.status(400).send({ mensagem: "Usuário com esse email não encontrado." });
 
-    if (user.senha !== senha)
+    var senhaEncr = MD5(senha).toString();
+
+    if (senhaEncr !== user.senha)
       return res.status(400).send({ mensagem: "Senha inválida." });
 
     var exp = moment().add(30, "days");
