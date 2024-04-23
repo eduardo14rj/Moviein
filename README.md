@@ -23,6 +23,26 @@ Após o clone do projeto pelo Github, é necessário fazer algumas coisas para o
   - link do site: https://nodejs.org/en 
 
 ### 2. npm install 
-É necessário executar o seguinte código para os respectivos projeto no node_modules do projeto.
-são eles:
-- 
+É necessário executar o seguinte código para os respectivos projetos. São esses caminhos:
+- /Moviein/Moviein/moviein
+- /Moviein/Moviein/
+- /Moviein/Moviein/servidor
+
+esse é o código para a execução para cada um:
+```bash
+npm install
+```
+
+---
+
+# Iniciar projeto
+Na rota '/Moviein', execute o __npm run start__
+
+Após clicar em enter para iniciar o processo, o sistema irá iniciar tanto o **servidor(backend)** quanto o **moviein(frontent)**.
+![npm](./img/npm.png)
+
+E rodando, o sistema irá abrir no navegador o site executado no localhost:3000 no moviein e no servidor no localhost:3001
+
+![npm](./img/front.png)
+![npm](./img/backend.png)
+
