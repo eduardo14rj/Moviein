@@ -4,7 +4,7 @@ import { Pool } from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
 import cors from '@fastify/cors'; // Importe o módulo 'cors' diretamente
 
-import UserController from "./controllers/UserController";
+const UserController = require("./controllers/UserController");
 
 const connectionString = "postgres://dvlvctun:u1gQQ6T2PxiVXJAl1hA1GcjkWA-81PZv@kesavan.db.elephantsql.com/dvlvctun"
 const pool = new Pool({ connectionString })
