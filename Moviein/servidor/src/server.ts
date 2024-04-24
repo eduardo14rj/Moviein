@@ -13,11 +13,7 @@ export const prismaClient = new PrismaClient({ adapter })
 const app = fastify();
 app.register(cors, {origin: true});
 
-const usuarioController = new UserController();
-
-app.post("/api/usuario/login", usuarioController.login); 
-app.post("/api/usuario/registro", usuarioController.RegistrarUsuario);
-app.get("/api/usuario/listar", usuarioController.ListarUsuarios);
+app.register(UserController, { prefix: "/api/usuario/" })
 
 app.listen({
     port: process.env.PORT ? Number(process.env.PORT) : 3001,

@@ -1,24 +1,48 @@
-import { FastifyReply, FastifyRequest } from 'fastify';
+import { FastifyPluginCallback } from 'fastify';
 import RegisterUserDTO_Req from '../models/DTOs/RegisterUserDTO_Req';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { prismaClient } from '../server';
-import moment from 'moment';
-import jwt from 'jsonwebtoken';
 import MD5 from "crypto-js/md5";
-import TokenService from '../service/tokenService';
+import TokenService from '../services/tokenService';
 
-export class UserController {
+export const UserController: FastifyPluginCallback = (instance, opts, done) => {
 
-  async ListarUsuarios(req: FastifyRequest, res: FastifyReply) {
+  instance.post("login", {}, async (req, res) => {
+    const { email, senha } = req.body as LoginDTO_Req
+
+    var user = await prismaClient.usuario.findUnique({
+      where: {
+        email: email
+      }
+    });
+
+    if (user === null)
+      return res.status(400).send({ mensagem: "Usuário com esse email não encontrado." });
+
+    var senhaEncr = MD5(senha).toString();
+    if (senhaEncr !== user.senha)
+      return res.status(400).send({ mensagem: "Senha inválida." });
+
+    var token = TokenService.encript(user.id, user.funcao);
+
+    return res.status(200).send({
+      token: token.token,
+      funcao: token.funcao,
+      exp: token.exp
+    });
+
+  });
+
+  instance.get("listar", async (req, res) => {
     const users = await prismaClient.usuario.findMany();
     return res.code(200).send(users);
-  }
 
-  async RegistrarUsuario(req: FastifyRequest, res: FastifyReply) {
+  });
+
+
+  instance.post("registro", async (req, res) => {
     var data = req.body as RegisterUserDTO_Req;
-
     var senhaEncr = MD5(data.senha).toString();
-
 
     try {
       await prismaClient.usuario.create({
@@ -59,31 +83,7 @@ export class UserController {
       });
 
     }
-  }
+  });
 
-  async login(req: FastifyRequest, res: FastifyReply) {
-    const { email, senha } = req.body as LoginDTO_Req
-
-    var user = await prismaClient.usuario.findUnique({
-      where: {
-        email: email
-      }
-    });
-
-    if (user === null)
-      return res.status(400).send({ mensagem: "Usuário com esse email não encontrado." });
-
-    var senhaEncr = MD5(senha).toString();
-    if (senhaEncr !== user.senha)
-      return res.status(400).send({ mensagem: "Senha inválida." });
-
-    console.log(TokenService)
-    var token = TokenService.encript(user.id, user.funcao);
-
-    return res.status(200).send({
-      token: token.token,
-      funcao: token.funcao,
-      exp: token.exp
-    });
-  }
+  done();
 }
