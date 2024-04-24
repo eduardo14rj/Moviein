@@ -5,7 +5,7 @@ import { prismaClient } from '../server';
 import MD5 from "crypto-js/md5";
 import TokenService from '../services/tokenService';
 
-export const UserController: FastifyPluginCallback = (instance, opts, done) => {
+const UserController: FastifyPluginCallback = (instance, opts, done) => {
 
   instance.post("login", {}, async (req, res) => {
     const { email, senha } = req.body as LoginDTO_Req
@@ -87,3 +87,5 @@ export const UserController: FastifyPluginCallback = (instance, opts, done) => {
 
   done();
 }
+
+export default UserController;
