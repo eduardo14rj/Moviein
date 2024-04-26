@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
-import LandingPage from "./pages/landingPage/Index";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Principal from "./pages/layout/Principal";
 import PageValidate from "./pages/validate/PageValidate";
+import LandingPage from "./pages/landingPage/Index";
 function App() {
   return (
     <Routes>
