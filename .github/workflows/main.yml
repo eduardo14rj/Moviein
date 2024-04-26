@@ -29,12 +29,7 @@ jobs:
      - name: Build Client
        run: |
         npm run build
-       working-directory: Moviein/moviein
-
-     - name: Build Server
-       run: |
-        npm run build
-       working-directory: Moviein/servidor
+       working-directory: Moviein
 
      - name: clear node_modules client
        run: |
