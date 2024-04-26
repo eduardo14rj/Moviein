@@ -2,7 +2,7 @@ import fastify from "fastify";
 import { PrismaClient } from "@prisma/client";
 import { Pool } from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
-import cors from '@fastify/cors'; // Importe o módulo 'cors' diretamente
+import cors from '@fastify/cors';
 
 import UserController from "./controllers/UserController";
 
