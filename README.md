@@ -35,13 +35,25 @@ npm install
 
 ---
 
-# Iniciar projeto
-Na rota '/Moviein', execute o __npm run start__
+# Mapeando Entidades do banco
+Antes da inicialização do projeto, é necessário navegar para o projeto do **servidor** e rodar o seguinte prompt de comando:
+```bash
+npx prisma generate
+```  
+dessa forma, o prisma irá mapear as entidades existentes no banco, tornando possível o funcionamento do PrismaClient do servidor e com isso conseguindo coletar os dados do banco para o backend.
 
-Após clicar em enter para iniciar o processo, o sistema irá iniciar tanto o **servidor(backend)** quanto o **moviein(frontent)**.
+---
+
+# Iniciando projeto
+Voltando para a rota principal Na rota **/Moviein/Moviein**, execute o seguinte comando
+```bash
+npm run start
+```
+
+Após clicar em 'Enter' para começar o processo, o sistema irá iniciar tanto o **servidor(backend)** quanto o **moviein(frontent)**.
 ![npm](./img/npm.png)
 
-E rodando, o sistema irá abrir no navegador o site executado no localhost:3000 no moviein e no servidor no localhost:3001
+E rodando, o sistema irá abrir no navegador automaticamente o site no localhost:3000 no moviein(cliente) e no servidor no localhost:3001
 
 ![npm](./img/front.png)
 ![npm](./img/backend.png)
