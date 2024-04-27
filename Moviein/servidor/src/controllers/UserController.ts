@@ -4,6 +4,7 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { prismaClient } from '../server';
 import MD5 from "crypto-js/md5";
 import TokenService from '../services/tokenService';
+import Auth from '../middlewares/Auth';
 
 const UserController: FastifyPluginCallback = (instance, opts, done) => {
 
@@ -33,10 +34,9 @@ const UserController: FastifyPluginCallback = (instance, opts, done) => {
 
   });
 
-  instance.get("listar", async (req, res) => {
+  instance.get("listar", { preHandler: Auth} , async (req, res) => {
     const users = await prismaClient.usuario.findMany();
     return res.code(200).send(users);
-
   });
 
 

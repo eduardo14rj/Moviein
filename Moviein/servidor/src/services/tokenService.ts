@@ -1,7 +1,7 @@
 import moment from "moment";
 import jwt from 'jsonwebtoken';
 
-interface tokenModel {
+export interface tokenModel {
     funcao: string,
     usuarioId: number,
     exp: number
@@ -14,7 +14,9 @@ export default class tokenService {
 
     public static descript(token: string): tokenModel {
 
-        var decoded = jwt.verify(token, this.tokenKey);
+        var decoded = jwt.verify(token, this.tokenKey, {
+            ignoreExpiration: true
+        });
         var decodedResponse = decoded as tokenModel;
         return decodedResponse;
     }
