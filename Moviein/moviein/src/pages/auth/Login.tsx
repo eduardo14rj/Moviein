@@ -34,14 +34,12 @@ const Login: React.FC = () => {
         window.localStorage.setItem("funcao", e.data.funcao);
         window.localStorage.setItem("exp", e.data.exp.toString());
         setLoad(false);
-        nav("/")
+        nav("/a/")
       }
     } catch (error) {
       setLoad(false);
       var errorData = error as AxiosError<{ mensagem: string }>;
-      toast.error(errorData.response?.data.mensagem, {
-        position: "bottom-center"
-      });
+      toast.error(errorData.response?.data.mensagem);
     }
   }
 

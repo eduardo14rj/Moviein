@@ -3,15 +3,14 @@ import { PrismaClient } from "@prisma/client";
 import { Pool } from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
 import cors from '@fastify/cors';
+import UserController from "./controllers/UserController";
+import UserAuthorizationModel from "./models/UserAuthorizationModel";
 
 declare module 'fastify' {
     interface FastifyRequest {
       user: UserAuthorizationModel
     }
   }
-
-import UserController from "./controllers/UserController";
-import UserAuthorizationModel from "./models/UserAuthorizationModel";
 
 const connectionString = "postgres://dvlvctun:u1gQQ6T2PxiVXJAl1hA1GcjkWA-81PZv@kesavan.db.elephantsql.com/dvlvctun"
 const pool = new Pool({ connectionString })
