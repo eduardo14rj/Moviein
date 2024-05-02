@@ -22,7 +22,8 @@ const Login: React.FC = () => {
   type LoginDTO_Res = {
     token: string,
     funcao: string
-    exp: Date
+    exp: number
+    expiracao: Date
   }
 
   async function LoginEntrar(data: LoginSchreemaType) {
@@ -32,7 +33,7 @@ const Login: React.FC = () => {
       if (e.status === 200 || e.status === 204) {
         window.localStorage.setItem("token", e.data.token);
         window.localStorage.setItem("funcao", e.data.funcao);
-        window.localStorage.setItem("exp", e.data.exp.toString());
+        window.localStorage.setItem("exp", e.data.expiracao.toString());
         setLoad(false);
         nav("/a/")
       }

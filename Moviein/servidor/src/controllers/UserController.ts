@@ -5,6 +5,7 @@ import { prismaClient } from '../server';
 import MD5 from "crypto-js/md5";
 import TokenService from '../services/tokenService';
 import Auth from '../middlewares/Auth';
+import moment from 'moment';
 
 const UserController: FastifyPluginCallback = (instance, opts, done) => {
 
@@ -24,17 +25,17 @@ const UserController: FastifyPluginCallback = (instance, opts, done) => {
     if (senhaEncr !== user.senha)
       return res.status(400).send({ mensagem: "Senha inválida." });
 
-    var token = TokenService.encript(user.id, user.funcao);
+    var token = TokenService.encript(user.email, user.funcao);
 
     return res.status(200).send({
       token: token.token,
       funcao: token.funcao,
-      exp: token.exp
+      expiracao: token.expiracao
     });
 
   });
 
-  instance.get("listar", { preHandler: Auth} , async (req, res) => {
+  instance.get("listar", async (req, res) => {
     const users = await prismaClient.usuario.findMany();
     return res.code(200).send(users);
   });

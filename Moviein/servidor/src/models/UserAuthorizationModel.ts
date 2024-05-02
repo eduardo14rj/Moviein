@@ -1,6 +1,5 @@
 interface UserAuthorizationModel {
-    usuarioId?: number,
-    exp?: number,
+    email?: string,
     funcao?: string
 }
 
