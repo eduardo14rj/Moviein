@@ -4,6 +4,9 @@ import Register from "./pages/auth/Register";
 import Principal from "./pages/layout/Principal";
 import PageValidate from "./pages/validate/PageValidate";
 import LandingPage from "./pages/landingPage/Index";
+import DadosPrincipais from "./pages/layout/perfil/DadosPrincipais";
+import SidebarPerfil from "./components/SidebarPerfil/SidebarPerfil";
+import MeusVideos from "./pages/layout/perfil/MeusVideos";
 function App() {
   return (
     <Routes>
@@ -11,8 +14,12 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/registro" element={<Register />} />
 
-      <Route path="/a" element={<PageValidate />}>
+      <Route path="/a/" element={<PageValidate />}>
         <Route index element={<Principal />} />
+        <Route path="/a/perfil/" element={<SidebarPerfil />}>
+          <Route path="dadosPrincipais" element={<DadosPrincipais />} />
+          <Route path="meusVideos" element={<MeusVideos />} />
+        </Route>
       </Route>
     </Routes>
   );

@@ -1,9 +1,9 @@
 import React from 'react';
+import Sidebar from '../../components/Sidebar/Sidebar';
 
 const Principal: React.FC = () => {
     return (
-        <div className='bg-dark w-full h-screen'>
-
+        <div>
         </div>
     );
 }
