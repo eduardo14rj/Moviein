@@ -1,12 +1,5 @@
 
 body {
-    background: #FFFFFF url("img/fundo.jpg") no-repeat right top fixed;
-}
-
-
-.fundo {
-    background-image: url();
-    
 }
 
 .indicacao {
@@ -18,7 +11,7 @@ body {
 
 h1 {
     font-family: "Poppins", sans-serif;
-    font-size: 70px;
+    font-size: 60px;
     margin-left: 100px;
     color: white;
     
@@ -79,6 +72,8 @@ h5 {
     font-family: "Poppins", sans-serif;
 }
 
+
+
 .download {
     text-decoration: none;
     color: white;
@@ -92,7 +87,50 @@ h5 {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
+@media screen and (max-width:1400px){ 
+
+    h1 {
+        font-family: "Poppins", sans-serif;
+        font-size: 35px;
+
+    }
+
+    h5 {
+        font-family: "Poppins", sans-serif;
+        text-align: left;
+        font-size: 14px;
+        margin-bottom: 60px;
+    }
+
+    .indicacao {
+        width: 60px;
+        height: 60px;
+        margin: 50px 0px 0px 100px;
+    }
+    
+
+}
+
+@media screen and (max-width: 830px) {
+
+    h1 {
+        font-family: "Poppins", sans-serif;
+        font-size: 25px;
+
+    }
+
+    h5 {
+        font-family: "Poppins", sans-serif;
+        text-align: left;
+        font-size: 10px;
+        margin-bottom: 60px;
+    }
 
 
+    .indicacao {
+        width: 40px;
+        height: 40px;
+        margin: 50px 0px 0px 100px;
+    }
 
-
+}
