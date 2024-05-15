@@ -24,7 +24,7 @@ const SidebarPerfil: React.FC = () => {
         <>
             <img src={film} alt="filmes" className="w-screen h-[60px] object-cover" />
             <div className="flex">
-                <div className="w-[50vh] bg-[#00000070] h-[calc(100vh-60px)]">
+                <div className="w-[30%] bg-[#00000070] h-[calc(100vh-60px)]">
 
                     <MenuItemPerfil
                         path="/a/perfil/dadosPrincipais"
@@ -35,7 +35,7 @@ const SidebarPerfil: React.FC = () => {
                         titulo="Meus vídeos" />
 
                 </div>
-                <div className="w-[50vh] h[calc(100vh-60px)]">
+                <div className="w-[70%] h[calc(100vh-60px)]">
                     <Outlet />
                 </div>
             </div>

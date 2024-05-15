@@ -86,6 +86,22 @@ const UserController: FastifyPluginCallback = (instance, opts, done) => {
     }
   });
 
+
+  instance.get("get", {preHandler: Auth}, async (req, res) => {
+    const usuario = await prismaClient.usuario.findFirst({
+      where: {
+        email: req.user.email
+      }
+    });
+    if(usuario != null) {
+      return res.send({
+        nome: usuario.nome,
+        email: usuario.email,
+        thumb: usuario.thumb
+      })
+    }
+  })
+
   done();
 }
 

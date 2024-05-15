@@ -11,4 +11,21 @@ const Api = axios.create({
     baseURL
 })
 
+
+Api.interceptors.request.use(
+    config => {
+        // Aqui você pode adicionar sua lógica de autenticação
+        // Por exemplo, adicionar um token de autenticação no cabeçalho
+        const token = localStorage.getItem('token');
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    error => {
+        // Se ocorrer um erro durante a configuração da solicitação, você pode lidar com isso aqui
+        return Promise.reject(error);
+    }
+)
+
 export default Api;

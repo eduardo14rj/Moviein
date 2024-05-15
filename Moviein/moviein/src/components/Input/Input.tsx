@@ -5,13 +5,14 @@ type InputType<T extends FieldValues> = {
     Titulo: string
     Type?: string
     Icon?: ReactNode
+    Disable?: boolean
 
     field: Path<T>
     fieldErrors: FieldErrors<T>
     register: UseFormRegister<T>
 }
 
-const Input = <T extends FieldValues>({ Type, Titulo, Icon, register, field, fieldErrors }: InputType<T>) => {
+const Input = <T extends FieldValues>({ Type, Titulo, Icon, register, field, fieldErrors, Disable }: InputType<T>) => {
     const error = fieldErrors[field as keyof T] as FieldError | undefined;
 
     return (
@@ -21,6 +22,7 @@ const Input = <T extends FieldValues>({ Type, Titulo, Icon, register, field, fie
                 <div className='relative'>
                     <input {...register(field)}
                         type={Type}
+                        disabled={Disable}
                         className='p-2 text-white active:text-white outline-none rounded-lg bg-[transparent] w-full border-[1px] border-white' placeholder='...' />
 
                     {Icon && React.cloneElement(Icon as React.ReactElement<any>, {

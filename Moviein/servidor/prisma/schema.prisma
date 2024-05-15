@@ -15,6 +15,7 @@ model Usuario {
   nome              String?
   funcao            String
   senha             String
+  thumb             String?
   usuarioInformacao UsuarioInformacao?
 }
 
