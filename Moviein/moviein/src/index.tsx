@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import "./style/index.css";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ThemeProvider } from './components/ui/theme-provider';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,7 +14,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <ThemeProvider defaultTheme='system' storageKey='moviein-ui-theme'>
+        <App />
+      </ThemeProvider>
       <ToastContainer
         position="bottom-center"
         autoClose={5000}
