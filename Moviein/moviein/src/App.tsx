@@ -8,7 +8,7 @@ import DadosPrincipais from "./pages/layout/perfil/DadosPrincipais";
 import SidebarPerfil from "./components/SidebarPerfil/SidebarPerfil";
 import MeusVideos from "./pages/layout/perfil/MeusVideos";
 import Pagamento from "./pages/pagamento/Pagamento";
-function App() {
+function App() { 
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
