@@ -1,0 +1,47 @@
+body{
+    background: rgb(2,0,36);
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 96vh;
+    background: linear-gradient(146deg, rgba(2,0,36,1) 0%, rgba(197,19,255,1) 35%, rgba(255,0,91,1) 100%);
+    font-family: Arial, sans-serif;
+}
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    padding-top: 40px;
+    background-image: url(/Moviein/moviein/img/fundo.png); 
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+.form-group {
+    margin-bottom: 20px;
+    max-width: 500px;
+}
+h2{
+    color: #fff;
+}
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #fff;
+}
+input[type="text"], input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+input[type="submit"] {
+    background-color: #731f45;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+input[type="submit"]:hover {
+    background-color: #3e1832;
+}
