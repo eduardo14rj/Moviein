@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import UserContext from "context/UserContext";
+import React, { useContext, useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 const Sidebar: React.FC = () => {
     const [open, setOpen] = useState<boolean>(false);
+    const {nome, thumb}= useContext(UserContext)
     const nav = useNavigate();
 
     return (
@@ -16,9 +18,9 @@ const Sidebar: React.FC = () => {
                                 setOpen(false);
                                 nav("/a/perfil/dadosPrincipais");
                             }}>
-                                <img alt="avatar" className="w-[40px] h-[40px] rounded-full bg-dark" />
+                                <img alt="avatar" src={thumb} className="w-[40px] h-[40px] rounded-full bg-dark" />
                                 <p className="m-0 p-0 text-white">
-                                    John doe
+                                    {nome}
                                 </p>
                             </div>
 

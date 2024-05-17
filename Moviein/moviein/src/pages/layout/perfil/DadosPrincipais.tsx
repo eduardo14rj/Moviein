@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Api from "../../../api/api";
 import Input from "../../../components/Input/Input";
 import * as yup from 'yup'
@@ -8,43 +8,44 @@ import Button from "../../../components/Button";
 import ModalThumbnail from "../../../components/Modals/ModalThumbnail/ModalThumbnail";
 import { Skeleton } from "components/ui/skeleton";
 import ModalDesconectar from "components/Modals/ModalThumbnail/ModalDesconectar/ModalDesconectar";
-
-const useSchreema = yup.object({
-    nome: yup.string(),
-    email: yup.string(),
-    thumb: yup.string()
-})
-
-type use = yup.InferType<typeof useSchreema>;
+import UserContext, { UseContextType } from "context/UserContext";
 
 const DadosPrincipais: React.FC = () => {
-    const { register, setValue, formState: { errors }, watch } = useForm({
-        resolver: yupResolver(useSchreema)
-    })
+    // const { register, setValue, formState: { errors }, watch } = useForm({
+    //     resolver: yupResolver(UseContextSchreema)
+    // })
+    const { thumb, email, setValueUser, watchUser, reload, errorUser, registerUser } = useContext(UserContext)
     const [load, setLoad] = useState<boolean>(true);
 
-
-
-    async function loadPerfil() {
-        setLoad(true);
-        var user = await Api.get<use>("api/usuario/get");
-        setValue("nome", user.data.nome)
-        setValue("email", user.data.email)
-        setValue("thumb", user.data.thumb);
-        setLoad(false);
-    }
+    // async function loadPerfil() {
+    //     setLoad(true);
+    //     var user = await Api.get<UseContextType>("api/usuario/get");
+    //     setValue("nome", user.data.nome)
+    //     setValue("email", user.data.email)
+    //     setValue("thumb", user.data.thumb);
+    //     setLoad(false);
+    // }
 
     useEffect(() => {
-        async function perfil() {
-            setLoad(true);
-            var user = await Api.get<use>("api/usuario/get");
-            setValue("nome", user.data.nome)
-            setValue("email", user.data.email)
-            setValue("thumb", user.data.thumb);
-            setLoad(false);
+        console.log(email)
+        if (email === undefined) {
+            setLoad(true)
+        } else {
+            setLoad(false)
         }
-        perfil();
-    }, [setValue])
+    }, [email])
+
+    // useEffect(() => {
+    //     async function perfil() {
+    //         setLoad(true);
+    //         var user = await Api.get<UseContextType>("api/usuario/get");
+    //         setValue("nome", user.data.nome)
+    //         setValue("email", user.data.email)
+    //         setValue("thumb", user.data.thumb);
+    //         setLoad(false);
+    //     }
+    //     perfil();
+    // }, [setValue])
 
     return (
         <>
@@ -57,17 +58,17 @@ const DadosPrincipais: React.FC = () => {
                             ) : (
                                 <>
                                     {
-                                        (watch("thumb") === undefined || watch("thumb") === null) ? (
+                                        (thumb === undefined || thumb === null) ? (
                                             <img alt="avatar" src="https://picsum.photos/200/300" className="w-[180px] h-[180px] rounded-full" />
                                         ) : (
-                                            <img alt="avatar" src={watch("thumb")} className="w-[180px] h-[180px] rounded-full" />
+                                            <img alt="avatar" src={thumb} className="w-[180px] h-[180px] rounded-full" />
                                         )
                                     }
                                     <div className="absolute bottom-[-20px] z-10">
-                                        <ModalThumbnail thumb={watch("thumb")}
-                                            setValue={setValue}
-                                            email={watch("email")}
-                                            reloadPerfil={loadPerfil} />
+                                        <ModalThumbnail thumb={thumb}
+                                            setValue={setValueUser}
+                                            email={thumb}
+                                            reloadPerfil={reload} />
                                     </div>
                                 </>
                             )
@@ -80,23 +81,23 @@ const DadosPrincipais: React.FC = () => {
                         {
                             load ? (
                                 <>
-                                <div className="flex flex-col space-y-4 mt-4">
-                                    <Skeleton className="w-[full] h-[64px] " />
-                                    <Skeleton className="w-[full] h-[64px]" />
-                                </div>
+                                    <div className="flex flex-col space-y-4 mt-4">
+                                        <Skeleton className="w-[full] h-[64px] " />
+                                        <Skeleton className="w-[full] h-[64px]" />
+                                    </div>
                                 </>
                             ) : (
                                 <>
-                                    <Input<use> Titulo="Nome"
+                                    <Input<UseContextType> Titulo="Nome"
                                         field="nome"
                                         Disable
-                                        register={register}
-                                        fieldErrors={errors} />
-                                    <Input<use> Titulo="Email"
+                                        register={registerUser!}
+                                        fieldErrors={errorUser!} />
+                                    <Input<UseContextType> Titulo="Email"
                                         field="email"
                                         Disable
-                                        register={register}
-                                        fieldErrors={errors} />
+                                        register={registerUser!}
+                                        fieldErrors={errorUser!} />
                                 </>
                             )
                         }
