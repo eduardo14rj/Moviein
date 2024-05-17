@@ -3,7 +3,7 @@ import { DialogFooter, DialogHeader, Dialog, DialogTrigger, DialogContent, Dialo
 import React, { useRef, useState } from 'react';
 import { UseFormSetValue } from 'react-hook-form';
 import { MdImage } from 'react-icons/md';
-import Api from 'src/api/api';
+import Api from '../../../api/api';
 import { toast } from 'react-toastify';
 import Resizer from "react-image-file-resizer";
 
@@ -12,6 +12,7 @@ type ModalThumbnailType = {
     thumb?: string
     setValue: UseFormSetValue<any>
     email?: string
+    reloadPerfil: () => any
 }
 
 const ModalThumbnail: React.FC<ModalThumbnailType> = (p) => {
@@ -68,6 +69,7 @@ const ModalThumbnail: React.FC<ModalThumbnailType> = (p) => {
                 if (res.status === 200 || res.status === 204) {
                     setOpen(false);
                     setLoad(false);
+                    p.reloadPerfil();
                     toast.success("imagem salva com sucesso!");
                 }
 
@@ -113,6 +115,7 @@ const ModalThumbnail: React.FC<ModalThumbnailType> = (p) => {
                     }
                 </DialogHeader>
                 <DialogFooter>
+                    <Button titulo='Fechar' onClick={() => setOpen(false)} color="outline-white" />
                     {
                         (p.thumb === undefined || p.thumb === null) ? (
                             <Button titulo='Salvar thumb'

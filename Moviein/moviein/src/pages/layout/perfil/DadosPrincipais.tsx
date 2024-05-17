@@ -1,20 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Api from "../../../api/api";
 import Input from "../../../components/Input/Input";
 import * as yup from 'yup'
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Button from "../../../components/Button";
-import {
-    Dialog,
-    DialogContent,
-    DialogTitle,
-    DialogTrigger,
-    DialogHeader,
-    DialogFooter,
-    DialogClose
-} from '../../../components/ui/dialog';
 import ModalThumbnail from "../../../components/Modals/ModalThumbnail/ModalThumbnail";
+import { Skeleton } from "components/ui/skeleton";
+import ModalDesconectar from "components/Modals/ModalThumbnail/ModalDesconectar/ModalDesconectar";
 
 const useSchreema = yup.object({
     nome: yup.string(),
@@ -28,19 +21,29 @@ const DadosPrincipais: React.FC = () => {
     const { register, setValue, formState: { errors }, watch } = useForm({
         resolver: yupResolver(useSchreema)
     })
+    const [load, setLoad] = useState<boolean>(true);
 
-    function desconectar() {
-        localStorage.clear();
+
+
+    async function loadPerfil() {
+        setLoad(true);
+        var user = await Api.get<use>("api/usuario/get");
+        setValue("nome", user.data.nome)
+        setValue("email", user.data.email)
+        setValue("thumb", user.data.thumb);
+        setLoad(false);
     }
 
     useEffect(() => {
-        async function loadPerfil() {
+        async function perfil() {
+            setLoad(true);
             var user = await Api.get<use>("api/usuario/get");
             setValue("nome", user.data.nome)
             setValue("email", user.data.email)
             setValue("thumb", user.data.thumb);
+            setLoad(false);
         }
-        loadPerfil();
+        perfil();
     }, [setValue])
 
     return (
@@ -49,65 +52,61 @@ const DadosPrincipais: React.FC = () => {
                 <div>
                     <div className="mt-10 flex justify-center relative">
                         {
-                            (watch("thumb") === undefined || watch("thumb") === null) ? (
-                                <img alt="avatar" src="https://picsum.photos/200/300" className="w-[180px] h-[180px] rounded-full" />
+                            load ? (
+                                <Skeleton className="w-[189px] h-[180px] rounded-full" />
                             ) : (
-                                <img alt="avatar" src={watch("thumb")} className="w-[180px] h-[180px] rounded-full" />
+                                <>
+                                    {
+                                        (watch("thumb") === undefined || watch("thumb") === null) ? (
+                                            <img alt="avatar" src="https://picsum.photos/200/300" className="w-[180px] h-[180px] rounded-full" />
+                                        ) : (
+                                            <img alt="avatar" src={watch("thumb")} className="w-[180px] h-[180px] rounded-full" />
+                                        )
+                                    }
+                                    <div className="absolute bottom-[-20px] z-10">
+                                        <ModalThumbnail thumb={watch("thumb")}
+                                            setValue={setValue}
+                                            email={watch("email")}
+                                            reloadPerfil={loadPerfil} />
+                                    </div>
+                                </>
                             )
-
-
                         }
-                        <div className="absolute bottom-[-20px] z-10">
-                            <ModalThumbnail thumb={watch("thumb")}
-                                setValue={setValue}
-                                email={watch("email")} />
-                        </div>
+
                     </div>
 
                     <div>
-                        <Input<use> Titulo="Nome"
-                            field="nome"
-                            Disable
-                            register={register}
-                            fieldErrors={errors} />
-                        <Input<use> Titulo="Email"
-                            field="email"
-                            Disable
-                            register={register}
-                            fieldErrors={errors} />
+
+                        {
+                            load ? (
+                                <>
+                                <div className="flex flex-col space-y-4 mt-4">
+                                    <Skeleton className="w-[full] h-[64px] " />
+                                    <Skeleton className="w-[full] h-[64px]" />
+                                </div>
+                                </>
+                            ) : (
+                                <>
+                                    <Input<use> Titulo="Nome"
+                                        field="nome"
+                                        Disable
+                                        register={register}
+                                        fieldErrors={errors} />
+                                    <Input<use> Titulo="Email"
+                                        field="email"
+                                        Disable
+                                        register={register}
+                                        fieldErrors={errors} />
+                                </>
+                            )
+                        }
+
                         <div className="my-5">
                             <Button titulo="Redefinir senha"
                                 className="w-full" />
                         </div>
                         <div>
-                            <Dialog>
-                                <DialogTrigger asChild>
-                                    <Button titulo="Deslogar"
-                                        color="outline-white"
-                                        className="w-full" />
-                                </DialogTrigger>
-                                <DialogContent>
-                                    <DialogHeader>
-                                        <DialogTitle>Desconectar?</DialogTitle>
-                                    </DialogHeader>
-                                    {/* <DialogDescription>
-                                        </DialogDescription> */}
-                                    Deseja mesmo deslogar da conta?
-                                    <DialogFooter>
-                                        <DialogClose>
-                                            <Button
-                                                titulo="Fechar"
-                                                color="outline-white"
-                                            />
-                                        </DialogClose>
-                                        <Button
-                                            titulo="Sair da plataforma"
-                                            color="red"
-                                            onClick={() => desconectar()}
-                                        />
-                                    </DialogFooter>
-                                </DialogContent>
-                            </Dialog>
+                            <ModalDesconectar />
                         </div>
                     </div>
 
