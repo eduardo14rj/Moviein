@@ -3,8 +3,8 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 const Sidebar: React.FC = () => {
     const [open, setOpen] = useState<boolean>(false);
-
     const nav = useNavigate();
+
     return (
         <>
             {
