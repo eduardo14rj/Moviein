@@ -1,5 +1,5 @@
 import {createContext} from "react";
-import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormStateProps, UseFormWatch } from "react-hook-form";
+import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from "react-hook-form";
 import * as yup from "yup";
 
 export const UseContextSchreema = yup.object({
