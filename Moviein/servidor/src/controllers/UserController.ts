@@ -5,7 +5,7 @@ import { prismaClient } from '../server';
 import MD5 from "crypto-js/md5";
 import TokenService from '../services/tokenService';
 import Auth from '../middlewares/Auth';
-import moment from 'moment';
+import SendEMailService from '../services/SendEmailService';
 
 const UserController: FastifyPluginCallback = (instance, opts, done) => {
 
@@ -119,6 +119,50 @@ const UserController: FastifyPluginCallback = (instance, opts, done) => {
         thumb: thumb
       }
     })
+  });
+
+
+  instance.post("resetPasswordCode", { preHandler: Auth }, async (req, res) => {
+    const { email } = req.body as { email: string }
+
+    const randomNumber = Math.floor(10000 + Math.random() * 90000);
+
+    await SendEMailService.Enviar({
+      conteudo: `Seu código de redefinição de senha é: <b>${randomNumber}</b>`,
+      email: email,
+      titulo: "Moviein: Código de redefinição de senha."
+    });
+
+    return res.code(200).send({
+      code: randomNumber.toString()
+    });
+  })
+
+  instance.post("resetPassword", { preHandler: Auth }, async (req, res) => {
+    const { senha, email } = req.body as RedefinirSenhaDTO_Req
+    const usuario = await prismaClient.usuario.findFirst({
+      where: {
+        email: email
+      }
+    });
+    if (usuario === null)
+      return res.code(400).send("Usuário não encontrado.");
+
+    var novaSenha = MD5(senha).toString();
+
+    try {
+      await prismaClient.usuario.update({
+        where: {
+          email: email
+        },
+        data: {
+          senha: novaSenha
+        }
+      });
+      return res.code(200).send("Senha redefinida com sucesso!");
+    } catch (error) {
+      return res.code(400).send(error);
+    }
   })
 
   done();

@@ -23,7 +23,7 @@ const Input = <T extends FieldValues>({ Type, Titulo, Icon, register, field, fie
                     <input {...register(field)}
                         type={Type}
                         disabled={Disable}
-                        className='p-2 text-white active:text-white outline-none rounded-lg bg-[transparent] w-full border-[1px] border-white' placeholder='...' />
+                        className='p-2 text-white active:text-white outline-none rounded-lg bg-[transparent] w-full border-[1px] border-input' placeholder='...' />
 
                     {Icon && React.cloneElement(Icon as React.ReactElement<any>, {
                         className: `text-white absolute right-4 bottom-[50%] translate-y-[50%]`

@@ -8,12 +8,16 @@ import DadosPrincipais from "./pages/layout/perfil/DadosPrincipais";
 import SidebarPerfil from "./components/SidebarPerfil/SidebarPerfil";
 import MeusVideos from "./pages/layout/perfil/MeusVideos";
 import Pagamento from "./pages/pagamento/Pagamento";
+import RedefinirSenha from "pages/auth/RedefinirSenha";
+import EnviarCodigo from "pages/auth/EnviarCodigo";
 function App() { 
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/registro" element={<Register />} />
+      <Route path="/enviarCodigo" element={<EnviarCodigo />} />
+      <Route path="/redefinirSenha" element={<RedefinirSenha />} />
       <Route path="/pagamento" element={<Pagamento/>} />
 
       <Route path="/a/" element={<PageValidate />}>

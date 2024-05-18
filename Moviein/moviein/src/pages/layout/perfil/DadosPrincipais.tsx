@@ -1,31 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
-import Api from "../../../api/api";
 import Input from "../../../components/Input/Input";
-import * as yup from 'yup'
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import Button from "../../../components/Button";
 import ModalThumbnail from "../../../components/Modals/ModalThumbnail/ModalThumbnail";
 import { Skeleton } from "components/ui/skeleton";
 import ModalDesconectar from "components/Modals/ModalThumbnail/ModalDesconectar/ModalDesconectar";
 import UserContext, { UseContextType } from "context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const DadosPrincipais: React.FC = () => {
-    // const { register, setValue, formState: { errors }, watch } = useForm({
-    //     resolver: yupResolver(UseContextSchreema)
-    // })
-    const { thumb, email, setValueUser, watchUser, reload, errorUser, registerUser } = useContext(UserContext)
+    const { thumb, email, setValueUser, reload, errorUser, registerUser } = useContext(UserContext)
     const [load, setLoad] = useState<boolean>(true);
-
-    // async function loadPerfil() {
-    //     setLoad(true);
-    //     var user = await Api.get<UseContextType>("api/usuario/get");
-    //     setValue("nome", user.data.nome)
-    //     setValue("email", user.data.email)
-    //     setValue("thumb", user.data.thumb);
-    //     setLoad(false);
-    // }
-
+    const nav = useNavigate();
     useEffect(() => {
         console.log(email)
         if (email === undefined) {
@@ -35,17 +20,9 @@ const DadosPrincipais: React.FC = () => {
         }
     }, [email])
 
-    // useEffect(() => {
-    //     async function perfil() {
-    //         setLoad(true);
-    //         var user = await Api.get<UseContextType>("api/usuario/get");
-    //         setValue("nome", user.data.nome)
-    //         setValue("email", user.data.email)
-    //         setValue("thumb", user.data.thumb);
-    //         setLoad(false);
-    //     }
-    //     perfil();
-    // }, [setValue])
+    function redefinirSenha() {
+        nav("/enviarCodigo");
+    }
 
     return (
         <>
@@ -104,7 +81,8 @@ const DadosPrincipais: React.FC = () => {
 
                         <div className="my-5">
                             <Button titulo="Redefinir senha"
-                                className="w-full" />
+                                className="w-full"
+                                onClick={() => redefinirSenha()} />
                         </div>
                         <div>
                             <ModalDesconectar />
