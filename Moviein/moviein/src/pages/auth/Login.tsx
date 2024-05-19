@@ -90,7 +90,7 @@ const Login: React.FC = () => {
                 </form>
                 <div className='mt-6 flex gap-1'>
                   <p className='text-white'>Esqueceu sua senha?</p>
-                  <p className='text-primary cursor-pointer underline decoration-slice'>Redefine aqui</p>
+                  <p className='text-primary cursor-pointer underline decoration-slice' onClick={() => nav("/enviarCodigo")}>Redefine aqui</p>
                 </div>
 
                 <div className='mt-6'>

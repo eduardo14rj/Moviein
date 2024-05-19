@@ -4,7 +4,7 @@ import tokenService from "../services/tokenService";
 function Auth(req: FastifyRequest, re: FastifyReply, done: HookHandlerDoneFunction, ) {
     const authBearer = req.headers.authorization;
     if (!authBearer) {
-        re.code(401).send({ erro: "Token Inválido" })
+        re.code(401).send({ erro: "Não autorizado." })
         return;
     }
     

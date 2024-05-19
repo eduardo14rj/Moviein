@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import Api from 'api/api';
+import { AxiosError } from 'axios';
 import Button from 'components/Button';
 import Input from 'components/Input/Input';
 import React, { useState } from 'react';
@@ -23,10 +24,15 @@ const EnviarCodigo: React.FC = () => {
 
   async function submit(data: EnviarSenhaType) {
     setLoadred(true);
-    const res = await Api.post<{ code: string }>("api/usuario/resetPasswordCode", data);
-    if (res.status === 200) {
-      toast.info("Enviamos um código de redefinição de senha em sua caixa de email.");
-      nav("/RedefinirSenha", { state: { code: res.data.code, email: data.email } });
+    try {
+      const res = await Api.post<{ code: string }>("api/usuario/resetPasswordCode", data);
+      if (res.status === 200) {
+        toast.info("Enviamos um código de redefinição de senha em sua caixa de email.");
+        nav("/RedefinirSenha", { state: { code: res.data.code, email: data.email } });
+      }
+    } catch (err) {
+      var error = err as AxiosError<{erro: string}>;
+      toast.error(error.response?.data.erro as string);
     }
     setLoadred(false);
   }

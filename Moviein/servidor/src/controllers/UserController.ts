@@ -122,7 +122,7 @@ const UserController: FastifyPluginCallback = (instance, opts, done) => {
   });
 
 
-  instance.post("resetPasswordCode", { preHandler: Auth }, async (req, res) => {
+  instance.post("resetPasswordCode", async (req, res) => {
     const { email } = req.body as { email: string }
 
     const randomNumber = Math.floor(10000 + Math.random() * 90000);
@@ -138,7 +138,7 @@ const UserController: FastifyPluginCallback = (instance, opts, done) => {
     });
   })
 
-  instance.post("resetPassword", { preHandler: Auth }, async (req, res) => {
+  instance.post("resetPassword", async (req, res) => {
     const { senha, email } = req.body as RedefinirSenhaDTO_Req
     const usuario = await prismaClient.usuario.findFirst({
       where: {
