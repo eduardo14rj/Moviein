@@ -18,12 +18,12 @@ const Input = <T extends FieldValues>({ Type, Titulo, Icon, register, field, fie
     return (
         <>
             <div className='w-100 mb-5 flex flex-col relative'>
-                <label className='text-white mb-2'>{Titulo}</label>
+                <label className='text-text mb-2'>{Titulo}</label>
                 <div className='relative'>
                     <input {...register(field)}
                         type={Type}
                         disabled={Disable}
-                        className='p-2 text-white active:text-white outline-none rounded-lg bg-[transparent] w-full border-[1px] border-input' placeholder='...' />
+                        className='p-2 text-text active:text-primary dark:active:text-white outline-none rounded-lg bg-[transparent] w-full border-[1px] border-input' placeholder='...' />
 
                     {Icon && React.cloneElement(Icon as React.ReactElement<any>, {
                         className: `text-white absolute right-4 bottom-[50%] translate-y-[50%]`

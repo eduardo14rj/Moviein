@@ -99,7 +99,7 @@ const ModalThumbnail: React.FC<ModalThumbnailType> = (p) => {
                                 <img alt="Alterar imagem"
                                     className="w-[400px] h-[400px] object-cover"
                                     src={imageView ? imageView : p.thumb} />
-                                <button onClick={() => ImageRef.current?.click()} className='bg-dark p-2 px-4 rounded-full absolute bottom-3'>
+                                <button onClick={() => ImageRef.current?.click()} className='bg-background p-2 px-4 rounded-full absolute bottom-3'>
                                     substituir imagem
                                 </button>
                             </div>

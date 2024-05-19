@@ -20,7 +20,7 @@ const Select = <T extends FieldValues>({ Titulo, register, field, placeholder, o
 
     return (
         <div className='w-100 mb-5 flex flex-col'>
-            <label className='text-white mb-2'>{Titulo}</label>
+            <label className='text-text mb-2'>{Titulo}</label>
             <div className='relative'>
                 <select {...register(field)} className='p-2 text-white outline-none rounded-lg bg-[transparent] w-full border-[1px] border-white' >
                     <option value="" className='bg-dark text-white/40'>{placeholder}</option>

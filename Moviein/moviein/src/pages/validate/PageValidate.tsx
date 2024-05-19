@@ -52,7 +52,7 @@ const PageValidate: React.FC = () => {
 
 
   return (
-    <div className='bg-dark w-full h-screen'>
+    <div className='bg-background w-full h-screen'>
       <UserContext.Provider value={{
         email: watch("email"),
         nome: watch("nome"),

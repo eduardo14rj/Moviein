@@ -6,9 +6,11 @@ import { Skeleton } from "components/ui/skeleton";
 import ModalDesconectar from "components/Modals/ModalThumbnail/ModalDesconectar/ModalDesconectar";
 import UserContext, { UseContextType } from "context/UserContext";
 import { useNavigate } from "react-router-dom";
+import { Theme, useTheme } from "components/ui/theme-provider";
 
 const DadosPrincipais: React.FC = () => {
     const { thumb, email, setValueUser, reload, errorUser, registerUser } = useContext(UserContext)
+    const { setTheme } = useTheme();
     const [load, setLoad] = useState<boolean>(true);
     const nav = useNavigate();
     useEffect(() => {
@@ -54,7 +56,6 @@ const DadosPrincipais: React.FC = () => {
                     </div>
 
                     <div>
-
                         {
                             load ? (
                                 <>
@@ -84,6 +85,14 @@ const DadosPrincipais: React.FC = () => {
                                 className="w-full"
                                 onClick={() => redefinirSenha()} />
                         </div>
+                        <div className="mb-4">
+                            <label className='text-text mb-2'>Tema</label>
+                            <select onChange={(e) => setTheme(e.target.value as Theme)} className='p-2 text-text outline-none rounded-lg bg-[transparent] w-full border-[1px] border-input' >
+                                <option value="light"  className='dark:bg-dark bg-white text-text/40'>Claro</option>
+                                <option value="dark" className='dark:bg-dark bg-white text-text/40'>Escuro</option>
+                                <option value="systema" className='dark:bg-dark bg-white text-text/40'>System</option>
+                            </select>
+                        </div>
                         <div>
                             <ModalDesconectar />
                         </div>
@@ -91,11 +100,11 @@ const DadosPrincipais: React.FC = () => {
 
                 </div>
                 <div>
-                    <div className="mt-10 relative h-[60vh] flex items-center p-10 w-full border-[1px] border-white/35 rounded-[20px] overflow-hidden">
-                        <div className="absolute top-[-60px] right-[-60px] opacity-45 w-[200px] h-[200px] bg-white rounded-full blur-[100px]"></div>
-                        <div className="absolute bottom-[-60px] left-[-60px] opacity-45 w-[200px] h-[200px] bg-white rounded-full blur-[100px]"></div>
+                    <div className="mt-10 relative h-[60vh] flex items-center p-10 w-full border-[1px] dark:border-white/35 border-primary/35 rounded-[20px] overflow-hidden">
+                        <div className="absolute top-[-60px] right-[-60px] opacity-45 w-[200px] h-[200px] bg-primary dark:bg-white rounded-full blur-[100px]"></div>
+                        <div className="absolute bottom-[-60px] left-[-60px] opacity-45 w-[200px] h-[200px] bg-primary dark:bg-white rounded-full blur-[100px]"></div>
 
-                        <div className="flex flex-col gap-4 text-center">
+                        <div className="flex flex-col gap-4 text-center text-text">
                             <h3 className="text-[20px]">Atualmente você não possui nenhuma assinatura</h3>
                             <Button color="outline-white"
                                 titulo="Comprar uma assinatura" />

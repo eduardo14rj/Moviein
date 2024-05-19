@@ -12,7 +12,7 @@ const SidebarPerfil: React.FC = () => {
 
     const MenuItemPerfil: React.FC<MenuItemPerfilType> = (i) => {
         const active = window.location.pathname === i.path;
-        const activeBg = active ? "bg-primary/20 text-primary" : "text-white";
+        const activeBg = active ? "bg-primary/20 text-primary" : "text-text";
         return (
             <div className={`p-4 cursor-pointer pr-8 ${activeBg}`} onClick={() => nav(i.path)}>
                 <p className="text-right">{i.titulo}</p>
@@ -24,7 +24,7 @@ const SidebarPerfil: React.FC = () => {
         <>
             <img src={film} alt="filmes" className="w-screen h-[60px] object-cover" />
             <div className="flex">
-                <div className="w-[30%] bg-[#00000070] h-[calc(100vh-60px)]">
+                <div className="w-[30%] bg-white/60 dark:bg-[#00000070] h-[calc(100vh-60px)]">
 
                     <MenuItemPerfil
                         path="/a/perfil/dadosPrincipais"

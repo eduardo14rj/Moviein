@@ -14,7 +14,7 @@ const button = tv({
         color: {
             primary: "bg-primary text-white border-primary",
             red: "bg-redDark text-white border-redDark",
-            "outline-white": "bg-transparent border-[1px] border-white text-white",
+            "outline-white": "bg-transparent border-[1px] dark:border-white border-dark text-text",
             "outline-red": "bg-transparent text-redDark border-redDark"
         }
     }

@@ -12,14 +12,14 @@ const Sidebar: React.FC = () => {
             {
                 open ? (
                     <>
-                        <div className="h-screen shadow-xl fixed p-4 left-0 w-[50vh] bg-dark z-50" onClick={() => setOpen(true)}>
+                        <div className="h-screen shadow-xl fixed p-4 left-0 w-[50vh] bg-white dark:bg-dark z-50" onClick={() => setOpen(true)}>
 
                             <div className="flex gap-5 items-center cursor-pointer" onClick={() => {
                                 setOpen(false);
                                 nav("/a/perfil/dadosPrincipais");
                             }}>
                                 <img alt="avatar" src={thumb} className="w-[40px] h-[40px] rounded-full bg-dark" />
-                                <p className="m-0 p-0 text-white">
+                                <p className="m-0 p-0 text-text">
                                     {nome}
                                 </p>
                             </div>
@@ -32,7 +32,7 @@ const Sidebar: React.FC = () => {
                     </>
                 ) : (
                     <div className="h-screen fixed cursor-pointer w-[32px] flex items-center" onClick={() => setOpen(true)}>
-                        <IoIosArrowForward className="text-white text-[22px]" />
+                        <IoIosArrowForward className="text-text text-[22px]" />
                     </div>
                 )
             }
