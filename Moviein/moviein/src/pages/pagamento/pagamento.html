@@ -6,10 +6,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tela de Pagamento</title>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
 </head>
 <body>
     <div class="container">
-        <img class="Logo" src="../../assets/logo.png" >
+        <img alt="" class="Logo" src="../../assets/logo.png" >
         <h2>Tela de Pagamento</h2>
         <form>
             <div class="form-group">
@@ -18,7 +23,7 @@
             </div>
             <div class="form-group">
                 <label for="cartao">Número do Cartão:</label>
-                <input type="text" id="cartao" name="cartao" placeholder="0000 0000 0000 0000" required>
+                <input type="text" id="cartao" name="cartao" placeholder="1234567891234567" required>
             </div>
             <div class="form-group">
                 <label for="validade">Data de Validade:</label>
@@ -29,6 +34,7 @@
                 <input type="number" id="cvv" name="cvv" maxlength="3" placeholder="000" required>
             </div>
             <input type="submit" value="Pagar">
+            <button type="button" class="voltar" onclick="goBack()">Voltar</button>
         </form>
     </div>
 </body>
