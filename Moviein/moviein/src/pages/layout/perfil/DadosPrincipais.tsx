@@ -10,7 +10,7 @@ import { Theme, useTheme } from "components/ui/theme-provider";
 
 const DadosPrincipais: React.FC = () => {
     const { thumb, email, setValueUser, reload, errorUser, registerUser } = useContext(UserContext)
-    const { setTheme } = useTheme();
+    const { setTheme, theme } = useTheme();
     const [load, setLoad] = useState<boolean>(true);
     const nav = useNavigate();
     useEffect(() => {
@@ -88,9 +88,9 @@ const DadosPrincipais: React.FC = () => {
                         <div className="mb-4">
                             <label className='text-text mb-2'>Tema</label>
                             <select onChange={(e) => setTheme(e.target.value as Theme)} className='p-2 text-text outline-none rounded-lg bg-[transparent] w-full border-[1px] border-input' >
-                                <option value="light"  className='dark:bg-dark bg-white text-text/40'>Claro</option>
-                                <option value="dark" className='dark:bg-dark bg-white text-text/40'>Escuro</option>
-                                <option value="systema" className='dark:bg-dark bg-white text-text/40'>System</option>
+                                <option value="light" selected={theme === "light"}  className='dark:bg-dark bg-white text-text/40'>Claro</option>
+                                <option value="dark" selected={theme === "dark"} className='dark:bg-dark bg-white text-text/40'>Escuro</option>
+                                <option value="systema" selected={theme === "system"} className='dark:bg-dark bg-white text-text/40'>System</option>
                             </select>
                         </div>
                         <div>

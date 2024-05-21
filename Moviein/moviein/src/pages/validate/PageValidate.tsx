@@ -8,7 +8,7 @@ import Api from 'api/api';
 
 const PageValidate: React.FC = () => {
   const navigate = useNavigate();
-  const { setValue, watch, formState: {errors}, register } = useForm({
+  const { setValue, watch, formState: { errors }, register } = useForm({
     resolver: yupResolver(UseContextSchreema)
   })
 
@@ -32,20 +32,29 @@ const PageValidate: React.FC = () => {
 
   async function loadPerfil() {
     // setLoad(true);
-    var user = await Api.get<UseContextType>("api/usuario/get");
-    setValue("nome", user.data.nome)
-    setValue("email", user.data.email)
-    setValue("thumb", user.data.thumb);
-    // setLoad(false);
-  }
-
-
-  useEffect(() => {
-    async function perfil() {
+    try {
       var user = await Api.get<UseContextType>("api/usuario/get");
       setValue("nome", user.data.nome)
       setValue("email", user.data.email)
       setValue("thumb", user.data.thumb);
+      // setLoad(false);
+    } catch (err) {
+
+    }
+  }
+  
+  useEffect(() => {
+    async function perfil() {
+      try {
+        var user = await Api.get<UseContextType>("api/usuario/get");
+        if (user.status === 200 || user.status === 204) {
+          setValue("nome", user.data.nome)
+          setValue("email", user.data.email)
+          setValue("thumb", user.data.thumb);
+        }
+      } catch (err) {
+
+      }
     }
     perfil();
   }, [setValue])
@@ -61,7 +70,7 @@ const PageValidate: React.FC = () => {
         watchUser: watch,
         errorUser: errors,
         registerUser: register,
-        reload:loadPerfil
+        reload: loadPerfil
       }}>
         <Sidebar />
         <Outlet />
