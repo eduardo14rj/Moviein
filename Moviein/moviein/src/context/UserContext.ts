@@ -5,7 +5,8 @@ import * as yup from "yup";
 export const UseContextSchreema = yup.object({
     nome: yup.string(),
     email: yup.string(),
-    thumb: yup.string()
+    thumb: yup.string(),
+    auth2: yup.boolean()
 })
 
 export type UseContextType = yup.InferType<typeof UseContextSchreema>;
@@ -22,6 +23,7 @@ const UserContext = createContext<UseContextTypeData>({
     email: undefined,
     nome: undefined,
     thumb: undefined,
+    auth2: undefined,
     setValueUser: () => {},
     watchUser: null,
     errorUser: undefined,

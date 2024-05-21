@@ -37,6 +37,7 @@ const PageValidate: React.FC = () => {
       setValue("nome", user.data.nome)
       setValue("email", user.data.email)
       setValue("thumb", user.data.thumb);
+      setValue("auth2", user.data.auth2);
       // setLoad(false);
     } catch (err) {
 
@@ -50,7 +51,8 @@ const PageValidate: React.FC = () => {
         if (user.status === 200 || user.status === 204) {
           setValue("nome", user.data.nome)
           setValue("email", user.data.email)
-          setValue("thumb", user.data.thumb);
+          setValue("thumb", user.data.thumb)
+          setValue("auth2", user.data.auth2)
         }
       } catch (err) {
 
@@ -66,6 +68,7 @@ const PageValidate: React.FC = () => {
         email: watch("email"),
         nome: watch("nome"),
         thumb: watch("thumb"),
+        auth2: watch("auth2"),
         setValueUser: setValue,
         watchUser: watch,
         errorUser: errors,
