@@ -97,7 +97,8 @@ const UserController: FastifyPluginCallback = (instance, opts, done) => {
       return res.send({
         nome: usuario.nome,
         email: usuario.email,
-        thumb: usuario.thumb
+        thumb: usuario.thumb,
+        auth2: usuario.Auth2
       })
     }
   });
@@ -162,6 +163,27 @@ const UserController: FastifyPluginCallback = (instance, opts, done) => {
       return res.code(200).send("Senha redefinida com sucesso!");
     } catch (error) {
       return res.code(400).send(error);
+    }
+  })
+
+
+  instance.get("toggleAuth2", { preHandler: Auth }, async (req, res) => {
+    const usuario = await prismaClient.usuario.findFirst({
+      where: {
+        email: req.user.email!
+      }
+    })
+    if (usuario != undefined) {
+      await prismaClient.usuario.update({
+        where: {
+          email: usuario.email
+        },
+        data: {
+          Auth2: !usuario.Auth2
+        }
+      })
+
+      return res.code(200).send();
     }
   })
 
