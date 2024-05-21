@@ -1,3 +1,4 @@
+import { DialogClose } from '@radix-ui/react-dialog';
 import Button from 'components/Button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from 'components/ui/dialog';
 import React from 'react';
@@ -25,10 +26,12 @@ const ModalDesconectar: React.FC = () => {
                     </DialogHeader>
                     <DialogFooter>
                         <>
-                            <Button
-                                titulo="Fechar"
-                                color="outline-white"
-                            />
+                            <DialogClose>
+                                <Button
+                                    titulo="Fechar"
+                                    color="outline-white"
+                                />
+                            </DialogClose>
                             <Button
                                 titulo="Sair da plataforma"
                                 color="red"

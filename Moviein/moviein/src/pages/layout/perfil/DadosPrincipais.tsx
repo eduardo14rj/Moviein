@@ -7,14 +7,14 @@ import ModalDesconectar from "components/Modals/ModalThumbnail/ModalDesconectar/
 import UserContext, { UseContextType } from "context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { Theme, useTheme } from "components/ui/theme-provider";
+import InputSwitchAutenticacao2Fatores from "components/InputSwitchAutenticacao2Fatores";
 
 const DadosPrincipais: React.FC = () => {
-    const { thumb, email, setValueUser, reload, errorUser, registerUser } = useContext(UserContext)
-    const { setTheme } = useTheme();
+    const { thumb, email, auth2, setValueUser, reload, errorUser, registerUser } = useContext(UserContext)
+    const { setTheme, theme } = useTheme();
     const [load, setLoad] = useState<boolean>(true);
     const nav = useNavigate();
     useEffect(() => {
-        console.log(email)
         if (email === undefined) {
             setLoad(true)
         } else {
@@ -76,6 +76,8 @@ const DadosPrincipais: React.FC = () => {
                                         Disable
                                         register={registerUser!}
                                         fieldErrors={errorUser!} />
+
+                                    <InputSwitchAutenticacao2Fatores auth2={auth2} />
                                 </>
                             )
                         }
@@ -88,9 +90,9 @@ const DadosPrincipais: React.FC = () => {
                         <div className="mb-4">
                             <label className='text-text mb-2'>Tema</label>
                             <select onChange={(e) => setTheme(e.target.value as Theme)} className='p-2 text-text outline-none rounded-lg bg-[transparent] w-full border-[1px] border-input' >
-                                <option value="light"  className='dark:bg-dark bg-white text-text/40'>Claro</option>
-                                <option value="dark" className='dark:bg-dark bg-white text-text/40'>Escuro</option>
-                                <option value="systema" className='dark:bg-dark bg-white text-text/40'>System</option>
+                                <option value="light" selected={theme === "light"} className='dark:bg-dark bg-white text-text/40'>Claro</option>
+                                <option value="dark" selected={theme === "dark"} className='dark:bg-dark bg-white text-text/40'>Escuro</option>
+                                <option value="systema" selected={theme === "system"} className='dark:bg-dark bg-white text-text/40'>System</option>
                             </select>
                         </div>
                         <div>

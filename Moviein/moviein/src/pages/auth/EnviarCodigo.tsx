@@ -39,7 +39,7 @@ const EnviarCodigo: React.FC = () => {
 
   return (
     <div className='bg-gradient-to-br flex justify-center items-center w-full h-screen from-primary to-redDark'>
-      <div className='w-[80vh] p-8 bg-dark rounded-xl'>
+      <div className='w-[80vh] p-8 bg-background rounded-xl'>
         <h2 className='text-xl'>Redefinir Senha</h2>
         <form className='mt-10' onSubmit={handleSubmit(submit)}>
           <Input<EnviarSenhaType> register={register}

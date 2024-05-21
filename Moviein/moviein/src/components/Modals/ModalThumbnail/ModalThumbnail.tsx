@@ -45,8 +45,8 @@ const ModalThumbnail: React.FC<ModalThumbnailType> = (p) => {
         new Promise((resolve) => {
             Resizer.imageFileResizer(
                 file,
-                300,
-                300,
+                240,
+                240,
                 "JPEG",
                 100,
                 0,

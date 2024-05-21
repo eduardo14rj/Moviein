@@ -13,7 +13,6 @@ const Sidebar: React.FC = () => {
                 open ? (
                     <>
                         <div className="h-screen shadow-xl fixed p-4 left-0 w-[50vh] bg-white dark:bg-dark z-50" onClick={() => setOpen(true)}>
-
                             <div className="flex gap-5 items-center cursor-pointer" onClick={() => {
                                 setOpen(false);
                                 nav("/a/perfil/dadosPrincipais");
@@ -25,13 +24,15 @@ const Sidebar: React.FC = () => {
                             </div>
 
                         </div>
-                        <div className="h-screen cursor-pointer w-[32px] fixed left-[50vh] flex items-center z-20" onMouseLeave={() => setOpen(false)}>
+                        <div className="h-screen cursor-pointer w-[32px] fixed left-[50vh] flex items-center z-20" 
+                        onMouseLeave={() => setOpen(false)}
+                        onClick={() => setOpen(false)}>
                             <IoIosArrowBack className="text-white text-[22px]" />
                         </div>
                         <div className="fixed bg-[#00000050] w-screen h-screen z-10"></div>
                     </>
                 ) : (
-                    <div className="h-screen fixed cursor-pointer w-[32px] flex items-center" onClick={() => setOpen(true)}>
+                    <div className="h-screen fixed cursor-pointer w-[32px] flex items-center z-10" onClick={() => setOpen(true)}>
                         <IoIosArrowForward className="text-text text-[22px]" />
                     </div>
                 )

@@ -51,14 +51,14 @@ const Login: React.FC = () => {
         <div className='grid md:grid-cols-2 grid-cols-1 h-screen'>
           <div className='md:col-start-2'>
             <div className='py-12 h-full'>
-              <div className='bg-dark rounded-md p-8 flex flex-col h-full relative'>
+              <div className='bg-background rounded-md p-8 flex flex-col h-full relative'>
                 <div className='mb-4'>
                   <img src={logo} alt='Moviein' className='w-[120px]' />
                 </div>
                 <div className='mb-20'>
-                  <h2 className='text-4xl mb-2 text-white'>Fazer login</h2>
+                  <h2 className='text-4xl mb-2 text-text'>Fazer login</h2>
                   <div className='flex gap-1'>
-                    <p className='text-white'>Novo usuário?</p>
+                    <p className='text-text'>Novo usuário?</p>
                     <p onClick={() => nav("/registro")} className='text-primary ml-1 cursor-pointer underline  decoration-slice'>Crie uma conta</p>
                   </div>
                 </div>
@@ -89,7 +89,7 @@ const Login: React.FC = () => {
                   </div>
                 </form>
                 <div className='mt-6 flex gap-1'>
-                  <p className='text-white'>Esqueceu sua senha?</p>
+                  <p className='text-text'>Esqueceu sua senha?</p>
                   <p className='text-primary cursor-pointer underline decoration-slice' onClick={() => nav("/enviarCodigo")}>Redefine aqui</p>
                 </div>
 
