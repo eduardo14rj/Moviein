@@ -1,12 +1,12 @@
 body{
     background-size: cover;
     background-repeat: no-repeat;
-    min-height: 90.8vh;
+    min-height: 92.3vh;
     background: linear-gradient(180deg, #865DFF 0%, rgb(0, 0, 0) 100%);
     font-family: poppins, sans-serif;
     padding-top: 40px;
 }
-.container {
+.confirmation-container {
     max-width: 600px;
     margin: 20px auto;
     padding: 20px;
@@ -19,4 +19,29 @@ body{
     align-items: center;
     justify-content: space-between;
     padding-bottom: 40px;
+    color: #fff;
+}
+button{
+    background-color: #b14bec;
+    color: #fff;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: poppins, sans-serif;
+    margin-bottom: 20px;
+}
+button:hover {
+    background-color: #5f2f80;
+}
+h1 {
+    color: #4CAF50;
+}
+
+p {
+    font-size: 16px;
+}
+
+.details p {
+    margin: 5px 0;
 }
