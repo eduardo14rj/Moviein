@@ -6,7 +6,7 @@
     :root {
       --background: 291 54% 97%;
       --foreground: 222.2 84% 4.9%;  
-
+      --inverse: 316 93% 23%;
       --card: 0 0% 100%;
       --card-foreground: 222.2 84% 4.9%;
       
@@ -47,6 +47,8 @@
     .dark {
       --background: 245 21% 12%;
       --foreground: 222.2 84% 4.9%;
+
+      --inverse: 291 54% 97%;
 
       --card: 222.2 84% 4.9%;
       --card-foreground: 210 40% 98%;
