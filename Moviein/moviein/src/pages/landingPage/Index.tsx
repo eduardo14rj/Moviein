@@ -77,7 +77,7 @@ const LandingPage: React.FC = () => {
           }
           {/* <img alt='Moviein' src={moviein} className="w-[100px] object-contain dark:hidden" /> */}
           <div className="flex gap-2">
-            <Button titulo='cadastre-e' color="red" onClick={() => nav("/registro")} />
+            <Button titulo='Cadastre-se' color="red" onClick={() => nav("/registro")} />
             <Button titulo='Entrar' onClick={() => nav("/login")} />
           </div>
         </div>
