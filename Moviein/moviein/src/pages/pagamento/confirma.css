@@ -45,3 +45,17 @@ p {
 .details p {
     margin: 5px 0;
 }
+button[type="button"] {
+    background-color: #191825;
+    color: #fff;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    font-family: poppins, sans-serif;
+}
+.voltar::after {
+    content: '\21B6'; 
+    margin-left: 5px;
+}

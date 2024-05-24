@@ -6,11 +6,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tela de Pagamento</title>
-    <script>
-        function goBack() {
-            window.history.back();
-        }
-    </script>
 </head>
 <body>
     <div class="container">
@@ -33,9 +28,17 @@
                 <label for="cvv">CVV:</label>
                 <input type="number" id="cvv" name="cvv" maxlength="3" placeholder="000" required>
             </div>
-            <input type="submit" value="Pagar">
+            <input type="submit" id="pagar"  value="Pagar">
             <button type="button" class="voltar" onclick="goBack()">Voltar</button>
         </form>
     </div>
+    <script>
+        document.getElementById('pagar').addEventListener('click', function() {
+          window.location.href = '../pagamento/confirma.html';
+        });
+        function goBack() {
+            window.history.back();
+        }
+    </script>
 </body>
 </html>

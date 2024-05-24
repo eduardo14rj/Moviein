@@ -4,6 +4,7 @@ body{
     height: 100%;
     background: linear-gradient(180deg, #865DFF 0%, rgb(0, 0, 0) 100%);
     font-family: poppins, sans-serif;
+    height: fit-content;
 }
 html {
     height: 100%;
