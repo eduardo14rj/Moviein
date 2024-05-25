@@ -11,7 +11,7 @@ const Principal: React.FC = () => {
 
             <div className='relative h-[24vh]'>
                 <div className='bg-background absolute w-full h-full z-[1]'>
-                    <img src={film} className='w-full opacity-60 h-full object-cover' />
+                    <img src={film} alt="filme" className='w-full opacity-60 h-full object-cover' />
                 </div>
                 <div className='container relative z-20'>
                     <div className='grid grid-cols-2 items-end h-[24vh] pb-14'>
@@ -21,11 +21,11 @@ const Principal: React.FC = () => {
                         </div>
                         <div className='flex justify-end gap-4'>
                             <button className='p-2 rounded-full items-center bg-background flex gap-3'>
-                                <img src={tomate} className='h-[18px] object-contain' />
+                                <img src={tomate} alt="tomate" className='h-[18px] object-contain' />
                                 <label>30%</label>
                             </button>
                             <button className='p-2 rounded-full items-center bg-background flex gap-3'>
-                                <img src={pipoca} className='h-[18px] object-contain' />
+                                <img src={pipoca} alt="pipoca" className='h-[18px] object-contain' />
                                 <label>60%</label>
                             </button>
                             <Button variant="red" >
