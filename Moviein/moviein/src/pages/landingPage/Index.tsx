@@ -1,102 +1,44 @@
 import React from 'react';
-import Button from 'components/Button';
-import { useNavigate } from 'react-router-dom';
+// import Button from 'components/Button';
 import movie from '../../assets/filme.png';
 import log from '../../assets/movie.png'
 import aparelhos from '../../assets/aparelhos.png';
 import moviein from '../../assets/moviein.png';
 import movieinDark from '../../assets/moviein-dark.png';
-import { useTheme } from 'components/ui/theme-provider';
 import { FaRegCircleCheck } from "react-icons/fa6";
-import { twMerge } from 'tailwind-merge';
-type checkItem = {
-  texto: string
-  check: boolean
-}
-
-type AssinaturaCardType = {
-  nome: string
-  minNome: string
-  color: "primary" | "darkRed" | "inverse",
-  checks: checkItem[],
-  preco: string
-}
-const AssinaturaCard: React.FC<AssinaturaCardType> = (p) => {
-  function cor(prefix: string) {
-    switch (p.color) {
-      case `primary`:
-        return `${prefix}-primary`
-      case `darkRed`:
-        return `${prefix}-redDark`
-      case `inverse`:
-        return `${prefix}-inverse`
-      default:
-        break;
-    }
-  }
-  return (
-    <div className={twMerge('relative p-6 py-10 rounded-xl border-primary border-[1px] text-text overflow-hidden', cor("border"))}>
-      <div className={twMerge("w-[180px] h-[180px] absolute right-0 top-0 rounded-full blur-[50px] -z-10", cor("bg"))}></div>
-      <div className={twMerge("w-[180px] h-[180px] absolute -left-5 bottom-[-60px] rounded-full blur-[50px] -z-10", cor("bg"))}></div>
-      <div className='mb-8'>
-        <h4 className='text-[28px]'>{p.nome}</h4>
-        <small className='text-md'>{p.minNome}</small>
-      </div>
-      <div className='border-l-2 border-l-white/45 p-4 flex flex-col gap-8'>
-        {
-          p.checks.map((e, i) => (
-            <div className={twMerge("flex gap-4", !e.check && "opacity-35")}>
-              <div key={i}>
-                <FaRegCircleCheck className='text-[28px]' />
-              </div>
-              <p className='text-[14px] text-text'>{e.texto}</p>
-            </div>
-          ))
-        }
-      </div>
-      <p className='text-3xl font-bold mt-16 mb-12'>{p.preco}</p>
-      <Button titulo='Comece agora' color={
-        p.color === "primary" ? "primary" : (p.color === "darkRed" ? "red" : "outline-white")
-      } className='w-full' />
-    </div>
-  )
-}
+import { Button } from 'components/ui/button';
+import Colaborador from './Colaborador';
+import eduardo from '../../assets/colaboradores/perfil-eduardo.jpg';
+import brenda from '../../assets/colaboradores/perfil-brenda.jpg';
+import gabriel from '../../assets/colaboradores/perfil-gabriel.jpg';
+import jose from '../../assets/colaboradores/perfil-jose.jpg';
+import lorrayne from '../../assets/colaboradores/perfil-lorrayne.jpg';
+import karol from '../../assets/colaboradores/perfil-karol.jpg';
+import Navbar from './Navbar/Navbar';
+import { useTheme } from 'components/ui/theme-provider';
+import unisuamLight from '../../assets/Unisuam-light.png'
+import unisuam from '../../assets/Unisuam.png'
 
 const LandingPage: React.FC = () => {
-  const nav = useNavigate();
   const { theme } = useTheme();
   return (
     <main>
-      <nav className="fixed top-0 left-0 bg-background/80 border-b-[1px] backdrop-blur-sm border-b-gray-400/50 flex w-full h-[68px] z-[100] justify-between items-center">
-        <div className='container flex justify-between'>
-          {
-            theme === "dark" && <img alt='Moviein' src={movieinDark} className="w-[100px] object-contain -dark:hidden" />
-          }
-          {
-            (theme === "light" || theme === "system") && <img alt='Moviein' src={moviein} className="w-[100px] object-contain -dark:hidden" />
-          }
-          {/* <img alt='Moviein' src={moviein} className="w-[100px] object-contain dark:hidden" /> */}
-          <div className="flex gap-2">
-            <Button titulo='Cadastre-se' color="red" onClick={() => nav("/registro")} />
-            <Button titulo='Entrar' onClick={() => nav("/login")} />
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       <section className="container mx-auto">
         <div className="relative col-span-3">
 
-          <div className='bg-primary/80 w-[340px] h-[340px] rounded-full blur-[100px] top-[130px] absolute'></div>
-          <div className='bg-redDark w-[160px] h-[160px] rounded-full blur-[80px] bottom-[130px] right-0 absolute -z-10'></div>
+          <div className='bg-primary/50 w-[340px] h-[340px] rounded-full blur-[100px] top-[130px] absolute'></div>
+          <div className='bg-redPalid w-[160px] h-[160px] rounded-full blur-[60px] bottom-[130px] right-0 absolute -z-10'></div>
 
-          <div className='grid grid-cols-3 h-screen items-center gap-[32px]'>
+          <div className='grid md:grid-cols-3 mt-8 md:mt-0 md:h-screen items-center gap-[32px]'>
 
-            <div className="relative">
+            <div className="relative flex flex-col items-center text-center md:text-start md:items-start">
               <img className="mb-4 w-[42px]" src={log} alt="Icon" />
               <h1 className="text text-6xl font-medium">Streaming feito para todos!</h1>
             </div>
 
-            <img className="w-full h-[80vh] object-cover rounded-full border-[4px] border-redDark"
+            <img className="w-full md:h-[80vh] object-cover rounded-full border-[4px] border-redDark"
               src={movie}
               alt="Elipse"
             />
@@ -127,13 +69,12 @@ const LandingPage: React.FC = () => {
       </section>
 
 
-      <section className='container mx-auto min-h-screen grid grid-cols-3 gap-12 relative items-center'>
-
+      <section className='container mx-auto min-h-screen grid md:grid-cols-3 gap-0 md:gap-12 relative items-center'>
         <div className='bg-primary w-[360px] h-[360px] left-20 rounded-full blur-[120px] absolute -z-10'></div>
         <div className='col-span-2'>
           <img alt='responsividade' src={aparelhos} className='w-full' />
         </div>
-        <div>
+        <div className='text-center md:text-start'>
           <h2 className='text-4xl font-bold mb-6'>Feito para todos os Tamanhos</h2>
           <p className='text-2xl'>
             Aproveite cada momento assistindo filmes, séries ou curta metragens em qualquer resolução de tela, seja por TV 4k, Tablets ou até mesmo celulares!
@@ -141,88 +82,208 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      <section className='container mx-auto min-h-screen'>
+      <section className='container mx-auto mb-[120px]'>
         <div className='col-span-3 text-center'>
           <h2 className='font-bold text-3xl mb-4'>Assinatura</h2>
           <p></p>
         </div>
-        <div className='grid grid-cols-3 gap-[20px]'>
-          <AssinaturaCard
-            color='primary'
-            nome='Cliente'
-            minNome='Casual'
-            preco='R$ 18,00/mês'
-            checks={[
-              {
-                check: true,
-                texto: "Livre para assistir qualquer vídeo gratuitamente (não alugados)."
-              },
-              {
-                check: true,
-                texto: "Avaliar vídeos como cliente"
-              },
-              {
-                check: false,
-                texto: "Avaliar vídeos como críticos"
-              },
-              {
-                check: false,
-                texto: "Enviar novo vídeo ou filme"
-              }
-            ]}
-          />
+        <div className='grid md:grid-cols-3 gap-[20px]'>
+          {/* ASSINATURAS */}
+          <div className='relative p-6 py-10 rounded-xl border-primary border-[1px] text-text overflow-hidden'>
+            <div className="w-[180px] h-[180px] absolute right-0 top-0 rounded-full blur-[50px] -z-10 bg-primary"></div>
+            <div className="w-[180px] h-[180px] absolute -left-5 bottom-[-60px] rounded-full blur-[50px] -z-10 bg-primary"></div>
+            <div className='mb-8'>
+              <h4 className='text-[28px]'>Cliente</h4>
+              <small className='text-md'>Casual</small>
+            </div>
+            <div className='border-l-2 border-l-white/45 p-4 flex flex-col gap-8'>
+              <div className="flex gap-4">
+                <div>
+                  <FaRegCircleCheck className='text-[28px]' />
+                </div>
+                <p className='text-[14px] text-text'>Livre para assistir qualquer vídeo gratuitamente (não alugados).</p>
+              </div>
+              <div className="flex gap-4">
+                <div>
+                  <FaRegCircleCheck className='text-[28px]' />
+                </div>
+                <p className='text-[14px] text-text'>Avaliar vídeos como cliente</p>
+              </div>
+              <div className="flex gap-4 opacity-35">
+                <div>
+                  <FaRegCircleCheck className='text-[28px]' />
+                </div>
+                <p className='text-[14px] text-text'>Avaliar vídeos como críticos</p>
+              </div>
+              <div className="flex gap-4 opacity-35">
+                <div>
+                  <FaRegCircleCheck className='text-[28px]' />
+                </div>
+                <p className='text-[14px] text-text'>Enviar novo vídeo ou filme</p>
+              </div>
+            </div>
+            <p className='text-3xl font-bold mt-16 mb-12'>R$ 18,00/mês</p>
+            <Button size="lg"
+              className='w-full'>
+              Comece agora
+            </Button>
+          </div>
 
-          <AssinaturaCard
-            color='darkRed'
-            nome='Cliente'
-            minNome='Casual'
-            preco='R$ 18,00/mês'
-            checks={[
-              {
-                check: true,
-                texto: "Livre para assistir qualquer vídeo gratuitamente (não alugados)."
-              },
-              {
-                check: true,
-                texto: "Avaliar vídeos como cliente"
-              },
-              {
-                check: true,
-                texto: "Avaliar vídeos como críticos"
-              },
-              {
-                check: false,
-                texto: "Enviar novo vídeo ou filme"
-              }
-            ]}
-          />
-              <AssinaturaCard
-            color='inverse'
-            nome='Criador'
-            minNome='Especial'
-            preco='R$ 18,00/mês'
-            checks={[
-              {
-                check: true,
-                texto: "Livre para assistir qualquer vídeo gratuitamente (não alugados)."
-              },
-              {
-                check: true,
-                texto: "Avaliar vídeos como cliente"
-              },
-              {
-                check: true,
-                texto: "Avaliar vídeos como críticos"
-              },
-              {
-                check: true,
-                texto: "Enviar novo vídeo ou filme"
-              }
-            ]}
-          />
+          <div className='relative p-6 py-10 rounded-xl border-red border-[1px] text-text overflow-hidden'>
+            <div className="w-[180px] h-[180px] absolute right-0 top-0 rounded-full blur-[50px] -z-10 bg-red"></div>
+            <div className="w-[180px] h-[180px] absolute -left-5 bottom-[-60px] rounded-full blur-[50px] -z-10 bg-red"></div>
+            <div className='mb-8'>
+              <h4 className='text-[28px]'>Crítico</h4>
+              <small className='text-md'>Diferente</small>
+            </div>
+            <div className='border-l-2 border-l-white/45 p-4 flex flex-col gap-8'>
+              <div className="flex gap-4">
+                <div>
+                  <FaRegCircleCheck className='text-[28px]' />
+                </div>
+                <p className='text-[14px] text-text'>Livre para assistir qualquer vídeo gratuitamente (não alugados).</p>
+              </div>
+              <div className="flex gap-4">
+                <div>
+                  <FaRegCircleCheck className='text-[28px]' />
+                </div>
+                <p className='text-[14px] text-text'>Avaliar vídeos como cliente</p>
+              </div>
+              <div className="flex gap-4">
+                <div>
+                  <FaRegCircleCheck className='text-[28px]' />
+                </div>
+                <p className='text-[14px] text-text'>Avaliar vídeos como críticos</p>
+              </div>
+              <div className="flex gap-4 opacity-35">
+                <div>
+                  <FaRegCircleCheck className='text-[28px]' />
+                </div>
+                <p className='text-[14px] text-text'>Enviar novo vídeo ou filme</p>
+              </div>
+            </div>
+            <p className='text-3xl font-bold mt-16 mb-12'>R$ 18,00/mês</p>
+            <Button size="lg"
+              className='w-full'
+              variant="red">
+              Comece agora
+            </Button>
+          </div>
+
+          <div className='relative p-6 py-10 rounded-xl border-redPalid border-[1px] text-text overflow-hidden'>
+            <div className="w-[180px] h-[180px] absolute right-0 top-0 rounded-full blur-[50px] -z-10 bg-redPalid"></div>
+            <div className="w-[180px] h-[180px] absolute -left-5 bottom-[-60px] rounded-full blur-[50px] -z-10 bg-redPalid"></div>
+            <div className='mb-8'>
+              <h4 className='text-[28px]'>Criador</h4>
+              <small className='text-md'>Único</small>
+            </div>
+            <div className='border-l-2 border-l-white/45 p-4 flex flex-col gap-8'>
+              <div className="flex gap-4">
+                <div>
+                  <FaRegCircleCheck className='text-[28px]' />
+                </div>
+                <p className='text-[14px] text-text'>Livre para assistir qualquer vídeo gratuitamente (não alugados).</p>
+              </div>
+              <div className="flex gap-4">
+                <div>
+                  <FaRegCircleCheck className='text-[28px]' />
+                </div>
+                <p className='text-[14px] text-text'>Avaliar vídeos como cliente</p>
+              </div>
+              <div className="flex gap-4">
+                <div>
+                  <FaRegCircleCheck className='text-[28px]' />
+                </div>
+                <p className='text-[14px] text-text'>Avaliar vídeos como críticos</p>
+              </div>
+              <div className="flex gap-4">
+                <div>
+                  <FaRegCircleCheck className='text-[28px]' />
+                </div>
+                <p className='text-[14px] text-text'>Enviar novo vídeo ou filme</p>
+              </div>
+            </div>
+            <p className='text-3xl font-bold mt-16 mb-12'>R$ 18,00/mês</p>
+            <Button size="lg"
+              className='w-full'
+              variant="redPalid">
+              Comece agora
+            </Button>
+          </div>
         </div>
       </section>
 
+      <div className='container mb-7'>
+        <div className='w-full flex items-center gap-5'>
+          <hr className='w-full' />
+          <Button variant="outline" size="lg" className='p-8 rounded-full'>
+            Comece agora mesmo
+          </Button>
+          <hr className='w-full' />
+        </div>
+      </div>
+
+      <section>
+        <div className='grid md:grid-cols-3 gap-[32px]'>
+
+          <Colaborador
+            nome='Eduardo Lima de Oliveira'
+            feitos={["Infra do projeto", "Autenticação", "Redefinição de senha"]}
+            imagem={eduardo}
+          />
+
+          <Colaborador
+            nome='Karollyne'
+            feitos={["Infra do projeto", "Autenticação", "Redefinição de senha"]}
+            imagem={karol}
+          />
+
+          <Colaborador
+            nome='José Augusto'
+            feitos={["Infra do projeto", "Autenticação", "Redefinição de senha"]}
+            imagem={jose}
+          />
+
+          <Colaborador
+            nome='Brenda'
+            feitos={["Infra do projeto", "Autenticação", "Redefinição de senha"]}
+            imagem={brenda}
+          />
+
+          <Colaborador
+            nome='Gabriel Tavares'
+            feitos={["Infra do projeto", "Autenticação", "Redefinição de senha"]}
+            imagem={gabriel}
+          />
+
+          <Colaborador
+            nome='Lorrayne'
+            feitos={["Infra do projeto", "Autenticação", "Redefinição de senha"]}
+            imagem={lorrayne}
+          />
+
+        </div>
+      </section>
+
+      <footer className="dark:bg-black bg-card p-8">
+        <div>
+          {
+            (theme === "dark" || theme === "system") && <img alt='Moviein' src={movieinDark} className="w-[100px] object-contain -dark:hidden" />
+          }
+          {
+            theme === "light" && <img alt='Moviein' src={moviein} className="w-[100px] object-contain -dark:hidden" />
+          }
+        </div>
+        <div className='flex justify-between'>
+          <small>Moviein © 2024 - Todos os direitos reservados</small>
+          {
+            (theme === "dark" || theme === "system") && <img alt='Moviein' src={unisuamLight} className="w-[100px] object-contain -dark:hidden" />
+          }
+          {
+            theme === "light" && <img alt='Moviein' src={unisuam} className="w-[100px] object-contain -dark:hidden" />
+          }
+        </div>
+      </footer>
     </main>
   );
 }
