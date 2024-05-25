@@ -69,7 +69,7 @@ const LandingPage: React.FC = () => {
       </section>
 
 
-      <section className='container mx-auto min-h-screen grid md:grid-cols-3 gap-0 md:gap-12 relative items-center'>
+      <section className='container overflow-hidden mx-auto min-h-screen grid md:grid-cols-3 gap-0 md:gap-12 relative items-center'>
         <div className='bg-primary w-[360px] h-[360px] left-20 rounded-full blur-[120px] absolute -z-10'></div>
         <div className='col-span-2'>
           <img alt='responsividade' src={aparelhos} className='w-full' />
