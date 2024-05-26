@@ -5,13 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import LoginSchreema, { LoginSchreemaType } from './LoginSchreema';
-import { MdEmail, MdOutlinePassword } from 'react-icons/md';
 // import Input from '../../components/Input/Input';
 import { AxiosError } from 'axios';
 import Api from '../../api/api';
 import { toast } from 'react-toastify';
 import { Button } from 'components/ui/button';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from 'components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from 'components/ui/form';
 import { Input } from 'components/ui/input';
 
 const Login: React.FC = () => {
