@@ -1,8 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import Api from 'api/api';
 import { AxiosError } from 'axios';
-import Input from 'components/Input/Input';
 import { Button } from 'components/ui/button';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from 'components/ui/form';
+import { Input } from 'components/ui/input';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -17,7 +18,7 @@ type EnviarSenhaType = yup.InferType<typeof EnviarSenhaSchreema>;
 
 const EnviarCodigo: React.FC = () => {
   const nav = useNavigate();
-  const { register, formState: { errors }, handleSubmit } = useForm({
+  const form = useForm({
     resolver: yupResolver(EnviarSenhaSchreema)
   })
   const [loadred, setLoadred] = useState<boolean>(false);
@@ -41,26 +42,36 @@ const EnviarCodigo: React.FC = () => {
     <div className='bg-gradient-to-br flex justify-center items-center w-full h-screen from-primary to-red'>
       <div className='w-[80vh] p-8 bg-background rounded-xl'>
         <h2 className='text-xl'>Redefinir Senha</h2>
-        <form className='mt-10' onSubmit={handleSubmit(submit)}>
-          <Input<EnviarSenhaType> register={register}
-            Titulo='Email'
-            field='email'
-            fieldErrors={errors}
-          />
-          <div className='mt-4 flex justify-end gap-4'>
-            <Button type='button'
-              variant='outline'
-              onClick={() => nav(-1)}>
-              Cancelar
-            </Button>
-            <Button
-              type='submit'
-              load={loadred}
-            >
-              Enviar código de redefinição
-            </Button>
-          </div>
-        </form>
+        <Form {...form}>
+          <form className='mt-10' onSubmit={form.handleSubmit(submit)}>
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className='mt-4 flex justify-end gap-4'>
+              <Button type='button'
+                variant='outline'
+                onClick={() => nav(-1)}>
+                Cancelar
+              </Button>
+              <Button
+                type='submit'
+                load={loadred}
+              >
+                Enviar código de redefinição
+              </Button>
+            </div>
+          </form>
+        </Form>
       </div>
     </div>
   );

@@ -6,22 +6,22 @@
   :root {
     --primary: 255 100% 68%;
     --redPalid: 316, 93%, 23%;
-    --red: 343, 96%, 39%;
+    --red: 343 96% 39%;
     
-    --text: 245, 21%, 12%;
-    --card: 291, 54%, 97%;
-    --background: 0, 0%, 100%;    
+    --text: 245 21% 12%;
+    --card: 291 54% 97%;
+    --background: 0 0% 100%;    
     --radius: 0.5rem;
   } 
 
   .dark {
     --primary: 255 100% 68%;
     --redPalid: 316, 93%, 23%;
-    --red: 343, 96%, 42%;
+    --red: 343 96% 42%;
     
-    --text: 0, 0%, 100%;
-    --card: 245, 21%, 12%;
-    --background:245, 21%, 12%;
+    --text: 0 0% 100%;
+    --card: 245 21% 12%;
+    --background:245 21% 12%;
     --radius: 0.5rem;
   }
 }
