@@ -1,16 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
-import Input from "../../../components/Input/Input";
 import ModalThumbnail from "../../../components/Modals/ModalThumbnail/ModalThumbnail";
 import { Skeleton } from "components/ui/skeleton";
 import ModalDesconectar from "components/Modals/ModalThumbnail/ModalDesconectar/ModalDesconectar";
-import UserContext, { UseContextType } from "context/UserContext";
+import UserContext from "context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { Theme, useTheme } from "components/ui/theme-provider";
 import InputSwitchAutenticacao2Fatores from "components/InputSwitchAutenticacao2Fatores";
 import { Button } from "components/ui/button";
+import { Input } from "components/ui/input";
+import { Label } from "components/ui/label";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "components/ui/select";
 
 const DadosPrincipais: React.FC = () => {
-    const { thumb, email, auth2, setValueUser, reload, errorUser, registerUser } = useContext(UserContext)
+    const { thumb, email, nome, auth2, setValueUser, reload } = useContext(UserContext)
     const { setTheme, theme } = useTheme();
     const [load, setLoad] = useState<boolean>(true);
     const nav = useNavigate();
@@ -66,16 +68,15 @@ const DadosPrincipais: React.FC = () => {
                                 </>
                             ) : (
                                 <>
-                                    <Input<UseContextType> Titulo="Nome"
-                                        field="nome"
-                                        Disable
-                                        register={registerUser!}
-                                        fieldErrors={errorUser!} />
-                                    <Input<UseContextType> Titulo="Email"
-                                        field="email"
-                                        Disable
-                                        register={registerUser!}
-                                        fieldErrors={errorUser!} />
+                                    <div className="mt-2">
+                                        <Label htmlFor="nome" className="opacity-50">Nome</Label>
+                                        <Input value={nome} id="nome" disabled />
+                                    </div>
+                                    <div className="mt-6">
+                                        <Label htmlFor="email" className="opacity-50">Sena</Label>
+                                        <Input value={email} id="email" disabled />
+                                    </div>
+
 
                                     <InputSwitchAutenticacao2Fatores auth2={auth2} />
                                 </>
@@ -88,12 +89,18 @@ const DadosPrincipais: React.FC = () => {
                             </Button>
                         </div>
                         <div className="mb-4">
-                            <label className='text-text mb-2'>Tema</label>
-                            <select onChange={(e) => setTheme(e.target.value as Theme)} className='p-2 text-text outline-none rounded-lg bg-[transparent] w-full border-[1px] border-input' >
-                                <option value="light" selected={theme === "light"} className='dark:bg-dark bg-white text-text/40'>Claro</option>
-                                <option value="dark" selected={theme === "dark"} className='dark:bg-dark bg-white text-text/40'>Escuro</option>
-                                <option value="systema" selected={theme === "system"} className='dark:bg-dark bg-white text-text/40'>System</option>
-                            </select>
+                            <Select onValueChange={(d: Theme) => setTheme(d)}>
+                                <SelectTrigger>
+                                    <SelectValue defaultValue={theme} />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectItem value="light">Claro</SelectItem>
+                                        <SelectItem value="dark">Escuro</SelectItem>
+                                        <SelectItem value="system">System</SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
                         </div>
                         <div>
                             <ModalDesconectar />

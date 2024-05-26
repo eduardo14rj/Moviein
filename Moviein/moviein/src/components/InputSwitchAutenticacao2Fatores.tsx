@@ -18,7 +18,7 @@ const InputSwitchAutenticacao2Fatores: React.FC<InputSwitchAutenticacao2FatoresT
 
     return (
         <>
-            <div className="flex gap-8 justify-between cursor-pointer" onClick={toggle2Auth}>
+            <div className="flex gap-8 justify-between cursor-pointer my-4" onClick={toggle2Auth}>
                 <label htmlFor="auth2"
                     className="pointer-events-none"
                     onClick={toggle2Auth}
