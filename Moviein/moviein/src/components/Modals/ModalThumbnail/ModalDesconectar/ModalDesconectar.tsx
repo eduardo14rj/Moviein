@@ -1,5 +1,5 @@
 import { DialogClose } from '@radix-ui/react-dialog';
-import Button from 'components/Button';
+import { Button } from 'components/ui/button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from 'components/ui/dialog';
 import React from 'react';
 
@@ -13,9 +13,11 @@ const ModalDesconectar: React.FC = () => {
         <>
             <Dialog>
                 <DialogTrigger asChild>
-                    <Button titulo="Deslogar"
+                    <Button
                         color="outline-white"
-                        className="w-full" />
+                        className="w-full">
+                        Deslogar
+                    </Button>
                 </DialogTrigger>
                 <DialogContent>
                     <DialogHeader>
@@ -27,16 +29,13 @@ const ModalDesconectar: React.FC = () => {
                     <DialogFooter>
                         <>
                             <DialogClose>
-                                <Button
-                                    titulo="Fechar"
-                                    color="outline-white"
-                                />
+                                <Button color="outline-white">
+                                    Fechar
+                                </Button>
                             </DialogClose>
-                            <Button
-                                titulo="Sair da plataforma"
-                                color="red"
-                                onClick={() => desconectar()}
-                            />
+                            <Button color="red" onClick={() => desconectar()}>
+                                Sair da plataforma
+                            </Button>
                         </>
                     </DialogFooter>
                 </DialogContent>

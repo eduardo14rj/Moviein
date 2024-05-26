@@ -6,16 +6,18 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import LoginSchreema, { LoginSchreemaType } from './LoginSchreema';
 import { MdEmail, MdOutlinePassword } from 'react-icons/md';
-import Input from '../../components/Input/Input';
-import Button from '../../components/Button';
+// import Input from '../../components/Input/Input';
 import { AxiosError } from 'axios';
 import Api from '../../api/api';
 import { toast } from 'react-toastify';
+import { Button } from 'components/ui/button';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from 'components/ui/form';
+import { Input } from 'components/ui/input';
 
 const Login: React.FC = () => {
   const nav = useNavigate();
   const [load, setLoad] = useState<boolean>(false);
-  const { register, formState: { errors }, handleSubmit } = useForm<LoginSchreemaType>({
+  const form = useForm<LoginSchreemaType>({
     resolver: yupResolver(LoginSchreema)
   })
 
@@ -62,32 +64,43 @@ const Login: React.FC = () => {
                     <p onClick={() => nav("/registro")} className='text-primary ml-1 cursor-pointer underline  decoration-slice'>Crie uma conta</p>
                   </div>
                 </div>
-                <form onSubmit={handleSubmit(LoginEntrar)}>
-                  <Input<LoginSchreemaType>
-                    Icon={<MdEmail />}
-                    Titulo='Email'
-                    Type='email'
-                    field="email"
-                    fieldErrors={errors}
-                    register={register} />
-                  <Input<LoginSchreemaType>
-                    Icon={<MdOutlinePassword />}
-                    Titulo='Senha'
-                    Type='password'
-                    field="senha"
-                    fieldErrors={errors}
-                    register={register}
-                  />
-                  <div className='flex gap-4 mt-4 justify-end'>
-                    {/* <input type='submit' value="Entrar" className='w-full cursor-pointer py-3 px-6 text-white bg-primary rounded-lg ' /> */}
-                    <Button
-                      type="submit"
-                      titulo='Entrar'
-                      className='w-full'
-                      loading={load}
+                <Form {...form}>
+                  <form className='gap-4 flex flex-col'
+                    onSubmit={form.handleSubmit(LoginEntrar)}>
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email</FormLabel>
+                          <FormControl>
+                            <Input {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
-                  </div>
-                </form>
+                    <FormField
+                      control={form.control}
+                      name="senha"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Senha</FormLabel>
+                          <FormControl>
+                            <Input {...field} type='password' />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <div className='flex gap-4 mt-4 justify-end'>
+                      <Button type="submit" className='w-full' load={load}>
+                        Entrar
+                      </Button>
+                    </div>
+                  </form>
+                </Form>
                 <div className='mt-6 flex gap-1'>
                   <p className='text-text'>Esqueceu sua senha?</p>
                   <p className='text-primary cursor-pointer underline decoration-slice' onClick={() => nav("/enviarCodigo")}>Redefine aqui</p>

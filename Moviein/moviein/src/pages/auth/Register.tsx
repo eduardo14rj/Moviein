@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import filmes from '../../assets/filme.png';
 import logo from '../../assets/logo.png';
-import Input from '../../components/Input/Input';
+// import Input from '../../components/Input/Input';
 import { yupResolver } from "@hookform/resolvers/yup"
 
 import { useForm } from 'react-hook-form';
-import { MdCalendarMonth, MdEmail, MdKey, MdSearch } from 'react-icons/md';
-import Select from '../../components/Input/Select';
-import RegistroUsuarioScheema, { RegistroUsuario } from './RegistroUsuarioScheema';
-import Button from '../../components/Button';
+import RegistroUsuarioScheema, { RegistroUsuario } from './RegisterScheema';
 import { useNavigate } from 'react-router-dom';
 import Api from '../../api/api';
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 import EnderecoCEPModel from '../../models/EnderecoCEPModel';
+import { Button } from 'components/ui/button';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from 'components/ui/form';
+import { Input } from 'components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'components/ui/select';
+import { MdSearch } from 'react-icons/md';
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
   const [load, setLoad] = useState<boolean>(false);
   const [loadCEP, setLoadCEP] = useState<boolean>(false);
-  const { register, handleSubmit, formState: { errors }, setValue, getValues, resetField, watch } = useForm<RegistroUsuario>({
+  const form = useForm<RegistroUsuario>({
     resolver: yupResolver(RegistroUsuarioScheema),
     defaultValues: {
       etapa: 0,
@@ -50,20 +52,20 @@ const Register: React.FC = () => {
       ));
 
   useEffect(() => {
-    setValue("etapa", etapa);
-  }, [etapa, setValue])
+    form.setValue("etapa", etapa);
+  }, [etapa, form])
 
   async function CEPEndereco() {
     try {
       setLoadCEP(true);
-      var cep = getValues("cep");
+      var cep = form.getValues("cep");
       var enderecos = await Api.get<EnderecoCEPModel>(`https://viacep.com.br/ws/${cep}/json/`);
       if (enderecos.status === 200 || enderecos.status === 204) {
         setLoadCEP(false);
-        setValue("bairro", enderecos.data.bairro);
-        setValue("estado", enderecos.data.uf);
-        setValue("complemento", enderecos.data.complemento);
-        setValue("cidade", enderecos.data.localidade);
+        form.setValue("bairro", enderecos.data.bairro);
+        form.setValue("estado", enderecos.data.uf);
+        form.setValue("complemento", enderecos.data.complemento);
+        form.setValue("cidade", enderecos.data.localidade);
       }
       if (
         enderecos.data?.bairro === undefined &&
@@ -85,28 +87,35 @@ const Register: React.FC = () => {
   }
 
   function LimparCampos() {
+
     switch (etapa) {
       case 0:
-        resetField("nomeCompleto");
-        resetField("nomeMaterno");
-        resetField("dataNascimento");
-        resetField("telefone");
-        resetField("cpf");
-        resetField("genero");
+        form.reset({
+          nomeCompleto: "",
+          nomeMaterno: "",
+          dataNascimento: "",
+          telefone: "",
+          cpf: "",
+          genero: ""
+        })
         break;
       case 1:
-        resetField("cep");
-        resetField("pais");
-        resetField("estado");
-        resetField("cidade");
-        resetField("bairro");
-        resetField("numero");
-        resetField("complemento");
+        form.reset({
+          cep: "",
+          pais: "",
+          estado: "",
+          cidade: "",
+          bairro: "",
+          numero: "",
+          complemento: ""
+        })
         break;
       case 2:
-        resetField("email");
-        resetField("senha");
-        resetField("confirmarSenha");
+        form.reset({
+          email: "",
+          senha: "",
+          confirmarSenha: ""
+        })
         break;
     }
   }
@@ -189,158 +198,270 @@ const Register: React.FC = () => {
           {/* Formulário: Etapa 1 */}
 
           <div className='mt-20'>
-            <form onSubmit={handleSubmit(RegistrarUsuario)}>
-              {
-                etapa === 0 && (
-                  <div className='grid md:grid-cols-2 grid-cols-1 gap-4'>
-                    <Input<RegistroUsuario>
-                      fieldErrors={errors}
-                      register={register}
-                      field='nomeCompleto'
-                      Titulo='Nome completo' />
-                    <Input<RegistroUsuario>
-                      fieldErrors={errors}
-                      register={register}
-                      field='nomeMaterno'
-                      Titulo='Nome materno' />
-                    <Input<RegistroUsuario>
-                      fieldErrors={errors}
-                      register={register}
-                      Icon={<MdCalendarMonth />}
-                      Type='date'
-                      field='dataNascimento'
-                      Titulo='Data de nascimento' />
-                    <Input<RegistroUsuario>
-                      fieldErrors={errors}
-                      register={register}
-                      field='telefone'
-                      Titulo='Telefone com DDD' />
-                    <Input<RegistroUsuario>
-                      fieldErrors={errors}
-                      register={register}
-                      field='cpf'
-                      Titulo='CPF' />
-                    <Select<RegistroUsuario>
-                      register={register}
-                      fieldErrors={errors}
-                      field='genero'
-                      options={[
-                        { nome: "Masculino", valor: "M" },
-                        { nome: "Feminino", valor: "F" }
-                      ]}
-                      placeholder='Selecione um gênero'
-                      Titulo='Gênero' />
-                  </div>
-                )
-              }
-              {
-                etapa === 1 && (
-                  <>
-                    <div className='flex justify-between items-start gap-3'>
-                      <div className='w-full'>
-                        <Input<RegistroUsuario>
-                          Titulo='CEP'
-                          field="cep"
-                          fieldErrors={errors}
-                          register={register}
+            <Form {...form}>
+              <form className='gap-4 flex flex-col'
+                onSubmit={form.handleSubmit(RegistrarUsuario)}>
+                {
+                  etapa === 0 && (
+                    <div className='grid md:grid-cols-2 grid-cols-1 gap-4'>
+                      <FormField
+                        control={form.control}
+                        name="nomeCompleto"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Nome completo</FormLabel>
+                            <FormControl>
+                              <Input {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="nomeMaterno"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Nome materno</FormLabel>
+                            <FormControl>
+                              <Input {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="dataNascimento"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Data de nascimento</FormLabel>
+                            <FormControl>
+                              <Input {...field} type='date' />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="telefone"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Telefone</FormLabel>
+                            <FormControl>
+                              <Input {...field} type='tel' />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="cpf"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>CPF</FormLabel>
+                            <FormControl>
+                              <Input {...field} maxLength={11} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="genero"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Gênero</FormLabel>
+                            <FormControl>
+                              <Select onValueChange={field.onChange} value={field.value}>
+                                <FormControl>
+                                  <SelectTrigger>
+                                    <SelectValue />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  <SelectItem value='M'>Masculino</SelectItem>
+                                  <SelectItem value='F'>Feminino</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  )
+                }
+                {
+                  etapa === 1 && (
+                    <>
+                      <FormField
+                        control={form.control}
+                        name="cep"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>CEP</FormLabel>
+                            <div className='flex space-x-4'>
+                              <FormControl>
+                                <Input {...field} type='number' />
+                              </FormControl>
+                              <Button type='button' load={loadCEP} onClick={() => CEPEndereco()}>
+                                <MdSearch className='text-white' />
+                              </Button>
+                            </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <hr className='border-white/30' />
+                      <div className='grid grid-cols-2 gap-5'>
+                        <FormField
+                          control={form.control}
+                          name="pais"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>País</FormLabel>
+                              <FormControl>
+                                <Input {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="estado"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Estado</FormLabel>
+                              <FormControl>
+                                <Input {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="cidade"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Cidade</FormLabel>
+                              <FormControl>
+                                <Input {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="bairro"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Bairro</FormLabel>
+                              <FormControl>
+                                <Input {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="numero"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Número</FormLabel>
+                              <FormControl>
+                                <Input {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="complemento"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Complemento</FormLabel>
+                              <FormControl>
+                                <Input {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
                         />
                       </div>
-                      <div className='relative'>
-                      <p className='text-white mb-2 opacity-0'>.</p>
-                        <Button
-                          disabled={watch("cep")?.length !== 8}
-                          icon={<MdSearch className='text-white' />}
-                          loading={loadCEP}
-                          onClick={() => CEPEndereco()} />
-                      </div>
-                    </div>
-                    <hr className='border-white/30' />
-                    <div className='mt-3 grid grid-cols-2 gap-4'>
-                      <Input<RegistroUsuario>
-                        Titulo="País"
-                        field="pais"
-                        fieldErrors={errors}
-                        register={register} />
-                      <Input<RegistroUsuario>
-                        Titulo="Estado"
-                        field="estado"
-                        fieldErrors={errors}
-                        register={register} />
-                      <Input<RegistroUsuario>
-                        Titulo="Cidade"
-                        field="cidade"
-                        fieldErrors={errors}
-                        register={register} />
-                      <Input<RegistroUsuario>
-                        Titulo="Bairro"
-                        field="bairro"
-                        fieldErrors={errors}
-                        register={register} />
-                      <Input<RegistroUsuario>
-                        Titulo="Número"
-                        field="numero"
-                        Type="number"
-                        fieldErrors={errors}
-                        register={register} />
-                      <Input<RegistroUsuario>
-                        Titulo="Complemento"
-                        field="complemento"
-                        fieldErrors={errors}
-                        register={register} />
-                    </div>
-                  </>
-                )
-              }
+                    </>
+                  )
+                }
 
-              {
-                etapa === 2 && (
-                  <div>
-                    <Input<RegistroUsuario>
-                      Titulo='Email'
-                      Icon={<MdEmail />}
-                      field='email'
-                      fieldErrors={errors}
-                      register={register}
-                      Type='email' />
-                    <Input<RegistroUsuario>
-                      Titulo="Senha"
-                      Icon={<MdKey />}
-                      field="senha"
-                      fieldErrors={errors}
-                      register={register}
-                      Type='password'
-                    />
-                    <Input<RegistroUsuario>
-                      Titulo="Confirmar senha"
-                      Icon={<MdKey />}
-                      field="confirmarSenha"
-                      fieldErrors={errors}
-                      register={register}
-                      Type='password'
-                    />
+                {
+                  etapa === 2 && (
+                    <div className='space-y-4'>
+                      <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Email</FormLabel>
+                            <FormControl>
+                              <Input {...field} type='email' />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="senha"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Senha</FormLabel>
+                            <FormControl>
+                              <Input {...field} type='password' />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="confirmarSenha"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Confirmar senha</FormLabel>
+                            <FormControl>
+                              <Input {...field} type='password' />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  )
+                }
+
+                <div className='mt-4 flex justify-between'>
+                  <Button onClick={() => LimparCampos()} variant="red" type='button' >
+                    Limpar
+                  </Button>
+                  <div className='flex gap-4'>
+                    <Button type='button' variant="outline" onClick={() => VoltarEtapa()}>
+                      {etapa === 0 ? "Voltar ao login" : "Voltar"}
+                    </Button>
+                    <Button load={load} type="submit">
+                      Próximo
+                    </Button>
                   </div>
-                )
-              }
-
-              <div className='mt-4 flex justify-between'>
-                <Button titulo='Limpar'
-                  onClick={() => LimparCampos()}
-                  color="outline-red" type='button' />
-                <div className='flex gap-4'>
-                  <Button
-                    titulo={etapa === 0 ? "Voltar ao login" : "Voltar"}
-                    type='button'
-                    color="outline-white"
-                    onClick={() => VoltarEtapa()}
-                  />
-                  <Button
-                    titulo='Próximo'
-                    loading={load}
-                    type="submit"
-                  />
                 </div>
-              </div>
-            </form>
+              </form>
+            </Form>
           </div>
 
         </div>

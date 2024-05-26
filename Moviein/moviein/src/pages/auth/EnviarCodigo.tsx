@@ -1,8 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import Api from 'api/api';
 import { AxiosError } from 'axios';
-import Button from 'components/Button';
 import Input from 'components/Input/Input';
+import { Button } from 'components/ui/button';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -31,14 +31,14 @@ const EnviarCodigo: React.FC = () => {
         nav("/RedefinirSenha", { state: { code: res.data.code, email: data.email } });
       }
     } catch (err) {
-      var error = err as AxiosError<{erro: string}>;
+      var error = err as AxiosError<{ erro: string }>;
       toast.error(error.response?.data.erro as string);
     }
     setLoadred(false);
   }
 
   return (
-    <div className='bg-gradient-to-br flex justify-center items-center w-full h-screen from-primary to-redDark'>
+    <div className='bg-gradient-to-br flex justify-center items-center w-full h-screen from-primary to-red'>
       <div className='w-[80vh] p-8 bg-background rounded-xl'>
         <h2 className='text-xl'>Redefinir Senha</h2>
         <form className='mt-10' onSubmit={handleSubmit(submit)}>
@@ -48,15 +48,17 @@ const EnviarCodigo: React.FC = () => {
             fieldErrors={errors}
           />
           <div className='mt-4 flex justify-end gap-4'>
-            <Button titulo='Cancelar'
-              type='button'
-              color='outline-white'
-              onClick={() => nav(-1)}
-            />
-            <Button titulo='Enviar código de redefinição'
+            <Button type='button'
+              variant='outline'
+              onClick={() => nav(-1)}>
+              Cancelar
+            </Button>
+            <Button
               type='submit'
-              loading={loadred}
-            />
+              load={loadred}
+            >
+              Enviar código de redefinição
+            </Button>
           </div>
         </form>
       </div>

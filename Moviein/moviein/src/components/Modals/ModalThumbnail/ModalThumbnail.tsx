@@ -1,4 +1,3 @@
-import Button from '../../Button';
 import { DialogFooter, DialogHeader, Dialog, DialogTrigger, DialogContent, DialogTitle, } from '../../../components/ui/dialog';
 import React, { useRef, useState } from 'react';
 import { UseFormSetValue } from 'react-hook-form';
@@ -6,6 +5,7 @@ import { MdImage } from 'react-icons/md';
 import Api from '../../../api/api';
 import { toast } from 'react-toastify';
 import Resizer from "react-image-file-resizer";
+import { Button } from 'components/ui/button';
 
 
 type ModalThumbnailType = {
@@ -115,16 +115,18 @@ const ModalThumbnail: React.FC<ModalThumbnailType> = (p) => {
                     }
                 </DialogHeader>
                 <DialogFooter>
-                    <Button titulo='Fechar' onClick={() => setOpen(false)} color="outline-white" />
+                    <Button onClick={() => setOpen(false)} variant="outline" >
+                        Fechar
+                    </Button>
                     {
                         (p.thumb === undefined || p.thumb === null) ? (
-                            <Button titulo='Salvar thumb'
-                                onClick={() => SaveImage()}
-                                loading={load} />
+                            <Button onClick={() => SaveImage()} load={load} >
+                                Salvar thumb
+                            </Button>
                         ) : (
-                            <Button titulo='Editar thumb'
-                                onClick={() => SaveImage()}
-                                loading={load} />
+                            <Button onClick={() => SaveImage()} load={load} >
+                                Editar thumb
+                            </Button>
                         )
                     }
                 </DialogFooter>

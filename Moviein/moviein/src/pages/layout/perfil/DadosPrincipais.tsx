@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import Input from "../../../components/Input/Input";
-import Button from "../../../components/Button";
 import ModalThumbnail from "../../../components/Modals/ModalThumbnail/ModalThumbnail";
 import { Skeleton } from "components/ui/skeleton";
 import ModalDesconectar from "components/Modals/ModalThumbnail/ModalDesconectar/ModalDesconectar";
@@ -8,6 +7,7 @@ import UserContext, { UseContextType } from "context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { Theme, useTheme } from "components/ui/theme-provider";
 import InputSwitchAutenticacao2Fatores from "components/InputSwitchAutenticacao2Fatores";
+import { Button } from "components/ui/button";
 
 const DadosPrincipais: React.FC = () => {
     const { thumb, email, auth2, setValueUser, reload, errorUser, registerUser } = useContext(UserContext)
@@ -83,9 +83,9 @@ const DadosPrincipais: React.FC = () => {
                         }
 
                         <div className="my-5">
-                            <Button titulo="Redefinir senha"
-                                className="w-full"
-                                onClick={() => redefinirSenha()} />
+                            <Button className="w-full" onClick={() => redefinirSenha()}>
+                                Redefinir senha
+                            </Button>
                         </div>
                         <div className="mb-4">
                             <label className='text-text mb-2'>Tema</label>
@@ -108,8 +108,9 @@ const DadosPrincipais: React.FC = () => {
 
                         <div className="flex flex-col gap-4 text-center text-text">
                             <h3 className="text-[20px]">Atualmente você não possui nenhuma assinatura</h3>
-                            <Button color="outline-white"
-                                titulo="Comprar uma assinatura" />
+                            <Button color="outline-white" >
+                                Comprar uma assinatura
+                            </Button>
                         </div>
                     </div>
                 </div>

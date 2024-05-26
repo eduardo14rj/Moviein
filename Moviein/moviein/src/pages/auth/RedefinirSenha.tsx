@@ -1,14 +1,14 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import Api from 'api/api';
-import Button from 'components/Button';
 import Input from 'components/Input/Input';
+import { Button } from 'components/ui/button';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from 'components/ui/input-otp';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
-type redefine = { code: string , email: string};
+type redefine = { code: string, email: string };
 
 const RedefinirSenhaSchreema = yup.object({
     senha: yup.string().required(),
@@ -27,7 +27,7 @@ const RedefinirSenha: React.FC = () => {
         resolver: yupResolver(RedefinirSenhaSchreema)
     })
 
-    
+
     async function submit(data: RedefinirSenhaType) {
         if (data.code !== code) {
             setError("code", { message: "Código inválido." });
@@ -55,7 +55,7 @@ const RedefinirSenha: React.FC = () => {
     }
 
     return (
-        <div className='bg-gradient-to-br flex justify-center items-center w-full h-screen from-primary to-redDark'>
+        <div className='bg-gradient-to-br flex justify-center items-center w-full h-screen from-primary to-red'>
             <div className='w-[80vh] h-[70vh] p-8 bg-dark rounded-xl'>
                 <h2 className='text-xl'>Redefinir Senha</h2>
                 <form className='mt-10' onSubmit={handleSubmit(submit)}>
@@ -83,15 +83,12 @@ const RedefinirSenha: React.FC = () => {
                         fieldErrors={errors}
                     />
                     <div className='mt-4 flex justify-end gap-4'>
-                        <Button titulo='Voltar'
-                            color="outline-white"
-                            onClick={() => nav(-1)}
-                            type='button'
-                        />
-                        <Button titulo='Redefinir senha'
-                            type='submit'
-                            loading={load}
-                        />
+                        <Button color="outline-white" onClick={() => nav(-1)} type='button'>
+                            Voltar
+                        </Button>
+                        <Button type='submit' load={load}>
+                            Redefinir senha
+                        </Button>
                     </div>
                 </form>
             </div>
