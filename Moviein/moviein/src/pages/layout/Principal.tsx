@@ -1,11 +1,14 @@
 import React from 'react';
-import film from '../../assets/filmes/film1.png'
+import film from '../../assets/filmes/film1.png';
 import { Button } from 'components/ui/button';
 import tomate from '../../assets/tomate.png';
 import pipoca from '../../assets/pipoca.png';
 import { Carousel, CarouselContent, CarouselItem } from 'components/ui/carousel';
+import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Principal: React.FC = () => {
+    const nav = useNavigate();
     return (
         <main>
 
@@ -28,7 +31,7 @@ const Principal: React.FC = () => {
                                 <img src={pipoca} alt="pipoca" className='h-[18px] object-contain' />
                                 <label>60%</label>
                             </button>
-                            <Button variant="red" >
+                            <Button onClick={() => nav("VisualFilme")} variant="red">
                                 Assistir
                             </Button>
                         </div>
@@ -41,7 +44,7 @@ const Principal: React.FC = () => {
                     <CarouselContent>
                         <CarouselItem className='basis-1/5'>
                             <div className='p-8 border-primary relative border-[1px] h-[200px] rounded-xl'>
-
+                            
                             </div>
                         </CarouselItem>
                     </CarouselContent>

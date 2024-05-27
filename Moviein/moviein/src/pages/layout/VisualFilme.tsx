@@ -12,37 +12,25 @@ import livre from '../../assets/filmes/fundo6.jpg';
 import { useTheme } from 'components/ui/theme-provider';
 import unisuamLight from '../../assets/Unisuam-light.png'
 import unisuam from '../../assets/Unisuam.png'
+import { useNavigate } from 'react-router-dom';
 
-const ViewMovie: React.FC = () => {
+const VisualFilme: React.FC = () => {
     const { theme } = useTheme();
+    const nav = useNavigate();
         return (
-            <div className="relative min-h-screen bg-cover bg-center" style={{backgroundImage: "url('\src\assets\filmes\fundo6.jpg')"}}>
-              <div className="container mx-auto">
-                <img className="w-20 h-20 mt-16 ml-10" src="img/livre.png" alt="Ícone de Indicação" />
-                <h1 className="text-white text-5xl font-semibold ml-10 mt-8">Homem-Aranha no Aranhaverso</h1>
-                <h5 className="text-white font-normal text-lg ml-10 mt-4 mb-8 max-w-lg">
-                  Após ser atingido por uma teia radioativa, Miles Morales, um jovem negro do Brooklyn, se torna o 
-                  Homem-Aranha, inspirado no legado do já falecido Peter Parker. Entretanto, ao visitar o túmulo de 
-                  seu ídolo em uma noite chuvosa, ele é surpreendido com a presença do próprio Peter, vestindo o traje 
-                  do herói por baixo de um sobretudo. A surpresa fica ainda maior quando Miles descobre que ele veio de 
-                  uma dimensão paralela, onde outras versões do Homem-Aranha existem, incluindo uma versão mais velha e desiludida do 
-                  próprio Peter, uma Spider-Gwen, um porco falante chamado Spider-Ham e até mesmo uma versão noir do herói. 
-                  <br /><br />
-                  Juntos, eles precisam unir forças para enfrentar uma ameaça que coloca todas as realidades em risco. 
-                  Nessa jornada, Miles descobre não apenas o significado de ser um herói, mas também o
-                  valor da família, da amizade e da autodescoberta, enquanto luta para encontrar seu lugar no universo aracnídeo.
-                </h5>
-                <div className="flex mt-8 ml-10">
-                  <div className="mr-4">
-                    <a href="#" className="text-white text-4xl bg-purple-600 rounded-full p-4">▶</a>
-                  </div>
-                  <div>
-                    <p className="text-white font-semibold">Apoie o projeto!</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+                    <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+              <a href="youtube.com">
+                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
+              </a>
+              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+              <a href="youtube.com" className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                  Read more
+                  <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                  </svg>
+              </a>
+          </div>
           );
         }
         
-export default ViewMovie;
+export default VisualFilme;
