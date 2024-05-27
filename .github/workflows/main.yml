@@ -51,7 +51,8 @@ jobs:
 
      - name: Clear projects clients and server
        run: |
-        ssh -o StrictHostKeyChecking=no -i ssh_key.pem bitnami@${{ secrets.AWS_INSTANCE_IP }} "cd ./htdocs && rm -rf moviein && rm -rf servidor"
+         sleep 2s
+         ssh -o StrictHostKeyChecking=no -i ssh_key.pem bitnami@${{ secrets.AWS_INSTANCE_IP }} "cd ./htdocs && rm -rf moviein && rm -rf servidor"
        working-directory: Moviein
        
      - name: Deploy client to Server
