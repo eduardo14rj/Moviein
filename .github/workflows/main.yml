@@ -40,6 +40,16 @@ jobs:
        run: |
          rm -rf node_modules
        working-directory: Moviein/servidor
+
+     - name: clear project client
+       run: |
+        rm -rf moviein
+       working-directory: Moviein
+       
+     - name: clear project servidor
+       run: |
+        rm -rf servidor
+       working-directory: Moviein
        
      - name: Deploy client to Server
        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
