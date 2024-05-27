@@ -93,7 +93,7 @@ const LandingPage: React.FC = () => {
             <div className="w-[180px] h-[180px] absolute right-0 top-0 rounded-full blur-[50px] -z-10 bg-primary"></div>
             <div className="w-[180px] h-[180px] absolute -left-5 bottom-[-60px] rounded-full blur-[50px] -z-10 bg-primary"></div>
             <div className='mb-8'>
-              <h4 className='text-[28px]'>Cliente</h4>
+              <h4 className='text-[28px]'>Mensal</h4>
               <small className='text-md'>Casual</small>
             </div>
             <div className='border-l-2 border-l-white/45 p-4 flex flex-col gap-8'>
@@ -113,7 +113,7 @@ const LandingPage: React.FC = () => {
                 <div>
                   <FaRegCircleCheck className='text-[28px]' />
                 </div>
-                <p className='text-[14px] text-text'>Avaliar vídeos como críticos</p>
+                <p className='text-[14px] text-text'>Com anúncios</p>
               </div>
               <div className="flex gap-4 opacity-35">
                 <div>
@@ -133,7 +133,7 @@ const LandingPage: React.FC = () => {
             <div className="w-[180px] h-[180px] absolute right-0 top-0 rounded-full blur-[50px] -z-10 bg-red"></div>
             <div className="w-[180px] h-[180px] absolute -left-5 bottom-[-60px] rounded-full blur-[50px] -z-10 bg-red"></div>
             <div className='mb-8'>
-              <h4 className='text-[28px]'>Crítico</h4>
+              <h4 className='text-[28px]'>Semestral</h4>
               <small className='text-md'>Diferente</small>
             </div>
             <div className='border-l-2 border-l-white/45 p-4 flex flex-col gap-8'>
@@ -153,7 +153,7 @@ const LandingPage: React.FC = () => {
                 <div>
                   <FaRegCircleCheck className='text-[28px]' />
                 </div>
-                <p className='text-[14px] text-text'>Avaliar vídeos como críticos</p>
+                <p className='text-[14px] text-text'>Sem anúncios</p>
               </div>
               <div className="flex gap-4 opacity-35">
                 <div>
@@ -162,7 +162,7 @@ const LandingPage: React.FC = () => {
                 <p className='text-[14px] text-text'>Enviar novo vídeo ou filme</p>
               </div>
             </div>
-            <p className='text-3xl font-bold mt-16 mb-12'>R$ 18,00/mês</p>
+            <p className='text-3xl font-bold mt-16 mb-12'>R$ 113,40/semestral</p>
             <Button size="lg"
               className='w-full'
               variant="red">
@@ -174,7 +174,7 @@ const LandingPage: React.FC = () => {
             <div className="w-[180px] h-[180px] absolute right-0 top-0 rounded-full blur-[50px] -z-10 bg-redPalid"></div>
             <div className="w-[180px] h-[180px] absolute -left-5 bottom-[-60px] rounded-full blur-[50px] -z-10 bg-redPalid"></div>
             <div className='mb-8'>
-              <h4 className='text-[28px]'>Criador</h4>
+              <h4 className='text-[28px]'>Anual</h4>
               <small className='text-md'>Único</small>
             </div>
             <div className='border-l-2 border-l-white/45 p-4 flex flex-col gap-8'>
@@ -194,7 +194,7 @@ const LandingPage: React.FC = () => {
                 <div>
                   <FaRegCircleCheck className='text-[28px]' />
                 </div>
-                <p className='text-[14px] text-text'>Avaliar vídeos como críticos</p>
+                <p className='text-[14px] text-text'>Sem anúncios</p>
               </div>
               <div className="flex gap-4">
                 <div>
@@ -203,7 +203,7 @@ const LandingPage: React.FC = () => {
                 <p className='text-[14px] text-text'>Enviar novo vídeo ou filme</p>
               </div>
             </div>
-            <p className='text-3xl font-bold mt-16 mb-12'>R$ 18,00/mês</p>
+            <p className='text-3xl font-bold mt-16 mb-12'>R$ 226,80/anual</p>
             <Button size="lg"
               className='w-full'
               variant="redPalid">
@@ -233,31 +233,31 @@ const LandingPage: React.FC = () => {
           />
 
           <Colaborador
-            nome='Karollyne'
+            nome='Karollyne de Oliveira Cordeiro'
             feitos={["Infra do projeto", "Autenticação", "Redefinição de senha"]}
             imagem={karol}
           />
 
           <Colaborador
-            nome='José Augusto'
+            nome='José Augusto R. dos Santos'
             feitos={["Infra do projeto", "Autenticação", "Redefinição de senha"]}
             imagem={jose}
           />
 
           <Colaborador
-            nome='Brenda'
+            nome='Brenda Rodrigues de Oliveira'
             feitos={["Infra do projeto", "Autenticação", "Redefinição de senha"]}
             imagem={brenda}
           />
 
           <Colaborador
-            nome='Gabriel Tavares'
+            nome='Gabriel Tavares Pessanha'
             feitos={["Infra do projeto", "Autenticação", "Redefinição de senha"]}
             imagem={gabriel}
           />
 
           <Colaborador
-            nome='Lorrayne'
+            nome='Lorrayne Calazans Braga'
             feitos={["Infra do projeto", "Autenticação", "Redefinição de senha"]}
             imagem={lorrayne}
           />

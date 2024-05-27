@@ -12,10 +12,8 @@ import RedefinirSenha from "pages/auth/RedefinirSenha";
 import EnviarCodigo from "pages/auth/EnviarCodigo";
 import { Toaster } from "components/ui/toaster";
 import { useToast } from "components/ui/use-toast";
-import ApiService from "api/ApiService";
 function App() {
   const teste = useToast();
-  ApiService.toast = teste;
   return (
     <>
       <Toaster />
