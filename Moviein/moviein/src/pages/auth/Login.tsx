@@ -29,6 +29,7 @@ const Login: React.FC = () => {
 
   async function LoginEntrar(data: LoginSchreemaType) {
     setLoad(true);
+
     try {
       var e = await Api.post<LoginDTO_Res>("/api/usuario/login", data);
       if (e.status === 200 || e.status === 204) {

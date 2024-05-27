@@ -4,7 +4,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import "./style/index.css";
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ThemeProvider } from './components/ui/theme-provider';
 
@@ -16,11 +15,12 @@ root.render(
     <BrowserRouter>
       <ThemeProvider defaultTheme='system' storageKey='moviein-ui-theme'>
         <App />
+        {/* <ToastContainer
+          position="bottom-center"
+          autoClose={5000}
+          toastClassName="toast-theme"
+        /> */}
       </ThemeProvider>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-      />
     </BrowserRouter>
   </React.StrictMode>
 );

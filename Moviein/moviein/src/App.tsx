@@ -10,24 +10,32 @@ import MeusVideos from "./pages/layout/perfil/MeusVideos";
 import Pagamento from "./pages/pagamento/Pagamento";
 import RedefinirSenha from "pages/auth/RedefinirSenha";
 import EnviarCodigo from "pages/auth/EnviarCodigo";
-function App() { 
+import { Toaster } from "components/ui/toaster";
+import { useToast } from "components/ui/use-toast";
+import ApiService from "api/ApiService";
+function App() {
+  const teste = useToast();
+  ApiService.toast = teste;
   return (
-    <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/registro" element={<Register />} />
-      <Route path="/enviarCodigo" element={<EnviarCodigo />} />
-      <Route path="/redefinirSenha" element={<RedefinirSenha />} />
-      <Route path="/pagamento" element={<Pagamento/>} />
+    <>
+      <Toaster />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/registro" element={<Register />} />
+        <Route path="/enviarCodigo" element={<EnviarCodigo />} />
+        <Route path="/redefinirSenha" element={<RedefinirSenha />} />
+        <Route path="/pagamento" element={<Pagamento />} />
 
-      <Route path="/a/" element={<PageValidate />}>
-        <Route index element={<Principal />} />
-        <Route path="/a/perfil/" element={<SidebarPerfil />}>
-          <Route path="dadosPrincipais" element={<DadosPrincipais />} />
-          <Route path="meusVideos" element={<MeusVideos />} />
+        <Route path="/a/" element={<PageValidate />}>
+          <Route index element={<Principal />} />
+          <Route path="/a/perfil/" element={<SidebarPerfil />}>
+            <Route path="dadosPrincipais" element={<DadosPrincipais />} />
+            <Route path="meusVideos" element={<MeusVideos />} />
+          </Route>
         </Route>
-      </Route>
-    </Routes>
+      </Routes>
+    </>
   );
 }
 
