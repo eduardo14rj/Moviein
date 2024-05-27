@@ -41,14 +41,17 @@ jobs:
          rm -rf node_modules
        working-directory: Moviein/servidor
 
-     - name: clear project client
+     - name: Prepare SSH Key
        run: |
-        rm -rf moviein
-       working-directory: Moviein
-       
-     - name: clear project servidor
+          mkdir -p ~/.ssh/
+          touch ~/.ssh/known_hosts
+          ssh-keygen -R ${{ secrets.AWS_INSTANCE_IP }}
+          echo "${{ secrets.AWS_SSH_KEY }}" > ssh_key.pem
+          chmod 600 ssh_key.pem
+
+     - name: Clear projects clients and server
        run: |
-        rm -rf servidor
+        ssh -o StrictHostKeyChecking=no -i ssh_key.pem bitnami@${{ secrets.AWS_INSTANCE_IP }} "cd ./htdocs && rm -rf moviein && rm -rf servidor"
        working-directory: Moviein
        
      - name: Deploy client to Server
@@ -74,14 +77,6 @@ jobs:
           sftpArgs: '-o ConnectTimeout=5'
           exclude: 'node_modules'
           rsyncFlags: '--exclude=node_modules'
-
-     - name: Prepare SSH Key
-       run: |
-          mkdir -p ~/.ssh/
-          touch ~/.ssh/known_hosts
-          ssh-keygen -R ${{ secrets.AWS_INSTANCE_IP }}
-          echo "${{ secrets.AWS_SSH_KEY }}" > ssh_key.pem
-          chmod 600 ssh_key.pem
 
      - name: Node Install
        run: |
