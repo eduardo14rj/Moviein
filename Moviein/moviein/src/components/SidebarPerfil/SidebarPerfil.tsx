@@ -24,7 +24,7 @@ const SidebarPerfil: React.FC = () => {
         <>
             <img src={film} alt="filmes" className="w-screen h-[60px] object-cover" />
             <div className="flex">
-                <div className="w-[30%] bg-white/60 dark:bg-[#00000070] sticky top-[0] left-0 h-[100vh]">
+                <div className="w-[30%] bg-primary/10 dark:bg-[#00000070] sticky top-[0] left-0 h-[100vh]">
                     <MenuItemPerfil
                         path="/a/perfil/dadosPrincipais"
                         titulo="Dados principais" />

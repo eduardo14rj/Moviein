@@ -13,8 +13,15 @@ import EnviarCodigo from "pages/auth/EnviarCodigo";
 import VisualFilme from "pages/layout/VisualFilme";
 import { Toaster } from "components/ui/toaster";
 import { useToast } from "components/ui/use-toast";
+import { ApiService } from "api/ApiService";
+import { useEffect } from "react";
 function App() {
   const teste = useToast();
+
+  useEffect(() => {
+    ApiService.ToastContainer = teste;
+  }, [])
+  
   return (
     <>
       <Toaster />

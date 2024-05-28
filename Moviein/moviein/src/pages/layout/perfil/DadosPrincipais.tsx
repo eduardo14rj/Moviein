@@ -89,9 +89,9 @@ const DadosPrincipais: React.FC = () => {
                             </Button>
                         </div>
                         <div className="mb-4">
-                            <Select onValueChange={(d: Theme) => setTheme(d)}>
+                            <Select onValueChange={(d: Theme) => setTheme(d)} defaultValue={theme}>
                                 <SelectTrigger>
-                                    <SelectValue defaultValue={theme} />
+                                    <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectGroup>

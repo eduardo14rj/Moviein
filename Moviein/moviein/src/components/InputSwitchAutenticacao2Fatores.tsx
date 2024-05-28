@@ -1,18 +1,26 @@
 import Api from "api/api";
 import { Switch } from "./ui/switch"
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { toast } from "react-toastify";
+import UserContext from "context/UserContext";
 
 type InputSwitchAutenticacao2FatoresType = {
     auth2?: boolean
 }
 const InputSwitchAutenticacao2Fatores: React.FC<InputSwitchAutenticacao2FatoresType> = (p) => {
     const [check, setCheck] = useState<boolean>(p.auth2 ?? false);
+    const { setValueUser } = useContext(UserContext);
+    const [disable, setDisable] = useState<boolean>(false);
     async function toggle2Auth() {
-        var e = await Api.get("api/usuario/toggleAuth2");
-        if(e.status === 200) {
-            setCheck(!check);
-            toast.success(`Autenticação de 2 fatores: ${check ? "Inativo" : "Ativo"}`)
+        if(!disable){
+            setDisable(true);    
+            var e = await Api.get("api/usuario/toggleAuth2");
+            if (e.status === 200) {
+                setCheck(!check);
+                toast.success(`Autenticação de 2 fatores: ${check ? "Inativo" : "Ativo"}`)
+                setValueUser("auth2", !check);
+                setDisable(false);
+            }
         }
     }
 
