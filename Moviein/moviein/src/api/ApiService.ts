@@ -1,5 +1,6 @@
 import { ToastType, ToasterToast } from "components/ui/use-toast";
 import Api from "./api";
+import { AxiosError } from "axios";
 
 type toastere = {
     toast: ({ ...props }: ToastType) => {
@@ -11,52 +12,81 @@ type toastere = {
     toasts: ToasterToast[];
 };
 
+type ApirequestPostType<T> = {
+    path: string,
+    data: any,
+    erroTitulo: string
+    thenCallback?: (response: T) => any,
+    catchCallback?: () => any
+}
+
+type ApirequestGetType<T> = {
+    path: string,
+    erroTitulo: string
+    thenCallback?: (response: T) => any,
+    catchCallback?: () => any
+}
+
+type ApiErrorException = {
+    status: string
+    message: string
+    data: any
+}
+
+type ApiSuccess<T> = {
+    status: string
+    message: string
+    data: T
+}
+
+
 class ApiService {
     public static ToastContainer: toastere | null = null;
 
-    public async Get<T>(path: string): Promise<T | undefined> {
+    public async Get<T>(data: ApirequestGetType<T>): Promise<T | undefined> {
         try {
-            var d = await Api.get<T>(path);
+            var d = await Api.get<ApiSuccess<T>>(data.path);
             if (d.status === 200 || d.status === 204) {
-                return d.data;
+                if (data.thenCallback !== undefined) data.thenCallback(d.data.data);
+                return d.data.data;
             } else {
-                console.log(ApiService.ToastContainer);
                 ApiService.ToastContainer?.toast({
-                    title: "Erro",
-                    description: "12345",
+                    title: data.erroTitulo,
+                    description: d.data.message,
                     duration: 4000
                 })
             }
         } catch (err) {
-            console.log(ApiService.ToastContainer);
+            var errorData = err as AxiosError<ApiErrorException>;
             ApiService.ToastContainer?.toast({
-                title: "Erro",
-                description: "12345",
+                title: data.erroTitulo,
+                description: errorData.message,
                 duration: 4000
             })
         }
     }
 
 
-    public async Post<T>(path: string, data: any): Promise<T | undefined> {
+    public async Post<T>(data: ApirequestPostType<T>): Promise<T | undefined> {
         try {
-            const response = await Api.post<T>(path, data);
+            const response = await Api.post<ApiSuccess<T>>(data.path, data.data);
             if (response.status === 201 || response.status === 200) {
-                return response.data;
+                if (data.thenCallback !== undefined) data.thenCallback(response.data.data);
+                return response.data.data;
             } else {
-                console.log(ApiService.ToastContainer);
                 ApiService.ToastContainer?.toast({
                     title: "Erro",
-                    description: "Erro ao enviar dados para a API",
+                    description: response.data.message,
                     duration: 4000
                 });
             }
         } catch (err) {
-            console.log(ApiService.ToastContainer);
+            var errorData = err as AxiosError<ApiErrorException>;
             ApiService.ToastContainer?.toast({
-                title: "Erro",
-                description: "Erro ao enviar dados para a API",
-                duration: 4000
+                title: data.erroTitulo,
+                description: errorData.response?.data.message,
+                duration: 4000,
+                className: "bg-red"
             });
         }
         return undefined;

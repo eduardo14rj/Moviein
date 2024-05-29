@@ -2,10 +2,10 @@ import { DialogFooter, DialogHeader, Dialog, DialogTrigger, DialogContent, Dialo
 import React, { useRef, useState } from 'react';
 import { UseFormSetValue } from 'react-hook-form';
 import { MdImage } from 'react-icons/md';
-import Api from '../../../api/api';
-import { toast } from 'react-toastify';
 import Resizer from "react-image-file-resizer";
 import { Button } from 'components/ui/button';
+import { ApiService } from 'api/ApiService';
+import { useToast } from 'components/ui/use-toast';
 
 
 type ModalThumbnailType = {
@@ -15,12 +15,14 @@ type ModalThumbnailType = {
     reloadPerfil: () => any
 }
 
+const Api = new ApiService();
 const ModalThumbnail: React.FC<ModalThumbnailType> = (p) => {
     const [open, setOpen] = useState<boolean>(false);
     const [load, setLoad] = useState<boolean>(false);
     const ImageRef = useRef<HTMLInputElement>(null);
     const [imageBlob, setImageBlob] = useState<Blob | null>(null);
     const [imageView, setImageView] = useState<string | null>(null);
+    const { toast } = useToast();
 
     const convertToBase64 = (file: File): Promise<string | ArrayBuffer | null> => {
         return new Promise((resolve, reject) => {
@@ -64,18 +66,20 @@ const ModalThumbnail: React.FC<ModalThumbnailType> = (p) => {
             const data = {
                 thumb: image
             };
-            try {
-                var res = await Api.post("api/usuario/updateThumb", data);
-                if (res.status === 200 || res.status === 204) {
+            await Api.Post<undefined>({
+                data: data,
+                erroTitulo: "Falha ao enviar thumbnail",
+                path: "api/usuario/updateThumb",
+                thenCallback: (d) => {
                     setOpen(false);
                     setLoad(false);
                     p.reloadPerfil();
-                    toast.success("imagem salva com sucesso!");
+                    toast({
+                        title: "imagem salva com sucesso!",
+                        className: "bg-success dark:text-dark text-blue",
+                    })
                 }
-
-            } catch (error) {
-                setLoad(false);
-            }
+            })
         }
     }
 

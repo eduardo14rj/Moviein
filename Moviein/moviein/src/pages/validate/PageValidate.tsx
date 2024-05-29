@@ -4,8 +4,10 @@ import Sidebar from '../../components/Sidebar/Sidebar';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import UserContext, { UseContextSchreema, UseContextType } from 'context/UserContext';
-import Api from 'api/api';
+import { ApiService } from 'api/ApiService';
+// import Api from 'api/api';
 
+var Api = new ApiService();
 const PageValidate: React.FC = () => {
   const navigate = useNavigate();
   const { setValue, watch, formState: { errors }, register } = useForm({
@@ -31,29 +33,31 @@ const PageValidate: React.FC = () => {
   }, [navigate]);
 
   async function loadPerfil() {
-    // setLoad(true);
-    try {
-      var user = await Api.get<UseContextType>("api/usuario/get");
-      setValue("nome", user.data.nome)
-      setValue("email", user.data.email)
-      setValue("thumb", user.data.thumb);
-      setValue("auth2", user.data.auth2);
-      // setLoad(false);
-    } catch (err) {
+    // try {
+    //   var user = await Api.get<UseContextType>("api/usuario/get");
+    //   setValue("nome", user.data.nome)
+    //   setValue("email", user.data.email)
+    //   setValue("thumb", user.data.thumb);
+    //   setValue("auth2", user.data.auth2);
+    // } catch (err) {
 
-    }
+    // }
+    // await Api.Get<>
   }
-  
+
   useEffect(() => {
     async function perfil() {
       try {
-        var user = await Api.get<UseContextType>("api/usuario/get");
-        if (user.status === 200 || user.status === 204) {
-          setValue("nome", user.data.nome)
-          setValue("email", user.data.email)
-          setValue("thumb", user.data.thumb)
-          setValue("auth2", user.data.auth2)
-        }
+        await Api.Get<UseContextType>({
+          path: "api/usuario/get",
+          thenCallback: (e) => {
+            setValue("nome", e.nome)
+            setValue("email", e.email)
+            setValue("thumb", e.thumb)
+            setValue("auth2", e.auth2)
+          },
+          erroTitulo: "Falha ao carregar dados do usuário logado."
+        });
       } catch (err) {
 
       }
