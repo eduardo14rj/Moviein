@@ -1,35 +1,56 @@
 import React from 'react';
 // import Button from 'components/Button';
-import movie from '../../assets/filme.png';
-import log from '../../assets/movie.png'
-import aparelhos from '../../assets/aparelhos.png';
-import moviein from '../../assets/moviein.png';
-import movieinDark from '../../assets/moviein-dark.png';
-import { FaRegCircleCheck } from "react-icons/fa6";
 import { Button } from 'components/ui/button';
-import fundo from '../../assets/filmes/livre.png';
-import livre from '../../assets/filmes/fundo6.jpg';
+import livre from '../../assets/filmes/livre.png';
+import fundo from '../../assets/filmes/fundopanda7.jpg';
 import { useTheme } from 'components/ui/theme-provider';
-import unisuamLight from '../../assets/Unisuam-light.png'
-import unisuam from '../../assets/Unisuam.png'
+import tomate from '../../assets/tomate.png';
+import pipoca from '../../assets/pipoca.png';
 import { useNavigate } from 'react-router-dom';
+
 
 const VisualFilme: React.FC = () => {
     const { theme } = useTheme();
     const nav = useNavigate();
         return (
-                    <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-              <a href="youtube.com">
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-              </a>
-              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-              <a href="youtube.com" className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                  Read more
-                  <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                  </svg>
-              </a>
+          <div className="absolute mx-auto h-full w-full top-0 left-0 m-0 p-0 border-0 bg-cover" style={{ backgroundImage: `url(${fundo})` }}>
+          <div className="container ml-12">
+            <img className="w-20 h-20 mt-16 ml-10" src={livre} alt="Ícone de Indicação" />
+            <h1 className="text-white text-7xl font-semibold ml-10 mt-12">Kung Fu Panda 4</h1>
+            <h5 className="text-2xl  text-white font-normal leading-9 ml-10 mt-4 mb-16 max-w-6xl text-left">
+            <br />
+              Em "Kung Fu Panda 4", Po, o Grande Dragão Guerreiro, é escolhido para se tornar 
+              o Líder Espiritual do Vale da Paz, mas enfrenta desafios ao encontrar e treinar 
+              um novo Dragão Guerreiro, Zhen, uma raposa relutante. Enquanto isso, a Camaleoa 
+              tenta ressuscitar vilões derrotados por Po, colocando em risco a paz novamente.
+              <br /><br />
+              Durante essa jornada cheia de ação e autodescoberta, Po também precisa lidar
+              com suas próprias dúvidas sobre seu papel como líder e mentor. Com coragem, humor e a sabedoria 
+              adquirida ao longo de suas aventuras, ele e Zhen devem unir forças para restaurar a paz e provar que, 
+              juntos, são capazes de superar qualquer desafio.
+            </h5>
+            <div className="flex mt-8 ml-10">
+                  <button
+                  className="w-16 h-16 mr-4 rounded-full hover:bg-purple-700 bg-purple-600 focus:outline-none flex items-center justify-center">
+                  &#9654;
+                  </button>
+                  <button className="bg-purple-600 hover:bg-purple-700 text-white font-semibold text-lg rounded-full px-5 py-3 ">
+                  Apoie o projeto!
+                  </button>
+            </div>
           </div>
+
+          <div className='flex justify-end gap-4 mr-10 bottom-0'>
+              <button className='px-7 py-5 rounded-full items-center bg-background flex gap-3'>
+                  <img src={tomate} alt="tomate" className='h-[20px] object-contain' />
+                  <label>30%</label>
+              </button>
+              <button className='px-7 py-5 rounded-full items-center bg-background flex gap-3'>
+                  <img src={pipoca} alt="pipoca" className='h-[20px] object-contain' />
+                  <label>60%</label>
+              </button>
+          </div>
+        </div>
           );
         }
         
