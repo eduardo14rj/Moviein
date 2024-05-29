@@ -1,17 +1,12 @@
 import React from 'react';
 // import Button from 'components/Button';
-import { Button } from 'components/ui/button';
 import livre from '../../assets/filmes/livre.png';
 import fundo from '../../assets/filmes/fundopanda7.jpg';
-import { useTheme } from 'components/ui/theme-provider';
 import tomate from '../../assets/tomate.png';
 import pipoca from '../../assets/pipoca.png';
-import { useNavigate } from 'react-router-dom';
 
 
 const VisualFilme: React.FC = () => {
-    const { theme } = useTheme();
-    const nav = useNavigate();
         return (
           <div className="absolute mx-auto h-full w-full top-0 left-0 m-0 p-0 border-0 bg-cover" style={{ backgroundImage: `url(${fundo})` }}>
           <div className="container ml-12">

@@ -4,7 +4,6 @@ import { Button } from 'components/ui/button';
 import tomate from '../../assets/tomate.png';
 import pipoca from '../../assets/pipoca.png';
 import { Carousel, CarouselContent, CarouselItem } from 'components/ui/carousel';
-import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 const Principal: React.FC = () => {

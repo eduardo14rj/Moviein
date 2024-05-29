@@ -12,7 +12,15 @@ import RedefinirSenha from "pages/auth/RedefinirSenha";
 import EnviarCodigo from "pages/auth/EnviarCodigo";
 import VisualFilme from "pages/layout/VisualFilme";
 import { Toaster } from "components/ui/toaster";
+import { useEffect } from "react";
+import { ApiService } from "api/ApiService";
+import { useToast } from "components/ui/use-toast";
 function App() {
+  const teste = useToast();
+  useEffect(() => {
+    ApiService.ToastContainer = teste;
+  }, [])
+  
   return (
     <>
       <Toaster />
