@@ -71,7 +71,6 @@ class ApiService {
         try {
             const response = await Api.post<ApiSuccess<T>>(data.path, data.data);
             if (response.status === 201 || response.status === 200) {
-                console.log({ "w?????????????????": response });
                 if (data.thenCallback !== undefined) data.thenCallback(response.data.data);
                 return response.data.data;
             } else {

@@ -1,13 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import Api from 'api/api';
-import { AxiosError } from 'axios';
+import { ApiService } from 'api/ApiService';
 import { Button } from 'components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from 'components/ui/form';
 import { Input } from 'components/ui/input';
+import { useToast } from 'components/ui/use-toast';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import * as yup from 'yup';
 
 const EnviarSenhaSchreema = yup.object({
@@ -15,26 +14,30 @@ const EnviarSenhaSchreema = yup.object({
 })
 
 type EnviarSenhaType = yup.InferType<typeof EnviarSenhaSchreema>;
-
+var api = new ApiService();
 const EnviarCodigo: React.FC = () => {
   const nav = useNavigate();
   const form = useForm({
     resolver: yupResolver(EnviarSenhaSchreema)
   })
+  const { toast } = useToast();
   const [loadred, setLoadred] = useState<boolean>(false);
 
   async function submit(data: EnviarSenhaType) {
     setLoadred(true);
-    try {
-      const res = await Api.post<{ code: string }>("api/usuario/resetPasswordCode", data);
-      if (res.status === 200) {
-        toast.info("Enviamos um código de redefinição de senha em sua caixa de email.");
-        nav("/RedefinirSenha", { state: { code: res.data.code, email: data.email } });
+    await api.Post<{ code: string }>({
+      path: "api/usuario/resetPasswordCode",
+      data: data,
+      erroTitulo: "Falha ao enviar código de redefinição.",
+      thenCallback: (d) => {
+        toast({
+          title: "Código gerado",
+          description: "Enviamos um código de redefinição de senha em sua caixa de email.",
+          className: "bg-success"
+        });
+        nav("/RedefinirSenha", { state: { code: d.code, email: data.email } });
       }
-    } catch (err) {
-      var error = err as AxiosError<{ erro: string }>;
-      toast.error(error.response?.data.erro as string);
-    }
+    })
     setLoadred(false);
   }
 

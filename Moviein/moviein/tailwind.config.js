@@ -25,7 +25,7 @@ module.exports = {
         background: "hsl(var(--background))",
         text: "hsl(var(--text))",
 
-        success: "hsl(var(--status-success))",
+        success: "hsl(var(--success))",
 
         primary: "hsl(var(--primary))",
         redPalid: "hsl(var(--redPalid))",

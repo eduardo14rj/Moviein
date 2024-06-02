@@ -19,7 +19,7 @@ function App() {
   const teste = useToast();
   useEffect(() => {
     ApiService.ToastContainer = teste;
-  }, [])
+  }, [teste])
   
   return (
     <>

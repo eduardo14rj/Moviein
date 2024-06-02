@@ -6,7 +6,7 @@ import MD5 from "crypto-js/md5";
 import TokenService from '../services/tokenService';
 import Auth from '../middlewares/Auth';
 import SendEMailService from '../services/SendEmailService';
-import { sendError, sendSuccess } from '../middlewares/Send'
+// import { sendError, sendSuccess } from '../middlewares/Send'
 
 const UserController: FastifyPluginCallback = (instance, opts, done) => {
 
@@ -20,28 +20,29 @@ const UserController: FastifyPluginCallback = (instance, opts, done) => {
     });
 
     if (user === null)
-      return sendError(res, "Usuário com esse email não encontrado.", 400);
+      return res.badRequest("Usuário com esse email não encontrado.");
 
     var senhaEncr = MD5(senha).toString();
     if (senhaEncr !== user.senha)
-      return sendError(res, "Senha inválida", 400);
+      // return sendError(res, "Senha inválida", 400);
+      return res.badRequest("Senha inválida");
 
     var token = TokenService.encript(user.email, user.funcao);
 
-    return sendSuccess(
-      res,
-      {
-        token: token.token,
-        funcao: token.funcao,
-        expiracao: token.expiracao
-      }
-    )
+    var response = {
+      token: token.token,
+      funcao: token.funcao,
+      expiracao: token.expiracao
+    }
 
+    return res.ok(response);
   });
 
   instance.get("listar", async (req, res) => {
     const users = await prismaClient.usuario.findMany();
-    return res.code(200).send(users);
+    console.log(res);
+    // return res.code(200).send(users);
+    return res.ok(users);
   });
 
 
@@ -98,15 +99,14 @@ const UserController: FastifyPluginCallback = (instance, opts, done) => {
       }
     });
     if (usuario != null) {
-      return sendSuccess(
-        res,
-        {
-          nome: usuario.nome,
-          email: usuario.email,
-          thumb: usuario.thumb,
-          auth2: usuario.Auth2
-        }
-      )
+      const response = {
+        nome: usuario.nome,
+        email: usuario.email,
+        thumb: usuario.thumb,
+        auth2: usuario.Auth2
+      }
+
+      return res.ok(response);
     }
   });
 
@@ -118,7 +118,8 @@ const UserController: FastifyPluginCallback = (instance, opts, done) => {
       }
     });
     if (usuario == undefined)
-      return sendError(res, "Usuário não encontrado.", 400)
+      // return sendError(res, "Usuário não encontrado.", 400)
+      return res.badRequest("Usuário não encontrado.")
 
     await prismaClient.usuario.update({
       where: { email: req.user.email },
@@ -134,21 +135,21 @@ const UserController: FastifyPluginCallback = (instance, opts, done) => {
 
     const randomNumber = Math.floor(10000 + Math.random() * 90000);
 
+    var usuario = await prismaClient.usuario.findFirst({
+      where: {
+        email: email
+      }
+    })
+    if (usuario == undefined)
+      return res.badRequest("Usuário com esse email não encontrado.");
+
     await SendEMailService.Enviar({
       conteudo: `Seu código de redefinição de senha é: <b>${randomNumber}</b>`,
       email: email,
       titulo: "Moviein: Código de redefinição de senha."
     });
 
-    // return res.code(200).send({
-    //   code: randomNumber.toString()
-    // });
-    return sendSuccess(
-      res,
-      {
-        code: randomNumber.toString()
-      }
-    )
+    return res.ok({ code: randomNumber.toString() });
   })
 
   instance.post("resetPassword", async (req, res) => {
@@ -172,8 +173,7 @@ const UserController: FastifyPluginCallback = (instance, opts, done) => {
           senha: novaSenha
         }
       });
-      // return res.code(200).send("Senha redefinida com sucesso!");
-      return sendSuccess(res, {}, "Senha redefinida com sucesso")
+      return res.ok(undefined, "Senha redefinida com sucesso")
     } catch (error) {
       return res.code(400).send(error);
     }
@@ -196,7 +196,7 @@ const UserController: FastifyPluginCallback = (instance, opts, done) => {
         }
       })
 
-      return sendSuccess(res, {}, "");
+      return res.ok(null);
     }
   })
 
